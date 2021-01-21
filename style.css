@@ -58,17 +58,18 @@ body {
     display: grid;
     grid-template-columns: 20vw auto;
     height: fit-content;
+    width: 100vw;
 }
 
 #roundInfo {
     grid-column: 1;
-    border: 1px solid black;
     font-size: 25;
+    height: 157px;
 }
 
 #score {
     grid-column: 2;
-    border: 1px solid black;
+    height: fit-content;
 }
 
 #score table {
@@ -77,8 +78,9 @@ body {
 
 #main {
     display: grid;
-    grid-template-rows: 60vh 20vh;
+    grid-template-rows: 50vh auto;
     gap: 10%;
+    border-top: 1px solid black;
 }
 
 #player {
@@ -92,19 +94,21 @@ body {
 #gameBoard {
     grid-row: 1;
     display: grid;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 13% 29% 29% 29%;
     grid-template-columns: 50% 50%;
 }
 
 #gameBoard p {
     font-size: 20px;
+    margin-bottom: 0;
 }
 
 #bidArea {
     grid-row: 1;
     grid-column-start: 1;
     grid-column-end: 3;
-    padding: 20px;
+    padding: 10px;
+    height: fit-content;
 }
 
 #player1Card {

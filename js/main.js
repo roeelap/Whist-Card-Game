@@ -1,5 +1,5 @@
-import Game from './game.js'
-import Player from './player.js'
+    import Game from './game.js'
+    import Player from './player.js'
 
 
 function newGame() {
@@ -16,31 +16,7 @@ function newGame() {
         player.sortCards();
     });
 
-    Game.toggleCardClicks();
-
     return [game, player1, player2, player3, player4];
-}
-
-
-// showing the player's hand
-function showCards(player) {
-    let output = "";
-    let index = 0;
-    player.cards.forEach(card => {
-        output += `
-            <div style:"z-index: ${index};">
-                <img src="${card.getImage()}" class="cardImage" style="margin-left: -60px">
-            </div>
-        `;
-
-        index++;
-    });
-
-    $("#player").html(output);
-
-    document.querySelectorAll(".cardImage").forEach(cardImg => {
-        cardImg.onclick = () => putCard(player, $(cardImg.parentElement).index(), cardImg);
-    });
 }
 
 
@@ -59,10 +35,10 @@ function putCard(game, player, index, cardImg=null) {
 
 
 // checks if the trump suit bid is valid
-function isTrumpSuitBidValid(game, player, bidAmount, bidSuit) {
+function isTrumpSuitBidValid(game, bidAmount, bidSuit) {
     // if the player passes - the pass button is the sixth button
     if (bidSuit === 6) {
-        Game.showBid(player, "pass");
+        game.passCount += 1;
         return "pass";
     }
 
@@ -72,80 +48,110 @@ function isTrumpSuitBidValid(game, player, bidAmount, bidSuit) {
         return false;
     } else if (bidAmount === game.highestBid) {
         if (bidSuit > game.trumpSuit) {
-            game.highestBid = bidAmount;
-            player.bid = bidAmount;
-            game.trumpSuit = bidSuit;
             console.log("good bid");
-            Game.showBid(player, bidAmount + game.SUITS[bidSuit]);
             return true;
         } else {
             alert("Not a valid bid, please try again.");
             return false;
         }
     } else {
-        game.highestBid = bidAmount;
-        player.bid = bidAmount;
-        game.trumpSuit = bidSuit;
-        Game.showBid(player, bidAmount + game.SUITS[bidSuit]);
         console.log("good bid");
         return true;
     }
 }
 
 
-function TrumpSuitBidRound(game, player1) {
-    let passCount = 0;
-    let bidCount = 0;
+function trumpSuitBidRound(game) {
+    if (game.turn === 1) {
+        Game.toggleSuitButtons();
+    } else if (game.turn === 2 || 3 || 4) {
+        console.log("cpu's turn");
+    }
 
-    // letting the player bid on the trump suit
-    Game.toggleSuitButtons();
-    $.each($("#bid1 .bidButton"), (index, bidButton) => {
-        bidButton.onclick = function() {
-            let bidAmount = parseInt($("#bidAmount").val());
-            let bidSuit = $(bidButton).index();
-            let choice = isTrumpSuitBidValid(game, player1, bidAmount, bidSuit)
-            if (choice === "pass") {
-                passCount += 1;
-                Game.toggleSuitButtons();
-            } else if (choice) {
-                bidCount += 1;
-                passCount = 0;
-                Game.toggleSuitButtons();
-            }
-        }
-    });
-
-    if (passCount === 3 && bidCount >= 1) {
-        return
-    } else if (passCount === 4) {
+    if (game.passCount === 3 && game.bidCount >= 1) {
+        return;
+    } else if (game.passCount === 4) {
         game.newRound();
-        return
     }
 }
 
 
-// function regularBidRound(game, player1) {
-
-// }
-
-
-let [game, player1, player2, player3, player4] = newGame();
-showCards(player1);
-TrumpSuitBidRound(game, player1);
-
-
-
-// letting the computers bid ont the trump suit
-
-
-// let the players choose their bids
-$.each($("#bid2 .bidButton"), (index, bidButton) => {
-    bidButton.onclick = function() {
-        let bid = parseInt(bidButton.value);
-        if (isBidValid(game, player1, bid)) {;
-            Game.toggleBidButtons();
-        };
+function player1SuitBid(game, bidButton) {
+    let bidAmount = parseInt($("#bidAmount").val());
+    let bidSuit = $(bidButton).index();
+    let choice = isTrumpSuitBidValid(game, bidAmount, bidSuit)
+    if (choice === "pass") {
+        game.passCount++;
+        Game.toggleSuitButtons();
+        game.nextTurn();
+        return trumpSuitBidRound(game);
+    } else if (choice) {
+        game.bidCount++;
+        game.passCount = 0;
+        game.highestBid = game.players[0].bid = bidAmount;
+        game.trumpSuit = bidSuit;
+        game.firstPlayerToPlay = 1;
+        Game.toggleSuitButtons();
+        game.nextTurn();
+        return trumpSuitBidRound(game);
     }
+}
+
+
+function isTrickBidValid(game, bid) {
+    if (game.trickBidsMade !== 3 || 0) {
+        return true;
+    } else if (game.trickBidsMade === 3) {
+        if (game.totalBids + bid === 13) {
+            return false;
+        } else {
+            return true;
+        }
+    } else if (game.trickBidsMade === 0) {
+        if (bid < game.highestBid) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+
+function tricksBidRound(game) {
+    if (game.turn === 1) {
+        Game.toggleBidButtons();
+    } else if (game.turn === 2 || 3 || 4) {
+        console.log("cpu's turn");
+        game.trickBidsMade++;
+    }
+}
+
+
+function player1TricksBid(game, bidButton) {
+    let bid = parseInt(bidButton.value);
+    if (isTrickBidValid(game, bid)) {
+        game.players[0].bid = bid
+        game.totalBids += bid;
+        Game.toggleBidButtons();
+        game.trickBidsMade++;
+        game.nextTurn();
+        return tricksBidRound(game);
+    };
+}
+
+
+$(document).ready(() => {
+    let [game, player1, player2, player3, player4] = newGame();
+    game.showCards(game);
+    Game.toggleCardClicks();
+
+    $.each($("#bid1 .bidButton"), (index, bidButton) => {
+        bidButton.onclick = () => {player1SuitBid(game, bidButton)};
+    });
+    trumpSuitBidRound(game);
+
+    $.each($("#bid2 .bidButton"), (index, bidButton) => {
+        bidButton.onclick = () => {player1TricksBid(game, bidButton)};
+    });
+    tricksBidRound(game);
 });
-
-

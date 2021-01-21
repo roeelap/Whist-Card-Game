@@ -9,22 +9,32 @@ export default class Game {
         this.deck;
         this.round = 1;
         this.highestBid = 0;
-        this.trumpSuit = 0;
+        this.trumpSuit = 1;
         this.totalBids = 0;
-        this.PlayerIndex = 1;
+        this.turn = 1;
         this.thrownCards = {};
+        this.bidCount = 0;
+        this.passCount = 0;
+        this.trickBidsMade = 0;
+        this.firstPlayerToPlay = 0;
     }
 
+
     newRound() {
-        this.highestBid = 0;
+        this.highestBid = 6;
         this.trumpSuit = 0;
         this.totalBids = 0;
         this.thrownCards = {};
+        this.bidCount = 0;
+        this.passCount = 0;
+        this.trickBidsMade = 0;
+        this.firstPlayerToPlay = 0;
 
         this.deck = new Deck();
         this.deck.shuffle();
         this.dealCards();
     }
+
 
     dealCards() {
         while (this.deck.cards.length > 0) {
@@ -33,6 +43,32 @@ export default class Game {
             });
         };
     }
+
+
+    // showing the player's hand
+    showCards() {
+        let output = "";
+        let index = 0;
+        this.players[0].cards.forEach(card => {
+            output += `
+                <div style:"z-index: ${index};">
+                    <img src="${card.getImage()}" class="cardImage" style="margin-left: -60px">
+                </div>
+            `;
+
+            index++;
+        });
+
+        $("#player").html(output);
+
+        document.querySelectorAll(".cardImage").forEach(cardImg => {
+            cardImg.onclick = function() {
+                let cardIndex = $(cardImg.parentElement).index()
+                putCard(this, this.players[0], cardIndex, cardImg);
+            };
+        });
+    }
+
 
     getRoundStatus() {
         if (this.totalBids > 13) {
@@ -43,13 +79,21 @@ export default class Game {
         }
     }
 
+
+    nextTurn() {
+        this.turn = (this.turn + 1) % 4;
+    }
+
+
     static toggleSuitButtons() {
         $("#bid1").toggle();
     }
     
+
     static toggleBidButtons() {
-        $("#bid1").toggle();
+        $("#bid2").toggle();
     }
+
 
     // disables all card clicks
     static toggleCardClicks() {
@@ -58,6 +102,7 @@ export default class Game {
         });  
     }
 
+    // shows the bid/pass label 
     static showBid(player, bid) {
         let playerCardDiv = `#player${player.index}Card h4`;
         $(playerCardDiv).html(bid);
