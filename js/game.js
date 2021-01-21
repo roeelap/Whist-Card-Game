@@ -60,13 +60,6 @@ export default class Game {
         });
 
         $("#player").html(output);
-
-        document.querySelectorAll(".cardImage").forEach(cardImg => {
-            cardImg.onclick = function() {
-                let cardIndex = $(cardImg.parentElement).index()
-                putCard(this, this.players[0], cardIndex, cardImg);
-            };
-        });
     }
 
 

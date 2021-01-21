@@ -68,10 +68,13 @@ function trumpSuitBidRound(game) {
         console.log("cpu's turn");
     }
 
+    // checking if 3 player passed and 1 bid || OR || the 4 players have passed
     if (game.passCount === 3 && game.bidCount >= 1) {
-        return;
+        console.log("phase complete");
+        return tricksBidRound(game);
     } else if (game.passCount === 4) {
         game.newRound();
+        return;
     }
 }
 
@@ -124,6 +127,10 @@ function tricksBidRound(game) {
         console.log("cpu's turn");
         game.trickBidsMade++;
     }
+
+    if (game.trickBidsMade === 4) {
+        return throwingRound(game);
+    }
 }
 
 
@@ -141,17 +148,30 @@ function player1TricksBid(game, bidButton) {
 
 
 $(document).ready(() => {
+    // creating a new game
     let [game, player1, player2, player3, player4] = newGame();
     game.showCards(game);
     Game.toggleCardClicks();
-
+    
+    // onclick events for the suit buttons
     $.each($("#bid1 .bidButton"), (index, bidButton) => {
         bidButton.onclick = () => {player1SuitBid(game, bidButton)};
     });
-    trumpSuitBidRound(game);
-
+    
+    // onclick events for the bid buttons
     $.each($("#bid2 .bidButton"), (index, bidButton) => {
         bidButton.onclick = () => {player1TricksBid(game, bidButton)};
     });
-    tricksBidRound(game);
+
+    // onclick events for the card images
+    document.querySelectorAll(".cardImage").forEach(cardImg => {
+        cardImg.onclick = function() {
+            let cardIndex = $(cardImg.parentElement).index()
+            putCard(this, this.players[0], cardIndex, cardImg);
+        };
+    });
+
+
+    //starting the trump suit bid round
+    trumpSuitBidRound(game);
 });
