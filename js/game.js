@@ -50,6 +50,7 @@ export default class Game {
         while (this.deck.cards.length > 0) {
             this.players.forEach(player => {
                 player.cards.push(this.deck.cards.pop());
+                player.sortCards();
             });
         };
     }

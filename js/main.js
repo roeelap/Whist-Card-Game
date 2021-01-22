@@ -1,5 +1,5 @@
-    import Game from './game.js'
-    import Player from './player.js'
+import Game from './game.js'
+import Player from './player.js'
 
 
 function newGame() {
@@ -11,10 +11,6 @@ function newGame() {
     const game = new Game([player1, player2, player3, player4]);
 
     game.newRound();
-    
-    game.players.forEach(player => {
-        player.sortCards();
-    });
 
     return [game, player1, player2, player3, player4];
 }
@@ -254,6 +250,8 @@ function putCard(game, player, index, cardImg=null) {
 $(document).ready(() => {
     // creating a new game
     let [game, player1, player2, player3, player4] = newGame();
+
+    // showing player1's cards and disabling any clicks on them
     game.showCards(game);
     Game.toggleCardClicks();
     
