@@ -168,12 +168,12 @@ function player1TricksBid(game, bidButton) {
 
 function isCardValid(game, player, card) {
     // if it's the first player's turn
-    if (Object.keys(game.thrownCards).length === 0) {
+    if (game.thrownCards.length === 0) {
         return true;
     }
 
     // the suit of the first card played
-    playedSuit = Object.values(game.thrownCards)[0].suit;
+    playedSuit = game.thrownCards[0][1].suit;
     // if the suit if the same
     if (card.suit === playedSuit) {
         return true;
@@ -192,6 +192,18 @@ function isCardValid(game, player, card) {
 
 
 function gameRound(game) {
+    // if the players have run out of cards
+    if (game.players.every(player => player.cards.length === 0)) {
+        // calculate score for each player
+        if (player.bid === 0) {
+            game.calculateScoreForBid0(player);
+        } else {
+            Game.calculateScore(player);
+        }
+
+        game.newRound();
+    }
+
     // if it's player1's turn
     if (game.turn === 1) {
         Game.toggleCardClicks();
@@ -203,21 +215,10 @@ function gameRound(game) {
     }
 
     // if 4 players put a card down
-    if (Object.keys(game.thrownCards).length === 4) {
+    if (game.thrownCards.length === 4) {
         // figure out the winning card and the starting player of the next putdown
-        game.thrownCards = {};
-    }
-
-    // if the players have run out of cards
-    if (game.players.every(player => player.cards.length === 0)) {
-        // calculate score for each player
-        if (player.bid === 0) {
-            game.calculateScoreForBid0(player);
-        } else {
-            Game.calculateScore(player);
-        }
-
-        game.newRound();
+        game.determineTrickWinner();
+        return gameRound(game);
     }
 }
 
@@ -232,7 +233,7 @@ function putCard(game, player, index, cardImg=null) {
         $(playerCardId).attr("src", img);
 
         // removing the card from the player's hand
-        game.thrownCards[player] = player.cards.splice(index, 1);
+        game.thrownCards.push([player, player.cards.splice(index, 1)]);
         $(cardImg.parentElement).remove();
 
         // toggling the card clicks if the player is player1

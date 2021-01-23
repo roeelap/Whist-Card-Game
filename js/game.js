@@ -13,7 +13,7 @@ export default class Game {
         this.totalBids = 0;
         this.roundMode = 0;
         this.turn = 1;
-        this.thrownCards = {};
+        this.thrownCards = [];
         this.bidCount = 0;
         this.passCount = 0;
         this.trickBidsMade = 0;
@@ -27,11 +27,11 @@ export default class Game {
         this.trumpSuit = 0;
         this.totalBids = 0;
         this.roundMode = 0;
-        this.thrownCards = {};
+        this.thrownCards = [];
         this.bidCount = 0;
         this.passCount = 0;
         this.trickBidsMade = 0;
-        this.firstPlayerToPlay = 0;
+        this.firstPlayerToPlay++;
         
         //resetting the stats of each player
         this.players.forEach(player => {
@@ -43,6 +43,9 @@ export default class Game {
         this.deck = new Deck();
         this.deck.shuffle();
         this.dealCards();
+
+        // making the label of the first-player-to-act bold
+        Game.updateBoldLabel(this.firstPlayerToPlay);
     }
 
 
@@ -86,7 +89,47 @@ export default class Game {
 
 
     nextTurn() {
+        Game.updateBoldLabel(this.turn);
         this.turn = (this.turn + 1) % 4;
+        Game.updateBoldLabel(this.turn);
+    }
+
+
+    determineTrickWinner() {
+        let trumpCount = 0;
+
+        // removing all the cards that don't match the played suit or the trump suit
+        for (let i = 0; i < this.thrownCards.length; i++) {
+            if (this.thrownCards[i][1].suit !== this.thrownCards[0][1].suit && this.thrownCards[i][1].suit !== this.trumpSuit) {
+                this.thrownCards.splice(i, 1);
+            } else if (this.thrownCards[i][1].suit === this.trumpSuit) {
+                trumpCount++;
+            }
+        };
+
+        // removing all the card that don't match the trump suit
+        if (trump_count > 0) {
+            this.thrownCards.filter(PlayerCardPair => PlayerCardPair[1].suit === this.trumpSuit);
+        }
+
+        // sorting the list by descending values
+        this.thrownCards.sort((a, b) => b[1].value - a[1].value);
+
+        // getting the winner and giving him the trick
+        let winningPlayer = this.thrownCards[0][0];
+        winningPlayer.tricks++;
+        
+        // resetting the thrown cards list
+        game.thrownCards = [];
+
+        // updating the turn according to the winning player
+        this.turn = winningPlayer.index;
+
+        // updating the bold label
+        let playerDiv = `#player${winningPlayer.index}Card p`;
+        if (!$(playerDiv).hasClass("bold")) {
+            updateBoldLabel(winningPlayer.index);
+        }
     }
 
 
@@ -158,5 +201,11 @@ export default class Game {
     static showBid(player, bid) {
         let playerCardDiv = `#player${player.index}Card h4`;
         $(playerCardDiv).html(bid);
+    }
+
+    // makes the player's label bold while it's their turn
+    static updateBoldLabel(playerIndex) {
+        let playerLabel = `#player${playerIndex}Card p`;
+        $(playerLabel).toggleClass("bold");
     }
 }
