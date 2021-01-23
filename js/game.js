@@ -89,7 +89,6 @@ export default class Game {
 
 
     nextTurn() {
-        Game.updateBoldLabel(this.turn);
         this.turn = (this.turn + 1) % 4;
         Game.updateBoldLabel(this.turn);
     }
@@ -128,7 +127,7 @@ export default class Game {
         // updating the bold label
         let playerDiv = `#player${winningPlayer.index}Card p`;
         if (!$(playerDiv).hasClass("bold")) {
-            updateBoldLabel(winningPlayer.index);
+            Game.updateBoldLabel(winningPlayer.index);
         }
     }
 
@@ -205,7 +204,11 @@ export default class Game {
 
     // makes the player's label bold while it's their turn
     static updateBoldLabel(playerIndex) {
-        let playerLabel = `#player${playerIndex}Card p`;
-        $(playerLabel).toggleClass("bold");
+        let playerLabels = [`#player1Card p`, `#player2Card p`, `#player3Card p`, `#player4Card p`];
+        playerLabels.forEach(label => {
+            $(label).removeClass("bold")
+        })
+
+        $(playerLabels[playerIndex - 1]).addClass("bold");
     }
 }
