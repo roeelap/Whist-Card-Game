@@ -67,8 +67,3 @@
 // 1. if you have a lower card to put, put it. put the highest card that will not win.
 // 2. if you can't lose the hand, put the highest card you have.
 // 3. when you put the first card, put the lowest card you have.
-
-
-
-
-

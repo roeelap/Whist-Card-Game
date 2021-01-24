@@ -3,13 +3,15 @@ import Deck from './deck.js'
 
 export default class Game {
     SUITS = {1: "♣", 2: "♦", 3:"♥", 4:"♠", 5:"NT"};
+    mostFreqSuitScorer = [["2", 0.25], ["3", 0.25], ["4", 0.25], ["5", 0.25], ["6", 0.5], ["7", 0.5], ["8", 0.5], ["9", 0.75], ["10", 0.75], ["11", 1], ["12", 1], ["13", 1], ["14", 1]];
+    otherSuitScorer = [["12", 0.5], ["13", 1], ["14", 1]];
 
     constructor(players) {
         this.players = players;
         this.deck;
         this.round = 1;
-        this.highestBid = 0;
-        this.trumpSuit = 1;
+        this.highestBid = 5;
+        this.trumpSuit = 0;
         this.totalBids = 0;
         this.roundMode = 0;
         this.turn = 1;
@@ -23,7 +25,7 @@ export default class Game {
 
     newRound() {
         // resetting the stats
-        this.highestBid = 0;
+        this.highestBid = 5;
         this.trumpSuit = 0;
         this.totalBids = 0;
         this.roundMode = 0;
@@ -77,6 +79,74 @@ export default class Game {
     }
 
 
+    // checks if the trump suit bid is valid
+    isTrumpSuitBidValid(bidAmount, bidSuit) {
+        // if the player passes - the pass button is the sixth button
+        if (bidSuit === 6) {
+            this.passCount += 1;
+            return "pass";
+        }
+
+        //if the player tries to bid
+        if (bidAmount < this.highestBid) {
+            return false;
+        } else if (bidAmount === this.highestBid) {
+            if (bidSuit > this.trumpSuit) {
+                console.log("good bid");
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            console.log("good bid");
+            return true;
+        }
+    }
+
+
+    isTrickBidValid(bid) {
+        if (this.trickBidsMade !== 3 || 0) {
+            return true;
+        } else if (this.trickBidsMade === 3) {
+            if (this.totalBids + bid === 13) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (this.trickBidsMade === 0) {
+            if (bid < this.highestBid) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+
+    isCardValid(player, card) {
+        // if it's the first player's turn
+        if (this.thrownCards.length === 0) {
+            return true;
+        }
+    
+        // the suit of the first card played
+        playedSuit = this.thrownCards[0][1].suit;
+        // if the suit if the same
+        if (card.suit === playedSuit) {
+            return true;
+        } else {
+            // checking if the player has cards of the same suit
+            player.cards.forEach(card => {
+                if (card.suit ===  playedSuit) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        }
+    }
+
+
     getRoundMode() {
         this.roundMode = this.totalBids - 13;
         if (this.roundMode > 0) {
@@ -89,7 +159,12 @@ export default class Game {
 
 
     nextTurn() {
-        this.turn = (this.turn + 1) % 4;
+        if (this.turn === 4) {
+            this.turn = 1;
+        } else {
+            this.turn++;
+        }
+        
         Game.updateBoldLabel(this.turn);
     }
 
@@ -197,8 +272,8 @@ export default class Game {
     }
 
     // shows the bid/pass label 
-    static showBid(player, bid) {
-        let playerCardDiv = `#player${player.index}Card h4`;
+    static showBid(playerIndex, bid) {
+        let playerCardDiv = `#player${playerIndex}Card h4`;
         $(playerCardDiv).html(bid);
     }
 
@@ -210,5 +285,74 @@ export default class Game {
         })
 
         $(playerLabels[playerIndex - 1]).addClass("bold");
+    }
+
+
+    // --------------------- AI FUNCTIONS -------------------------- //
+
+
+    static isCardInArray(array, value) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].value === value) {
+                return true;
+            }
+        };
+
+        return false;
+    }
+
+
+    getTrumpSuitBid(player) {
+        let clubs = player.cards.filter(card => card.suit === "1");
+        let diamonds = player.cards.filter(card => card.suit === "2");
+        let hearts = player.cards.filter(card => card.suit === "3");
+        let spades = player.cards.filter(card => card.suit === "4");
+
+        // figure out which suit is the most common
+        let cards = [clubs, diamonds, hearts, spades].sort((a, b) => b.length - a.length);
+
+        let mostFreqSuit = cards[0];
+        let otherSuits = cards.slice(1, 4);
+
+        // if the most common suit is less than 4 cards, just pass
+        if (mostFreqSuit.length < 5) {
+            // updating the pass count
+            this.passCount++;
+            return "pass";
+        }
+
+        let bid = 0;
+
+        // get the score for the most common suit
+        this.mostFreqSuitScorer.forEach(cardValue => {
+            if (Game.isCardInArray(mostFreqSuit, cardValue[0])) {
+                bid += cardValue[1];
+            }
+        });
+
+        // get the score for the other suits
+        otherSuits.forEach(suitArray => {
+            this.otherSuitScorer.forEach(cardValue => {
+                if (Game.isCardInArray(suitArray, cardValue[0])) {
+                    bid += cardValue[1];
+                }
+            });
+        })
+        
+        if (this.isTrumpSuitBidValid(Math.floor(bid), mostFreqSuit[0].suit)) {
+            this.bidCount++;
+            this.passCount = 0;
+
+            // updating the highest bid and the trump suit
+            this.highestBid = player.bid = Math.floor(bid);
+            this.trumpSuit = mostFreqSuit[0].suit;
+            
+            return Math.floor(bid) + this.SUITS[mostFreqSuit[0].suit];
+
+        } else {
+             // updating the pass count
+             this.passCount++;
+             return "pass";
+        }
     }
 }

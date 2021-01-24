@@ -16,40 +16,7 @@ function newGame() {
 }
 
 
-// checks if the trump suit bid is valid
-function isTrumpSuitBidValid(game, bidAmount, bidSuit) {
-    // if the player passes - the pass button is the sixth button
-    if (bidSuit === 6) {
-        game.passCount += 1;
-        return "pass";
-    }
-
-    //if the player tries to bid
-    if (bidAmount < game.highestBid) {
-        alert("Not a valid bid, please try again.");
-        return false;
-    } else if (bidAmount === game.highestBid) {
-        if (bidSuit > game.trumpSuit) {
-            console.log("good bid");
-            return true;
-        } else {
-            alert("Not a valid bid, please try again.");
-            return false;
-        }
-    } else {
-        console.log("good bid");
-        return true;
-    }
-}
-
-
 function trumpSuitBidRound(game) {
-    if (game.turn === 1) {
-        Game.toggleSuitButtons();
-    } else if (game.turn === 2 || 3 || 4) {
-        console.log("cpu's turn");
-    }
-
     // checking if 3 player passed and 1 bid || OR || the 4 players have passed
     if (game.passCount === 3 && game.bidCount >= 1) {
         console.log("phase complete");
@@ -58,13 +25,24 @@ function trumpSuitBidRound(game) {
         game.newRound();
         return;
     }
+
+    if (game.turn === 1) {
+        Game.toggleSuitButtons();
+    } else if (game.turn === 2 || game.turn === 3 || game.turn === 4) {
+        setTimeout(function() {
+            Game.showBid(game.turn, game.getTrumpSuitBid(game.players[game.turn - 1]));
+            //updating the turn and letting the cpu act
+            game.nextTurn();
+            return trumpSuitBidRound(game);
+        }, 2000);
+    }
 }
 
 
 function player1SuitBid(game, bidButton) {
     let bidAmount = parseInt($("#bidAmount").val());
     let bidSuit = $(bidButton).index();
-    let choice = isTrumpSuitBidValid(game, bidAmount, bidSuit)
+    let choice = game.isTrumpSuitBidValid(bidAmount, bidSuit)
 
     if (choice === "pass") {
         // updating the pass count
@@ -74,7 +52,7 @@ function player1SuitBid(game, bidButton) {
         Game.toggleSuitButtons();
 
         // showing the player's bid
-        Game.showBid(game.players[0], choice);
+        Game.showBid(1, choice);
 
         //updating the turn and letting the cpu act
         game.nextTurn();
@@ -89,52 +67,34 @@ function player1SuitBid(game, bidButton) {
         game.highestBid = game.players[0].bid = bidAmount;
         game.trumpSuit = bidSuit;
 
-        // if no one will bid higher, player1 will be the first to play a card
-        game.firstPlayerToPlay = 1;
-
         // removing the suit buttons
         Game.toggleSuitButtons();
 
         // showing the player's bid
-        Game.showBid(game.players[0], bidAmount + game.SUITS[bidSuit]);
+        Game.showBid(1, bidAmount + game.SUITS[bidSuit]);
 
          //updating the turn and letting the cpu act
         game.nextTurn();
         return trumpSuitBidRound(game);
-    }
-}
 
-
-function isTrickBidValid(game, bid) {
-    if (game.trickBidsMade !== 3 || 0) {
-        return true;
-    } else if (game.trickBidsMade === 3) {
-        if (game.totalBids + bid === 13) {
-            return false;
-        } else {
-            return true;
-        }
-    } else if (game.trickBidsMade === 0) {
-        if (bid < game.highestBid) {
-            return false;
-        } else {
-            return true;
-        }
+    } else {
+        // if the bid is not valid
+        alert("Not a valid bid, please try again.");
     }
 }
 
 
 function tricksBidRound(game) {
+    if (game.trickBidsMade === 4) {
+        $("#roundMode").html(`<td><strong>${game.getRoundMode()}</strong></td>`);
+        return gameRound(game);
+    }
+
     if (game.turn === 1) {
         Game.toggleBidButtons();
     } else if (game.turn === 2 || 3 || 4) {
         console.log("cpu's turn");
         game.trickBidsMade++;
-    }
-
-    if (game.trickBidsMade === 4) {
-        $("#roundMode").html(`<td><strong>${game.getRoundMode()}</strong></td>`);
-        return gameRound(game);
     }
 }
 
@@ -142,7 +102,7 @@ function tricksBidRound(game) {
 function player1TricksBid(game, bidButton) {
     let bid = parseInt(bidButton.value);
 
-    if (isTrickBidValid(game, bid)) {
+    if (game.isTrickBidValid(bid)) {
         // updating the player's bid
         game.players[0].bid = bid;
 
@@ -154,7 +114,7 @@ function player1TricksBid(game, bidButton) {
         Game.toggleBidButtons();
 
         // showing the player's bid on the game board
-        Game.showBid(game.players[0], bid);
+        Game.showBid(1, bid);
 
         // updating the number of tricks that has been made
         game.trickBidsMade++;
@@ -162,31 +122,9 @@ function player1TricksBid(game, bidButton) {
         // updating the turn and letting the cpu act
         game.nextTurn();
         return tricksBidRound(game);
-    };
-}
-
-
-function isCardValid(game, player, card) {
-    // if it's the first player's turn
-    if (game.thrownCards.length === 0) {
-        return true;
-    }
-
-    // the suit of the first card played
-    playedSuit = game.thrownCards[0][1].suit;
-    // if the suit if the same
-    if (card.suit === playedSuit) {
-        return true;
     } else {
-        // checking if the player has cards of the same suit
-        player.cards.forEach(card => {
-            if (card.suit ===  playedSuit) {
-                alert("Not A Valid Card");
-                return false;
-            } else {
-                return true;
-            }
-        });
+        // if the bid is not valid
+        alert("Not a valid bid, please try again.");
     }
 }
 
@@ -226,7 +164,7 @@ function gameRound(game) {
 // function for when the player wants to throw a card
 function putCard(game, player, index, cardImg=null) {
     // check if the player can put the card down
-    if (isCardValid(game, player, player.cards[index])) {
+    if (game.isCardValid(player, player.cards[index])) {
         // putting the clicked card on the game board
         let img = player.cards[index].getImage();
         let playerCardId = `#player${player.index}Card .usedCardImage`;
