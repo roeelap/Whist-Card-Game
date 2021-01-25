@@ -86,18 +86,20 @@ export default class Ai {
     }
 
     // calculate the wanted suit and bid
-    let [bid, suit] = Ai.calculateBidForTrumpSuitRound(cards)
+    let [bid, suit] = Ai.calculateBidForTrumpSuitRound(cards);
 
-    if (game.isTrumpSuitBidValid(bid, suit)) {
-      game.bidCount++;
-      game.passCount = 0;
+    // figure out the minimum bid which will be higher than the highest bid,
+    // and lower/equal to the wanted bid.
+    for (let i = 0; i <= bid; i++) {
+      if (game.isTrumpSuitBidValid(i, suit)) {
+        game.bidCount++;
+        game.passCount = 0;
+        game.highestBid = player.bid = i;
+        game.trumpSuit = suit;
 
-      // updating the highest bid and the trump suit
-      game.highestBid = player.bid = bid;
-      game.trumpSuit = suit;
-
-      return `${bid}${SUITS_TO_PICTURES[suit]}`;
-    }
+        return `${i}${SUITS_TO_PICTURES[suit]}`;
+      }
+    };
     
     // updating the pass count
     game.passCount++;
