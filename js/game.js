@@ -23,7 +23,7 @@ export default class Game {
     }
 
 
-    newRound() {
+    newRound(isAllPassed) {
         // resetting the stats
         this.highestBid = 5;
         this.trumpSuit = 0;
@@ -33,13 +33,26 @@ export default class Game {
         this.bidCount = 0;
         this.passCount = 0;
         this.trickBidsMade = 0;
-        this.firstPlayerToPlay++;
+
+        // in case all the players passed, don't pass the turn to next player
+        if (isAllPassed) {
+            this.firstPlayerToPlay = this.turn;
+        } else {
+            if (this.firstPlayerToPlay === 4) {
+                this.firstPlayerToPlay = 1;
+            } else {
+                this.firstPlayerToPlay++;
+            }
+        }
         
         //resetting the stats of each player
         this.players.forEach(player => {
             player.bid = 0;
             player.tricks = 0;
-        })
+            player.cards = [];
+        });
+
+        $("#player").empty();
 
         //creating a new deck
         this.deck = new Deck();
@@ -83,7 +96,6 @@ export default class Game {
     isTrumpSuitBidValid(bidAmount, bidSuit) {
         // if the player passes - the pass button is the sixth button
         if (bidSuit === 6) {
-            this.passCount += 1;
             return "pass";
         }
 

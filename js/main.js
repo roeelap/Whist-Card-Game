@@ -10,7 +10,7 @@ function newGame() {
 
     const game = new Game([player1, player2, player3, player4]);
 
-    game.newRound();
+    game.newRound(false);
 
     return [game, player1, player2, player3, player4];
 }
@@ -22,14 +22,18 @@ function trumpSuitBidRound(game) {
         console.log("phase complete");
         return tricksBidRound(game);
     } else if (game.passCount === 4) {
-        game.newRound();
-        return;
+        setTimeout(() => {
+            // a new round
+            game.newRound(true)
+            game.showCards(game);
+            return trumpSuitBidRound(game);
+        }, 2000);
     }
 
     if (game.turn === 1) {
         Game.toggleSuitButtons();
     } else if (game.turn === 2 || game.turn === 3 || game.turn === 4) {
-        setTimeout(function() {
+        setTimeout(() => {
             Game.showBid(game.turn, game.getTrumpSuitBid(game.players[game.turn - 1]));
             //updating the turn and letting the cpu act
             game.nextTurn();
@@ -139,7 +143,7 @@ function gameRound(game) {
             Game.calculateScore(player);
         }
 
-        game.newRound();
+        game.newRound(false);
     }
 
     // if it's player1's turn
