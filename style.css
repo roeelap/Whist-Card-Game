@@ -1,146 +1,144 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .cardImage {
-    height: 20vh;
-    width: auto;
-    cursor: pointer;
-    left: 30%;
+  height: 20vh;
+  width: auto;
+  cursor: pointer;
+  left: 30%;
 }
 
 .usedCardImage {
-    height: 100%;
-    width: auto;
+  height: 100%;
+  width: auto;
 }
 
 .nonClickable {
-    pointer-events: none;
-    cursor: default;
+  pointer-events: none;
+  cursor: default;
 }
 
 .bidButton {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .hover-red:hover {
-    color: red;
+  color: red;
 }
 
 .hover-black:hover {
-    color: black;
+  color: black;
 }
 
 .hover-gold:hover {
-    color: gold;
+  color: gold;
 }
 
 .bid {
-    position: relative;
-    background: white;
-    margin-top: -75px;
-    width: fit-content;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
+  position: relative;
+  background: white;
+  margin-top: -75px;
+  width: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
 }
-
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-
 #info {
-    display: grid;
-    grid-template-columns: 20vw auto;
-    height: fit-content;
-    width: 100vw;
+  display: grid;
+  grid-template-columns: 20vw auto;
+  height: fit-content;
+  width: 100vw;
 }
 
 #roundInfo {
-    grid-column: 1;
-    font-size: 25;
-    height: 157px;
-    border-right: 1px solid black;
+  grid-column: 1;
+  font-size: 25;
+  height: 157px;
+  border-right: 1px solid black;
 }
 
 #score {
-    grid-column: 2;
-    height: fit-content;
+  grid-column: 2;
+  height: fit-content;
 }
 
 #score table {
-    margin: 0;
+  margin: 0;
 }
 
 #main {
-    display: grid;
-    grid-template-rows: 50vh auto;
-    gap: 10%;
-    border-top: 1px solid black;
+  display: grid;
+  grid-template-rows: 50vh auto;
+  gap: 10%;
+  border-top: 1px solid black;
 }
 
 #player {
-    display: flex;
-    justify-content: center;
-    grid-row: 2;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
 }
 
 #gameBoard {
-    grid-row: 1;
-    display: grid;
-    grid-template-rows: 13% 29% 29% 29%;
-    grid-template-columns: 50% 50%;
+  grid-row: 1;
+  display: grid;
+  grid-template-rows: 13% 29% 29% 29%;
+  grid-template-columns: 50% 50%;
 }
 
 #gameBoard p {
-    font-size: 20px;
-    margin-bottom: 0;
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
 #bidArea {
-    grid-row: 1;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    padding: 10px;
-    height: fit-content;
+  grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding: 10px;
+  height: fit-content;
 }
 
 #player1Card {
-    grid-row: 4;
-    grid-column-start: 1;
-    grid-column-end: 3;
+  grid-row: 4;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 #player2Card {
-    grid-row: 3;
-    grid-column: 1;
+  grid-row: 3;
+  grid-column: 1;
 }
 
 #player3Card {
-    grid-row: 2;
-    grid-column-start: 1;
-    grid-column-end: 3;
+  grid-row: 2;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 #player4Card {
-    grid-row: 3;
-    grid-column: 2;
+  grid-row: 3;
+  grid-column: 2;
 }
 
 #bidAmount {
-    width: 70px;
-    font-size: 20px;
+  width: 70px;
+  font-size: 20px;
 }
