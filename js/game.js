@@ -1,27 +1,29 @@
 import Deck from './deck.js';
 
+
+export const SUITS_TO_PICTURES = { 1: '♣', 2: '♦', 3: '♥', 4: '♠', 5: 'NT' };
+const mostFreqSuitScorer = [
+[2, 0.25],
+[3, 0.25],
+[4, 0.25],
+[5, 0.25],
+[6, 0.5],
+[7, 0.5],
+[8, 0.5],
+[9, 0.75],
+[10, 0.75],
+[11, 1],
+[12, 1],
+[13, 1],
+[14, 1],
+];
+const otherSuitScorer = [
+[12, 0.5],
+[13, 1],
+[14, 1],
+];
+
 export default class Game {
-  SUITS = { 1: '♣', 2: '♦', 3: '♥', 4: '♠', 5: 'NT' };
-  mostFreqSuitScorer = [
-    ['2', 0.25],
-    ['3', 0.25],
-    ['4', 0.25],
-    ['5', 0.25],
-    ['6', 0.5],
-    ['7', 0.5],
-    ['8', 0.5],
-    ['9', 0.75],
-    ['10', 0.75],
-    ['11', 1],
-    ['12', 1],
-    ['13', 1],
-    ['14', 1],
-  ];
-  otherSuitScorer = [
-    ['12', 0.5],
-    ['13', 1],
-    ['14', 1],
-  ];
 
   constructor(players) {
     this.players = players;
@@ -305,10 +307,10 @@ export default class Game {
   }
 
   getTrumpSuitBid(player) {
-    let clubs = player.cards.filter((card) => card.suit === '1');
-    let diamonds = player.cards.filter((card) => card.suit === '2');
-    let hearts = player.cards.filter((card) => card.suit === '3');
-    let spades = player.cards.filter((card) => card.suit === '4');
+    let clubs = player.cards.filter((card) => card.suit === 1);
+    let diamonds = player.cards.filter((card) => card.suit === 2);
+    let hearts = player.cards.filter((card) => card.suit === 3);
+    let spades = player.cards.filter((card) => card.suit === 4);
 
     // figure out which suit is the most common
     let cards = [clubs, diamonds, hearts, spades].sort((a, b) => b.length - a.length);
@@ -326,7 +328,7 @@ export default class Game {
     let bid = 0;
 
     // get the score for the most common suit
-    this.mostFreqSuitScorer.forEach((cardValue) => {
+    mostFreqSuitScorer.forEach((cardValue) => {
       if (Game.isCardInArray(mostFreqSuit, cardValue[0])) {
         bid += cardValue[1];
       }
@@ -334,7 +336,7 @@ export default class Game {
 
     // get the score for the other suits
     otherSuits.forEach((suitArray) => {
-      this.otherSuitScorer.forEach((cardValue) => {
+      otherSuitScorer.forEach((cardValue) => {
         if (Game.isCardInArray(suitArray, cardValue[0])) {
           bid += cardValue[1];
         }
@@ -349,7 +351,7 @@ export default class Game {
       this.highestBid = player.bid = Math.floor(bid);
       this.trumpSuit = mostFreqSuit[0].suit;
 
-      return Math.floor(bid) + this.SUITS[mostFreqSuit[0].suit];
+      return `${Math.floor(bid)}${SUITS_TO_PICTURES[mostFreqSuit[0].suit]}`;
     } else {
       // updating the pass count
       this.passCount++;

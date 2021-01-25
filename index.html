@@ -74,12 +74,12 @@
         <div id="bidArea" class="container">
           <div id="bid1" style="display: none">
             <input type="number" id="bidAmount" class="btn btn-secondary" min="5" max="13" value="5" />
-            <input type="button" class="btn btn-secondary bidButton hover-black" value="♣" />
-            <input type="button" class="btn btn-secondary bidButton hover-red" value="♦" />
-            <input type="button" class="btn btn-secondary bidButton hover-red" value="♥" />
-            <input type="button" class="btn btn-secondary bidButton hover-black" value="♠" />
-            <input type="button" class="btn btn-secondary bidButton hover-gold" value="NT" />
-            <input type="button" class="btn btn-secondary bidButton" value="Pass" />
+            <input type="button" class="btn btn-secondary bidButton hover-black" value="♣" onclick="player1SuitBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton hover-red" value="♦" onclick="player1SuitBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton hover-red" value="♥" onclick="player1SuitBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton hover-black" value="♠" onclick="player1SuitBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton hover-gold" value="NT" onclick="player1SuitBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton" value="Pass" onclick="player1SuitBid(this)"/>
           </div>
           <div id="bid2" style="display: none">
             <input type="button" class="btn btn-secondary bidButton" value="0" />

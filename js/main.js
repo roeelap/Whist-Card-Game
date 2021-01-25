@@ -1,4 +1,4 @@
-import Game from './game.js';
+import Game, {SUITS_TO_PICTURES} from './game.js';
 import Player from './player.js';
 
 function newGame() {
@@ -11,7 +11,7 @@ function newGame() {
 
   game.newRound(false);
 
-  return [game, player1, player2, player3, player4];
+  return game;
 }
 
 function trumpSuitBidRound(game) {
@@ -25,7 +25,7 @@ function trumpSuitBidRound(game) {
       game.newRound(true);
       game.showCards(game);
       return trumpSuitBidRound(game);
-    }, 2000);
+    }, 0);
   }
 
   if (game.turn === 1) {
@@ -36,11 +36,11 @@ function trumpSuitBidRound(game) {
       //updating the turn and letting the cpu act
       game.nextTurn();
       return trumpSuitBidRound(game);
-    }, 2000);
+    }, 0);
   }
 }
 
-function player1SuitBid(game, bidButton) {
+function player1SuitBid(bidButton) {
   let bidAmount = parseInt($('#bidAmount').val());
   let bidSuit = $(bidButton).index();
   let choice = game.isTrumpSuitBidValid(bidAmount, bidSuit);
@@ -71,7 +71,7 @@ function player1SuitBid(game, bidButton) {
     Game.toggleSuitButtons();
 
     // showing the player's bid
-    Game.showBid(1, bidAmount + game.SUITS[bidSuit]);
+    Game.showBid(1, bidAmount + SUITS_TO_PICTURES[bidSuit]);
 
     //updating the turn and letting the cpu act
     game.nextTurn();
@@ -180,20 +180,22 @@ function putCard(game, player, index, cardImg = null) {
   }
 }
 
-$(document).ready(() => {
   // creating a new game
-  let [game, player1, player2, player3, player4] = newGame();
+  let game = newGame();
 
+
+$(document).ready(() => {
   // showing player1's cards and disabling any clicks on them
   game.showCards(game);
   Game.toggleCardClicks();
 
-  // onclick events for the suit buttons
-  $.each($('#bid1 .bidButton'), (index, bidButton) => {
-    bidButton.onclick = () => {
-      player1SuitBid(game, bidButton);
-    };
-  });
+//   // onclick events for the suit buttons
+//   $.each($('#bid1 .bidButton'), (index, bidButton) => {
+//     bidButton.onclick = () => {
+//       player1SuitBid(bidButton);
+//     };
+//   });
+    window.player1SuitBid = player1SuitBid
 
   // onclick events for the bid buttons
   $.each($('#bid2 .bidButton'), (index, bidButton) => {
