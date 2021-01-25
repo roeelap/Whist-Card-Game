@@ -1,14 +1,15 @@
-import Game, { SUITS_TO_PICTURES } from './game.js';
+import Game from './game.js';
+import { SUITS_TO_PICTURES } from './consts.js';
 import Player from './player.js';
-import Ai from './ai.js'
+import Ai from './ai.js';
 
 const newGame = () => {
-  const player1 = new Player(1);
-  const player2 = new Player(2);
-  const player3 = new Player(3);
-  const player4 = new Player(4);
+  let players = [];
+  for (let i = 1; i <= 4; i++) {
+    players.push(new Player(i));
+  }
 
-  const game = new Game([player1, player2, player3, player4]);
+  const game = new Game(players);
 
   game.newRound(false);
 
@@ -25,30 +26,35 @@ const validateBidInput = (bidInput) => {
 };
 window.validateBidInput = validateBidInput;
 
+const newRound = () => {
+  game.newRound(true);
+  game.showCards();
+  trumpSuitBidRound();
+};
+
 const trumpSuitBidRound = () => {
-  // checking if 3 player passed and 1 bid || OR || the 4 players have passed
+  // checking if trump suit bid round has ended
   if (game.passCount === 3 && game.bidCount >= 1) {
     console.log('phase complete');
     return tricksBidRound();
   } else if (game.passCount === 4) {
-    setTimeout(() => {
-      // a new round
-      game.newRound(true);
-      game.showCards();
-      return trumpSuitBidRound();
+    return setTimeout(() => {
+      return newRound();
     }, 0);
   }
 
+  // player turn
   if (game.turn === 1) {
     return Game.toggleSuitButtons();
   }
 
+  // AI turn
   setTimeout(() => {
     Game.showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
-    //updating the turn and letting the cpu act
+    // updating the turn and letting the cpu act
     game.nextTurn();
     return trumpSuitBidRound();
-  }, 0);
+  }, 1000);
 };
 
 const player1SuitBid = (bidButton) => {
