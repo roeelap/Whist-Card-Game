@@ -73,29 +73,37 @@
       <div id="gameBoard" class="container text-center">
         <div id="bidArea" class="container">
           <div id="bid1" style="display: none">
-            <input type="number" id="bidAmount" class="btn btn-secondary" min="5" max="13" value="5" />
-            <input type="button" class="btn btn-secondary bidButton hover-black" value="♣" onclick="player1SuitBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton hover-red" value="♦" onclick="player1SuitBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton hover-red" value="♥" onclick="player1SuitBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton hover-black" value="♠" onclick="player1SuitBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton hover-gold" value="NT" onclick="player1SuitBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="Pass" onclick="player1SuitBid(this)"/>
+            <input
+              type="number"
+              id="bidAmount"
+              class="btn btn-secondary"
+              min="5"
+              max="13"
+              value="5"
+              onchange="validateBidInput(this)"
+            />
+            <input type="button" class="btn btn-secondary bidButton hover-black" value="♣" onclick="player1SuitBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton hover-red" value="♦" onclick="player1SuitBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton hover-red" value="♥" onclick="player1SuitBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton hover-black" value="♠" onclick="player1SuitBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton hover-gold" value="NT" onclick="player1SuitBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="Pass" onclick="player1SuitBid(this)" />
           </div>
           <div id="bid2" style="display: none">
-            <input type="button" class="btn btn-secondary bidButton" value="0" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="1" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="2" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="3" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="4" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="5" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="6" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="7" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="8" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="9" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="10" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="11" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="12" onclick="player1TricksBid(this)"/>
-            <input type="button" class="btn btn-secondary bidButton" value="13" onclick="player1TricksBid(this)"/>
+            <input type="button" class="btn btn-secondary bidButton" value="0" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="1" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="2" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="3" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="4" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="5" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="6" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="7" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="8" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="9" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="10" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="11" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="12" onclick="player1TricksBid(this)" />
+            <input type="button" class="btn btn-secondary bidButton" value="13" onclick="player1TricksBid(this)" />
           </div>
         </div>
         <div id="player1Card">
