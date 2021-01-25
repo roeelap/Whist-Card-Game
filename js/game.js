@@ -260,11 +260,11 @@ export default class Game {
   static changeCardClickable(isClickable) {
     if (isClickable) {
       return document.querySelectorAll('.cardImage').forEach((cardImg) => {
-        $(cardImg).addClass('nonClickable');
+        $(cardImg).removeClass('nonClickable');
       });
     }
     document.querySelectorAll('.cardImage').forEach((cardImg) => {
-      $(cardImg).removeClass('nonClickable');
+      $(cardImg).addClass('nonClickable');
     });
   }
 

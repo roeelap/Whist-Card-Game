@@ -166,6 +166,13 @@ export const throwCard = (player, index, cardImg = null) => {
   }
 };
 
+const bindConstsToWindow = () => {
+  window.game = game;
+  window.onSuitBidButtonClicked = onSuitBidButtonClicked;
+  window.onTricksBidButtonClicked = onTricksBidButtonClicked;
+  window.onBidInputChange = onBidInputChange;
+};
+
 // creating a new game
 const game = newGame();
 
@@ -186,10 +193,3 @@ $(document).ready(() => {
   // starting the trump suit bid round
   trumpSuitBidRound();
 });
-
-const bindConstsToWindow = () => {
-  window.game = game;
-  window.onSuitBidButtonClicked = onSuitBidButtonClicked;
-  window.onTricksBidButtonClicked = onTricksBidButtonClicked;
-  window.onBidInputChange = onBidInputChange;
-};

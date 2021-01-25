@@ -1,41 +1,38 @@
-import { SUITS_TO_PICTURES } from "./consts.js";
+import { SUITS_TO_PICTURES } from './consts.js';
 
-
-const mostFreqSuitScorer = {
-2: 0.25,
-3: 0.25,
-4: 0.25,
-5: 0.25,
-6: 0.5,
-7: 0.5,
-8: 0.5,
-9: 0.75,
-10: 0.75,
-11: 1,
-12: 1,
-13: 1,
-14: 1,
+const mostFreqSuitScores = {
+  2: 0.25,
+  3: 0.25,
+  4: 0.25,
+  5: 0.25,
+  6: 0.5,
+  7: 0.5,
+  8: 0.5,
+  9: 0.75,
+  10: 0.75,
+  11: 1,
+  12: 1,
+  13: 1,
+  14: 1,
 };
 
-const otherSuitScorer = {
-2: 0,
-3: 0,
-4: 0,
-5: 0,
-6: 0,
-7: 0,
-8: 0,
-9: 0,
-10: 0,
-11: 0,
-12: 0.5,
-13: 1,
-14: 1,
+const otherSuitScores = {
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0.5,
+  13: 1,
+  14: 1,
 };
-
 
 export default class Ai {
-
   static isCardInArray(array, value) {
     for (let i = 0; i < array.length; i++) {
       if (array[i].value === value) {
@@ -44,7 +41,6 @@ export default class Ai {
     }
     return false;
   }
-
 
   static divideCardsBySuits(cards) {
     let clubs = cards.filter((card) => card.suit === 1);
@@ -55,25 +51,23 @@ export default class Ai {
     return [clubs, diamonds, hearts, spades];
   }
 
-
   static calculateBidForTrumpSuitRound(cards) {
     let mostFreqSuit = cards[0][0].suit;
     let bid = 0;
 
     // for each card, add it's score to the bid variable
-    cards.forEach(suitArray => {
-      suitArray.forEach(card => {
+    cards.forEach((suitArray) => {
+      suitArray.forEach((card) => {
         if (card.suit === mostFreqSuit) {
-          bid += mostFreqSuitScorer[card.value];
+          bid += mostFreqSuitScores[card.value];
         } else {
-          bid += otherSuitScorer[card.value];
+          bid += otherSuitScores[card.value];
         }
       });
     });
 
     return [Math.floor(bid), mostFreqSuit];
   }
-
 
   static getTrumpSuitBid(game, player) {
     // figure out which suit is the most common
@@ -99,10 +93,10 @@ export default class Ai {
 
         return `${i}${SUITS_TO_PICTURES[suit]}`;
       }
-    };
-    
+    }
+
     // updating the pass count
     game.passCount++;
     return 'pass';
-    }
+  }
 }
