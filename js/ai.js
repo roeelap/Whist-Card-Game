@@ -1,26 +1,37 @@
 import { SUITS_TO_PICTURES } from "./consts.js";
 
 
-const mostFreqSuitScorer = [
-[2, 0.25],
-[3, 0.25],
-[4, 0.25],
-[5, 0.25],
-[6, 0.5],
-[7, 0.5],
-[8, 0.5],
-[9, 0.75],
-[10, 0.75],
-[11, 1],
-[12, 1],
-[13, 1],
-[14, 1],
-];
-const otherSuitScorer = [
-[12, 0.5],
-[13, 1],
-[14, 1],
-];
+const mostFreqSuitScorer = {
+2: 0.25,
+3: 0.25,
+4: 0.25,
+5: 0.25,
+6: 0.5,
+7: 0.5,
+8: 0.5,
+9: 0.75,
+10: 0.75,
+11: 1,
+12: 1,
+13: 1,
+14: 1,
+};
+
+const otherSuitScorer = {
+2: 0,
+3: 0,
+4: 0,
+5: 0,
+6: 0,
+7: 0,
+8: 0,
+9: 0,
+10: 0,
+11: 0,
+12: 0.5,
+13: 1,
+14: 1,
+};
 
 
 export default class Ai {
@@ -46,25 +57,21 @@ export default class Ai {
 
 
   static calculateBidForTrumpSuitRound(cards) {
-    let mostFreqSuit = cards[0];
-    let otherSuits = cards.slice(1, 4);
+    let mostFreqSuit = cards[0][0].suit;
     let bid = 0;
 
-    // get the score for the most common suit
-    mostFreqSuitScorer.forEach((cardValue) => {
-      if (Ai.isCardInArray(mostFreqSuit, cardValue[0])) {
-        bid += cardValue[1];
-      }
-    });
-
-    // get the score for the other suits
-    otherSuits.forEach((suitArray) => {
-      otherSuitScorer.forEach((cardValue) => {
-        if (Ai.isCardInArray(suitArray, cardValue[0])) {
-          bid += cardValue[1];
+    // for each card, add it's score to the bid variable
+    cards.forEach(suitArray => {
+      suitArray.forEach(card => {
+        if (card.suit === mostFreqSuit) {
+          bid += mostFreqSuitScorer[card.value];
+        } else {
+          bid += otherSuitScorer[card.value];
         }
       });
     });
+
+    return [Math.floor(bid), mostFreqSuit];
   }
 
 
@@ -72,26 +79,30 @@ export default class Ai {
     // figure out which suit is the most common
     let cards = Ai.divideCardsBySuits(player.cards).sort((a, b) => b.length - a.length);
 
-    // if the most common suit is less than 4 cards, just pass
+    // if the most common suit is less than 5 cards, just pass
     if (cards[0].length < 5) {
-      // updating the pass count
       game.passCount++;
       return 'pass';
     }
 
-    if (game.isTrumpSuitBidValid(Math.floor(bid), cards[0][0].suit)) {
-      game.bidCount++;
-      game.passCount = 0;
+    // calculate the wanted suit and bid
+    let [bid, suit] = Ai.calculateBidForTrumpSuitRound(cards);
 
-      // updating the highest bid and the trump suit
-      game.highestBid = player.bid = Math.floor(bid);
-      game.trumpSuit = cards[0][0].suit;
+    // figure out the minimum bid which will be higher than the highest bid,
+    // and lower/equal to the wanted bid.
+    for (let i = 0; i <= bid; i++) {
+      if (game.isTrumpSuitBidValid(i, suit)) {
+        game.bidCount++;
+        game.passCount = 0;
+        game.highestBid = player.bid = i;
+        game.trumpSuit = suit;
 
-      return `${Math.floor(bid)}${SUITS_TO_PICTURES[cards[0][0].suit]}`;
-    } else {
-      // updating the pass count
-      game.passCount++;
-      return 'pass';
+        return `${i}${SUITS_TO_PICTURES[suit]}`;
+      }
+    };
+    
+    // updating the pass count
+    game.passCount++;
+    return 'pass';
     }
-  }
 }
