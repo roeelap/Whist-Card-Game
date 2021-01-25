@@ -52,8 +52,6 @@ export default class Game {
             player.cards = [];
         });
 
-        $("#player").empty();
-
         //creating a new deck
         this.deck = new Deck();
         this.deck.shuffle();
@@ -117,7 +115,7 @@ export default class Game {
 
 
     isTrickBidValid(bid) {
-        if (this.trickBidsMade !== 3 || 0) {
+        if (this.trickBidsMade !== 3 || this.trickBidsMade !== 0) {
             return true;
         } else if (this.trickBidsMade === 3) {
             if (this.totalBids + bid === 13) {
@@ -194,7 +192,7 @@ export default class Game {
         };
 
         // removing all the card that don't match the trump suit
-        if (trump_count > 0) {
+        if (trumpCount > 0) {
             this.thrownCards.filter(PlayerCardPair => PlayerCardPair[1].suit === this.trumpSuit);
         }
 
@@ -206,16 +204,13 @@ export default class Game {
         winningPlayer.tricks++;
         
         // resetting the thrown cards list
-        game.thrownCards = [];
+        this.thrownCards = [];
 
         // updating the turn according to the winning player
         this.turn = winningPlayer.index;
 
-        // updating the bold label
-        let playerDiv = `#player${winningPlayer.index}Card p`;
-        if (!$(playerDiv).hasClass("bold")) {
-            Game.updateBoldLabel(winningPlayer.index);
-        }
+        
+        Game.updateBoldLabel(winningPlayer.index);
     }
 
 
@@ -349,7 +344,7 @@ export default class Game {
                     bid += cardValue[1];
                 }
             });
-        })
+        });
         
         if (this.isTrumpSuitBidValid(Math.floor(bid), mostFreqSuit[0].suit)) {
             this.bidCount++;
