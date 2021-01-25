@@ -16,7 +16,8 @@ const newGame = () => {
   return game;
 };
 
-const validateBidInput = (bidInput) => {
+// Correct bid
+const onBidInputChange = (bidInput) => {
   if (bidInput.value < 5) {
     return (bidInput.value = 5);
   }
@@ -24,7 +25,7 @@ const validateBidInput = (bidInput) => {
     return (bidInput.value = 13);
   }
 };
-window.validateBidInput = validateBidInput;
+window.onBidInputChange = onBidInputChange;
 
 const newRound = () => {
   game.newRound(true);
@@ -45,96 +46,77 @@ const trumpSuitBidRound = () => {
 
   // player turn
   if (game.turn === 1) {
-    return Game.toggleSuitButtons();
+    return Game.showSuitButtons(true);
   }
 
   // AI turn
   setTimeout(() => {
     Game.showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
-    // updating the turn and letting the cpu act
     game.nextTurn();
     return trumpSuitBidRound();
   }, 1000);
 };
 
-const player1SuitBid = (bidButton) => {
-  let bidAmount = parseInt($('#bidAmount').val());
-  let bidSuit = $(bidButton).index();
-  let choice = game.isTrumpSuitBidValid(bidAmount, bidSuit);
+// on suit bid click
+const onSuitBidButtonClicked = (bidButton) => {
+  const bidAmount = parseInt($('#bidAmount').val());
+  const bidSuit = $(bidButton).index();
+  const choice = game.isTrumpSuitBidValid(bidAmount, bidSuit);
+
+  // invalid choice
+  if (!choice) {
+    return alert('Not a valid bid, please try again.');
+  }
 
   if (choice === 'pass') {
-    // updating the pass count
     game.passCount++;
-
-    // removing the suit buttons
-    Game.toggleSuitButtons();
-
-    // showing the player's bid
     Game.showBid(1, choice);
-
-    //updating the turn and letting the cpu act
-    game.nextTurn();
-    return trumpSuitBidRound();
-  } else if (choice) {
-    // updating the bid and pass counts
+  } else {
     game.bidCount++;
     game.passCount = 0;
 
-    // updating the highest bid and the trump suit
     game.highestBid = game.players[0].bid = bidAmount;
     game.trumpSuit = bidSuit;
 
-    // removing the suit buttons
-    Game.toggleSuitButtons();
-
-    // showing the player's bid
     Game.showBid(1, bidAmount + SUITS_TO_PICTURES[bidSuit]);
-
-    //updating the turn and letting the cpu act
-    game.nextTurn();
-    return trumpSuitBidRound();
-  } else {
-    // if the bid is not valid
-    alert('Not a valid bid, please try again.');
   }
+
+  // updating the turn and letting the cpu act
+  Game.showSuitButtons(false);
+  game.nextTurn();
+  return trumpSuitBidRound();
 };
 
 const tricksBidRound = () => {
+  // Tricks round ended
   if (game.trickBidsMade === 4) {
     $('#roundMode').html(`<td><strong>${game.getRoundMode()}</strong></td>`);
     return gameRound();
   }
 
+  // waiting for player to bid
   if (game.turn === 1) {
-    return Game.toggleBidButtons();
+    return Game.showBidButtons(true);
   }
 
+  // TODO AI bid
   console.log("ai's turn");
   game.trickBidsMade++;
 };
 
-const player1TricksBid = (bidButton) => {
-  let bid = parseInt(bidButton.value);
+const onTricksBidButtonClicked = (bidButton) => {
+  const bid = parseInt(bidButton.value);
 
   if (!game.isTrickBidValid(bid)) {
-    // if the bid is not valid
     return alert('Not a valid bid, please try again.');
   }
 
-  // updating the player's bid
   game.players[0].bid = bid;
-
-  // updating the total bids of the round
   game.totalBids += bid;
   $('#totalBids').html(`<td><strong>Total Bids: </strong>${game.totalBids}</td>`);
 
-  // removing the bid buttons
-  Game.toggleBidButtons();
-
-  // showing the player's bid on the game board
+  Game.showBidButtons(false);
   Game.showBid(1, bid);
-
-  // updating the number of tricks that has been made
   game.trickBidsMade++;
 
   // updating the turn and letting the cpu act
@@ -142,20 +124,14 @@ const player1TricksBid = (bidButton) => {
   return tricksBidRound();
 };
 
-const gameRound = (game) => {
-  // if the players have run out of cards
+const gameRound = () => {
+  // check if round has ended and calculate scores
   if (game.players.every((player) => player.cards.length === 0)) {
-    // calculate score for each player
-    if (player.bid === 0) {
-      game.calculateScoreForBid0(player);
-    } else {
-      Game.calculateScore(player);
-    }
-
+    Game.calculateScore(player);
     return game.newRound(false);
   }
 
-  // if 4 players put a card down
+  // if sub-round ended
   if (game.thrownCards.length === 4) {
     // figure out the winning card and the starting player of the next putdown
     game.determineTrickWinner();
@@ -206,8 +182,8 @@ $(document).ready(() => {
   game.showCards();
   Game.toggleCardClicks();
 
-  window.player1SuitBid = player1SuitBid;
-  window.player1TricksBid = player1TricksBid;
+  window.onSuitBidButtonClicked = onSuitBidButtonClicked;
+  window.onTricksBidButtonClicked = onTricksBidButtonClicked;
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {

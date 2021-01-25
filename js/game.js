@@ -1,7 +1,6 @@
 import Deck from './deck.js';
 
 export default class Game {
-
   constructor(players) {
     this.players = players;
     this.deck;
@@ -227,6 +226,10 @@ export default class Game {
   }
 
   static calculateScore(player) {
+    if (player.bid === 0) {
+      return this.calculateScoreForBid0(player);
+    }
+
     if (player.bid === player.tricks && player.bid > 0) {
       player.score += 10 + player.bid ** 2;
     } else if (player.bid != player.tricks && 0 < player.bid < 5) {
@@ -240,12 +243,18 @@ export default class Game {
     }
   }
 
-  static toggleSuitButtons() {
-    $('#bid1').toggle();
+  static showSuitButtons(isShow) {
+    if (isShow) {
+      return $('#bid1').show();
+    }
+    $('#bid1').hide();
   }
 
-  static toggleBidButtons() {
-    $('#bid2').toggle();
+  static showBidButtons(isShow) {
+    if (isShow) {
+      return $('#bid2').show();
+    }
+    $('#bid2').hide();
   }
 
   // disables all card clicks
