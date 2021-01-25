@@ -1,8 +1,8 @@
-import Game, {SUITS_TO_PICTURES} from './game.js';
+import Game, { SUITS_TO_PICTURES } from './game.js';
 import Player from './player.js';
 import Ai from './ai.js'
 
-function newGame() {
+const newGame = () => {
   const player1 = new Player(1);
   const player2 = new Player(2);
   const player3 = new Player(3);
@@ -13,9 +13,19 @@ function newGame() {
   game.newRound(false);
 
   return game;
-}
+};
 
-function trumpSuitBidRound() {
+const validateBidInput = (bidInput) => {
+  if (bidInput.value < 5) {
+    return (bidInput.value = 5);
+  }
+  if (bidInput.value > 13) {
+    return (bidInput.value = 13);
+  }
+};
+window.validateBidInput = validateBidInput;
+
+const trumpSuitBidRound = () => {
   // checking if 3 player passed and 1 bid || OR || the 4 players have passed
   if (game.passCount === 3 && game.bidCount >= 1) {
     console.log('phase complete');
@@ -39,9 +49,9 @@ function trumpSuitBidRound() {
     game.nextTurn();
     return trumpSuitBidRound();
   }, 0);
-}
+};
 
-function player1SuitBid(bidButton) {
+const player1SuitBid = (bidButton) => {
   let bidAmount = parseInt($('#bidAmount').val());
   let bidSuit = $(bidButton).index();
   let choice = game.isTrumpSuitBidValid(bidAmount, bidSuit);
@@ -81,9 +91,9 @@ function player1SuitBid(bidButton) {
     // if the bid is not valid
     alert('Not a valid bid, please try again.');
   }
-}
+};
 
-function tricksBidRound() {
+const tricksBidRound = () => {
   if (game.trickBidsMade === 4) {
     $('#roundMode').html(`<td><strong>${game.getRoundMode()}</strong></td>`);
     return gameRound();
@@ -95,9 +105,9 @@ function tricksBidRound() {
 
   console.log("ai's turn");
   game.trickBidsMade++;
-}
+};
 
-function player1TricksBid(bidButton) {
+const player1TricksBid = (bidButton) => {
   let bid = parseInt(bidButton.value);
 
   if (!game.isTrickBidValid(bid)) {
@@ -124,9 +134,9 @@ function player1TricksBid(bidButton) {
   // updating the turn and letting the cpu act
   game.nextTurn();
   return tricksBidRound();
-}
+};
 
-function gameRound() {
+const gameRound = (game) => {
   // if the players have run out of cards
   if (game.players.every((player) => player.cards.length === 0)) {
     // calculate score for each player
@@ -155,10 +165,10 @@ function gameRound() {
   else if (game.turn === 2 || 3 || 4) {
     console.log("cpu's turn");
   }
-}
+};
 
 // function for when the player wants to throw a card
-function putCard(player, index, cardImg = null) {
+const putCard = (player, index, cardImg = null) => {
   // check if the player can put the card down
   if (game.isCardValid(player, player.cards[index])) {
     // putting the clicked card on the game board
@@ -179,22 +189,20 @@ function putCard(player, index, cardImg = null) {
     game.nextTurn();
     return gameRound();
   }
-}
-
+};
 
 // creating a new game
-let game = newGame();
+const game = newGame();
 window.game = game;
-
 
 $(document).ready(() => {
   // showing player1's cards and disabling any clicks on them
   game.showCards();
   Game.toggleCardClicks();
 
-  window.player1SuitBid = player1SuitBid
-  window.player1TricksBid = player1TricksBid
-  
+  window.player1SuitBid = player1SuitBid;
+  window.player1TricksBid = player1TricksBid;
+
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
     cardImg.onclick = function () {
