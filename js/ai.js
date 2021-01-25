@@ -1,3 +1,6 @@
+import { SUITS_TO_PICTURES } from "./consts.js";
+
+
 const mostFreqSuitScorer = [
 [2, 0.25],
 [3, 0.25],
@@ -31,29 +34,20 @@ export default class Ai {
     return false;
   }
 
+
   static divideCardsBySuits(cards) {
-    
+    let clubs = cards.filter((card) => card.suit === 1);
+    let diamonds = cards.filter((card) => card.suit === 2);
+    let hearts = cards.filter((card) => card.suit === 3);
+    let spades = cards.filter((card) => card.suit === 4);
+
+    return [clubs, diamonds, hearts, spades];
   }
 
-  static getTrumpSuitBid(game, player) {
-    let clubs = player.cards.filter((card) => card.suit === 1);
-    let diamonds = player.cards.filter((card) => card.suit === 2);
-    let hearts = player.cards.filter((card) => card.suit === 3);
-    let spades = player.cards.filter((card) => card.suit === 4);
 
-    // figure out which suit is the most common
-    let cards = [clubs, diamonds, hearts, spades].sort((a, b) => b.length - a.length);
-
+  static calculateBidForTrumpSuitRound(cards) {
     let mostFreqSuit = cards[0];
     let otherSuits = cards.slice(1, 4);
-
-    // if the most common suit is less than 4 cards, just pass
-    if (mostFreqSuit.length < 5) {
-      // updating the pass count
-      game.passCount++;
-      return 'pass';
-    }
-
     let bid = 0;
 
     // get the score for the most common suit
@@ -71,16 +65,29 @@ export default class Ai {
         }
       });
     });
+  }
 
-    if (game.isTrumpSuitBidValid(Math.floor(bid), mostFreqSuit[0].suit)) {
+
+  static getTrumpSuitBid(game, player) {
+    // figure out which suit is the most common
+    let cards = Ai.divideCardsBySuits(player.cards).sort((a, b) => b.length - a.length);
+
+    // if the most common suit is less than 4 cards, just pass
+    if (cards[0].length < 5) {
+      // updating the pass count
+      game.passCount++;
+      return 'pass';
+    }
+
+    if (game.isTrumpSuitBidValid(Math.floor(bid), cards[0][0].suit)) {
       game.bidCount++;
       game.passCount = 0;
 
       // updating the highest bid and the trump suit
       game.highestBid = player.bid = Math.floor(bid);
-      game.trumpSuit = mostFreqSuit[0].suit;
+      game.trumpSuit = cards[0][0].suit;
 
-      return `${Math.floor(bid)}${SUITS_TO_PICTURES[mostFreqSuit[0].suit]}`;
+      return `${Math.floor(bid)}${SUITS_TO_PICTURES[cards[0][0].suit]}`;
     } else {
       // updating the pass count
       game.passCount++;
