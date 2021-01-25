@@ -25,7 +25,6 @@ const onBidInputChange = (bidInput) => {
     return (bidInput.value = 13);
   }
 };
-window.onBidInputChange = onBidInputChange;
 
 const newRound = () => {
   game.newRound(true);
@@ -131,40 +130,34 @@ const gameRound = () => {
     return game.newRound(false);
   }
 
-  // if sub-round ended
+  // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
-    // figure out the winning card and the starting player of the next putdown
     game.determineTrickWinner();
     return gameRound();
   }
 
-  // if it's player1's turn
+  // player turn
   if (game.turn === 1) {
-    Game.toggleCardClicks();
+    return Game.changeCardClickable(true);
   }
 
-  // if it's the cpu's turn
-  else if (game.turn === 2 || 3 || 4) {
-    console.log("cpu's turn");
-  }
+  // ai turn
+  console.log('ai turn');
 };
 
-// function for when the player wants to throw a card
-const putCard = (player, index, cardImg = null) => {
-  // check if the player can put the card down
+export const throwCard = (player, index, cardImg = null) => {
   if (game.isCardValid(player, player.cards[index])) {
     // putting the clicked card on the game board
-    let img = player.cards[index].getImage();
-    let playerCardId = `#player${player.index}Card .usedCardImage`;
+    const img = player.cards[index].getImage();
+    const playerCardId = `#player${player.index}Card .usedCardImage`;
     $(playerCardId).attr('src', img);
 
     // removing the card from the player's hand
     game.thrownCards.push([player, player.cards.splice(index, 1)]);
     $(cardImg.parentElement).remove();
 
-    // toggling the card clicks if the player is player1
     if (player.index === 1) {
-      Game.toggleCardClicks();
+      Game.changeCardClickable(true);
     }
 
     // next turn
@@ -175,23 +168,28 @@ const putCard = (player, index, cardImg = null) => {
 
 // creating a new game
 const game = newGame();
-window.game = game;
 
 $(document).ready(() => {
-  // showing player1's cards and disabling any clicks on them
-  game.showCards();
-  Game.toggleCardClicks();
+  bindConstsToWindow();
 
-  window.onSuitBidButtonClicked = onSuitBidButtonClicked;
-  window.onTricksBidButtonClicked = onTricksBidButtonClicked;
+  // showing player cards and disable clicking
+  game.showCards();
+  Game.changeCardClickable(false);
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
     cardImg.onclick = function () {
-      putCard(game.players[0], $(cardImg.parentElement).index(), cardImg);
+      throwCard(game.players[0], $(cardImg.parentElement).index(), cardImg);
     };
   });
 
-  //starting the trump suit bid round
+  // starting the trump suit bid round
   trumpSuitBidRound();
 });
+
+const bindConstsToWindow = () => {
+  window.game = game;
+  window.onSuitBidButtonClicked = onSuitBidButtonClicked;
+  window.onTricksBidButtonClicked = onTricksBidButtonClicked;
+  window.onBidInputChange = onBidInputChange;
+};

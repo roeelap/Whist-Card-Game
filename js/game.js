@@ -257,10 +257,14 @@ export default class Game {
     $('#bid2').hide();
   }
 
-  // disables all card clicks
-  static toggleCardClicks() {
+  static changeCardClickable(isClickable) {
+    if (isClickable) {
+      return document.querySelectorAll('.cardImage').forEach((cardImg) => {
+        $(cardImg).addClass('nonClickable');
+      });
+    }
     document.querySelectorAll('.cardImage').forEach((cardImg) => {
-      $(cardImg).toggleClass('nonClickable');
+      $(cardImg).removeClass('nonClickable');
     });
   }
 
