@@ -29,15 +29,15 @@ function trumpSuitBidRound(game) {
   }
 
   if (game.turn === 1) {
-    Game.toggleSuitButtons();
-  } else if (game.turn === 2 || game.turn === 3 || game.turn === 4) {
-    setTimeout(() => {
-      Game.showBid(game.turn, game.getTrumpSuitBid(game.players[game.turn - 1]));
-      //updating the turn and letting the cpu act
-      game.nextTurn();
-      return trumpSuitBidRound(game);
-    }, 0);
+    return Game.toggleSuitButtons();
   }
+
+  setTimeout(() => {
+    Game.showBid(game.turn, game.getTrumpSuitBid(game.players[game.turn - 1]));
+    //updating the turn and letting the cpu act
+    game.nextTurn();
+    return trumpSuitBidRound(game);
+  }, 0);
 }
 
 function player1SuitBid(bidButton) {
@@ -89,40 +89,40 @@ function tricksBidRound(game) {
   }
 
   if (game.turn === 1) {
-    Game.toggleBidButtons();
-  } else if (game.turn === 2 || 3 || 4) {
-    console.log("cpu's turn");
-    game.trickBidsMade++;
+    return Game.toggleBidButtons();
   }
+
+  console.log("ai's turn");
+  game.trickBidsMade++;
 }
 
-function player1TricksBid(game, bidButton) {
+function player1TricksBid(bidButton) {
   let bid = parseInt(bidButton.value);
 
-  if (game.isTrickBidValid(bid)) {
-    // updating the player's bid
-    game.players[0].bid = bid;
-
-    // updating the total bids of the round
-    game.totalBids += bid;
-    $('#totalBids').html(`<td><strong>Total Bids: </strong>${game.totalBids}</td>`);
-
-    // removing the bid buttons
-    Game.toggleBidButtons();
-
-    // showing the player's bid on the game board
-    Game.showBid(1, bid);
-
-    // updating the number of tricks that has been made
-    game.trickBidsMade++;
-
-    // updating the turn and letting the cpu act
-    game.nextTurn();
-    return tricksBidRound(game);
-  } else {
+  if (!game.isTrickBidValid(bid)) {
     // if the bid is not valid
-    alert('Not a valid bid, please try again.');
+    return alert('Not a valid bid, please try again.');
   }
+
+  // updating the player's bid
+  game.players[0].bid = bid;
+
+  // updating the total bids of the round
+  game.totalBids += bid;
+  $('#totalBids').html(`<td><strong>Total Bids: </strong>${game.totalBids}</td>`);
+
+  // removing the bid buttons
+  Game.toggleBidButtons();
+
+  // showing the player's bid on the game board
+  Game.showBid(1, bid);
+
+  // updating the number of tricks that has been made
+  game.trickBidsMade++;
+
+  // updating the turn and letting the cpu act
+  game.nextTurn();
+  return tricksBidRound(game);
 }
 
 function gameRound(game) {
@@ -135,7 +135,14 @@ function gameRound(game) {
       Game.calculateScore(player);
     }
 
-    game.newRound(false);
+    return game.newRound(false);
+  }
+
+  // if 4 players put a card down
+  if (game.thrownCards.length === 4) {
+    // figure out the winning card and the starting player of the next putdown
+    game.determineTrickWinner();
+    return gameRound(game);
   }
 
   // if it's player1's turn
@@ -146,13 +153,6 @@ function gameRound(game) {
   // if it's the cpu's turn
   else if (game.turn === 2 || 3 || 4) {
     console.log("cpu's turn");
-  }
-
-  // if 4 players put a card down
-  if (game.thrownCards.length === 4) {
-    // figure out the winning card and the starting player of the next putdown
-    game.determineTrickWinner();
-    return gameRound(game);
   }
 }
 
@@ -180,8 +180,9 @@ function putCard(game, player, index, cardImg = null) {
   }
 }
 
-  // creating a new game
-  let game = newGame();
+
+// creating a new game
+let game = newGame();
 
 
 $(document).ready(() => {
@@ -189,21 +190,9 @@ $(document).ready(() => {
   game.showCards(game);
   Game.toggleCardClicks();
 
-//   // onclick events for the suit buttons
-//   $.each($('#bid1 .bidButton'), (index, bidButton) => {
-//     bidButton.onclick = () => {
-//       player1SuitBid(bidButton);
-//     };
-//   });
-    window.player1SuitBid = player1SuitBid
-
-  // onclick events for the bid buttons
-  $.each($('#bid2 .bidButton'), (index, bidButton) => {
-    bidButton.onclick = () => {
-      player1TricksBid(game, bidButton);
-    };
-  });
-
+  window.player1SuitBid = player1SuitBid
+  window.player1TricksBid = player1TricksBid
+  
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
     cardImg.onclick = function () {
