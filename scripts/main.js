@@ -63,7 +63,7 @@ const trumpSuitBidRound = () => {
     showBid(game.turn, AI.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     trumpSuitBidRound();
-  }, 1000);
+  }, 0);
 };
 
 // on suit bid click
@@ -113,13 +113,13 @@ const tricksBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    let bid = AI.getTrickBid(game, game.players[game.turn - 1])
+    let bid = AI.getTrickBid(game, game.players[game.turn - 1]);
     showBid(game.turn, bid);
     game.totalBids += bid;
     game.trickBidsMade++;
     game.nextTurn();
     trumpSuitBidRound();
-  }, 1000);
+  }, 0);
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -152,6 +152,7 @@ const gameRound = () => {
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
     game.determineTrickWinner();
+    createTables(game);
     return gameRound();
   }
 
@@ -163,10 +164,10 @@ const gameRound = () => {
   // AI turn
   let player = game.players[game.turn - 1];
   if (game.roundMode > 0) {
-    throwCard(player, AI.getCardToThrowOver(game, player))
+    throwCard(player, AI.getCardToThrowOver(game, player));
     return gameRound();
   }
-  throwCard(player, AI.getCardToThrowUnder(game, player))
+  throwCard(player, AI.getCardToThrowUnder(game, player));
   return gameRound();
 };
 
@@ -175,7 +176,6 @@ export const throwCard = (player, index, cardImg = null) => {
     // putting the clicked card on the game board
     const img = player.cards[index].getImage();
     const playerCardId = `#player${player.index}Card`;
-    console.log($(playerCardId));
     $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
@@ -184,7 +184,7 @@ export const throwCard = (player, index, cardImg = null) => {
     if (cardImg !== null) {
       $(cardImg.parentElement).remove();
     }
-    
+
     if (player.index === 1) {
       changeCardClickable(true);
     }
