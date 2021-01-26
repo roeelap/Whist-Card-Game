@@ -133,3 +133,10 @@ export const createTables = (game) => {
   createRoundInfoTable(game);
   createScoreTable(game);
 };
+
+export const clearCardImages = () => {
+  for (let i = 1; i <= 4; i++) {
+    const playerCardId = `#player${i}Card`;
+    $(playerCardId).css('background', `url('../../images/cards/grey-back.png') no-repeat center center/contain`);
+  }
+};

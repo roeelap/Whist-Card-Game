@@ -10,6 +10,7 @@ import {
   showCards,
   createTables,
   createTrickBidButtons,
+  clearCardImages,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -151,9 +152,12 @@ const gameRound = () => {
 
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
-    game.determineTrickWinner();
-    createTables(game);
-    return gameRound();
+    return setTimeout(() => {
+      game.determineTrickWinner();
+      createTables(game);
+      clearCardImages();
+      gameRound();
+    }, 1000);
   }
 
   // player turn
