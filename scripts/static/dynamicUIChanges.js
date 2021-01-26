@@ -1,3 +1,5 @@
+import { SUITS_TO_PICTURES } from './consts.js';
+
 export const showSuitButtons = (isShow) => {
   if (isShow) {
     return $('#bid1').show();
@@ -53,3 +55,60 @@ export const updateBoldLabel = (playerIndex) => {
 
   $(playerLabels[playerIndex - 1]).addClass('bold');
 };
+
+export const createRoundInfoTable = (game) => {
+  const data = [
+    { id: 'roundNumber', text: `Round ${game.round} of 14` },
+    { id: 'trumpSuit', text: `Trump Suit: ${SUITS_TO_PICTURES[game.trumpSuit]}` },
+    { id: 'totalBids', text: `Total Bids: ${game.totalBids}` },
+    { id: 'roundMode', text: game.getRoundMode() },
+  ];
+
+  let table = $('<table></table>').addClass('table table-sm table-hover').html(` 
+  <thead>
+    <tr class="text-center">
+      <th>
+        <strong>Round Information</strong>
+      </th>
+    </tr>
+  </thead>`);
+
+  let tableBody = $('<tbody></tbody>');
+
+  for (let header of data) {
+    tableBody.append(`
+    <tr id="${header.id}">
+      <th>${header.text}</th>
+    </tr>`);
+  }
+  table.append(tableBody);
+  $('#roundInfo').html(table);
+};
+
+// <table class="table table-sm table-hover">
+//   <tr class="text-center">
+//     <th>
+//       <strong>Round Information</strong>
+//     </th>
+//   </tr>
+//   <tr id="roundNumber">
+//     <td>
+//       <strong>Round 1 of 14</strong>
+//     </td>
+//   </tr>
+//   <tr id="trumpSuit">
+//     <td>
+//       <strong>Trump Suit: </strong>Spades
+//     </td>
+//   </tr>
+//   <tr id="totalBids">
+//     <td>
+//       <strong>Total Bids: </strong>14
+//     </td>
+//   </tr>
+//   <tr id="roundMode">
+//     <td>
+//       <strong>Over 1</strong>
+//     </td>
+//   </tr>
+// </table>;

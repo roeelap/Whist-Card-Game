@@ -2,7 +2,14 @@ import Game from './classes/Game.js';
 import { SUITS_TO_PICTURES } from './static/consts.js';
 import Player from './classes/Player.js';
 import Ai from './classes/AI.js';
-import { showBid, showBidButtons, showSuitButtons, changeCardClickable, showCards } from './static/dynamicUIChanges.js';
+import {
+  showBid,
+  showBidButtons,
+  showSuitButtons,
+  changeCardClickable,
+  showCards,
+  createRoundInfoTable,
+} from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
 const newGame = () => {
@@ -180,6 +187,7 @@ const game = newGame();
 
 $(document).ready(() => {
   bindConstsToWindow();
+  createRoundInfoTable(game);
 
   // showing player cards and disable clicking
   showCards(game.players[0].cards);
