@@ -8,7 +8,8 @@ import {
   showSuitButtons,
   changeCardClickable,
   showCards,
-  createRoundInfoTable,
+  createTables,
+  createTrickBidButtons,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -104,6 +105,8 @@ const tricksBidRound = () => {
 
   // waiting for player to bid
   if (game.turn === 1) {
+    const minBid = game.trickBidsMade === 0 ? game.highestBid : 0;
+    createTrickBidButtons(minBid);
     return showBidButtons(true);
   }
 
@@ -114,7 +117,6 @@ const tricksBidRound = () => {
     game.nextTurn();
     trumpSuitBidRound();
   }, 1000);
-  
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -192,7 +194,7 @@ const game = newGame();
 
 $(document).ready(() => {
   bindConstsToWindow();
-  createRoundInfoTable(game);
+  createTables(game);
 
   // showing player cards and disable clicking
   showCards(game.players[0].cards);
