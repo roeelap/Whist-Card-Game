@@ -1,36 +1,5 @@
-import { SUITS_TO_PICTURES } from '../static/consts.js';
+import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
 
-const mostFreqSuitScores = {
-  2: 0.25,
-  3: 0.25,
-  4: 0.25,
-  5: 0.25,
-  6: 0.5,
-  7: 0.5,
-  8: 0.5,
-  9: 0.75,
-  10: 0.75,
-  11: 1,
-  12: 1,
-  13: 1,
-  14: 1
-};
-
-const otherSuitScores = {
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  6: 0,
-  7: 0,
-  8: 0,
-  9: 0,
-  10: 0,
-  11: 0,
-  12: 0.5,
-  13: 1,
-  14: 1
-};
 
 export default class Ai {
   static isCardInArray(array, value) {
@@ -59,9 +28,9 @@ export default class Ai {
     cards.forEach((suitArray) => {
       suitArray.forEach((card) => {
         if (card.suit === mostFreqSuit) {
-          bid += mostFreqSuitScores[card.value];
+          bid += TRUMP_SUIT_SCORER[card.value];
         } else {
-          bid += otherSuitScores[card.value];
+          bid += OTHER_SUIT_SCORER[card.value];
         }
       });
     });
@@ -98,5 +67,34 @@ export default class Ai {
     // updating the pass count
     game.passCount++;
     return 'pass';
+  }
+
+  static calculateBidForTrickBidRound(cards, trumpSuit) {
+    let bid = 0;
+
+    cards.forEach(card => {
+      if (card.suit === trumpSuit) {
+        bid += TRUMP_SUIT_SCORER[card.value];
+      } else {
+        bid += OTHER_SUIT_SCORER[card.value];
+      }
+    });
+
+    return Math.floor(bid);
+  }
+
+  static getTrickBid(game, player) {
+    let bid = Ai.calculateBidForTrickBidRound(player.cards, game.trumpSuit);
+
+    if (game.isTrickBidValid(bid)) {
+      return bid;
+    }
+
+    if (Math.random() > 0.5) {
+      return bid + 1;
+    } 
+
+    return bid - 1;
+
   }
 }
