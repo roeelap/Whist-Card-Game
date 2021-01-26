@@ -160,7 +160,13 @@ const gameRound = () => {
   }
 
   // ai turn
-  console.log('ai turn');
+  let player = game.players[game.turn - 1];
+  if (game.roundMode > 0) {
+    throwCard(player, Ai.getCardToThrowOver(game, player))
+    return gameRound();
+  }
+  throwCard(player, Ai.getCardToThrowUnder(game, player))
+  return gameRound();
 };
 
 export const throwCard = (player, index, cardImg = null) => {
@@ -173,8 +179,11 @@ export const throwCard = (player, index, cardImg = null) => {
 
     // removing the card from the player's hand
     game.thrownCards.push([player, player.cards.splice(index, 1)]);
-    $(cardImg.parentElement).remove();
 
+    if (cardImg !== null) {
+      $(cardImg.parentElement).remove();
+    }
+    
     if (player.index === 1) {
       changeCardClickable(true);
     }

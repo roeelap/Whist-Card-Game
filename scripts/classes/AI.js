@@ -120,8 +120,8 @@ export default class Ai {
   static getCardToThrowOver(game, player) {
     const cards = player.cards;
 
-    if (this.thrownCards.length === 0) {
-      return getIndexOfHighestCardInHand(cards);
+    if (game.thrownCards.length === 0) {
+      return Ai.getIndexOfHighestCardInHand(cards);
     }
 
     const playedSuit = game.thrownCards[0][1].suit;
@@ -134,14 +134,14 @@ export default class Ai {
       };
     }
 
-    return getIndexOfLowestCardInHand(cards);
+    return Ai.getIndexOfLowestCardInHand(cards);
   }
 
   static getCardToThrowUnder(game, player) {
     const cards = player.cards;
 
-    if (this.thrownCards.length === 0) {
-      return getIndexOfLowestCardInHand(cards);
+    if (game.thrownCards.length === 0) {
+      return Ai.getIndexOfLowestCardInHand(cards);
     }
 
     const playedSuit = game.thrownCards[0][1].suit;
@@ -154,6 +154,6 @@ export default class Ai {
       };
     }
 
-    return getIndexOfHighestCardInHand(cards);
+    return Ai.getIndexOfHighestCardInHand(cards);
   }
 }
