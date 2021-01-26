@@ -109,8 +109,10 @@ const tricksBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
+    let bid = Ai.getTrickBid(game, game.players[game.turn - 1])
+    showBid(game.turn, bid);
+    game.totalBids += bid;
     game.trickBidsMade++;
-    showBid(game.turn, Ai.getTrickBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     trumpSuitBidRound();
   }, 1000);
