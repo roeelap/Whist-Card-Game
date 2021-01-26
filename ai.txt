@@ -26,23 +26,22 @@ clubs-6, BID HEARTS-6.
 
 
 
--------- CONTRACT BID ROUND --------- 
+-------- TRICK BID ROUND --------- 
 calculate score based on the cards:
 
 Trump suit:
 J -> A : +1
 6 -> 10 : +0.5
 2 -> 5 : +0.25
-if you have 5 or more cards with the trump suit, +1
 
 other suits:
-A : +1 (if you have 6 or more cards in a certain suit, +0.75) 
+A : +1 (if you have 5 or more cards in a certain suit, +0.75) 
 K : +1 (if you have 5 or more cards in a certain suit, +0.5) 
 Q : +0.5 (if you have 5 or more cards in a certain suit, +0) 
 Rest : +0
 
 if the lowest card in a certain suit is a 5/6 : +0.5
-if the lowest card in a certain suit is a 7 -> ... : +1
+if the lowest card in a certain suit is a 7 -> ... : +0.75
 
 floor the score
 

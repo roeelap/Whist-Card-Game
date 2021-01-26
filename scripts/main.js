@@ -58,10 +58,10 @@ const trumpSuitBidRound = () => {
   }
 
   // AI turn
-  setTimeout(() => {
+  return setTimeout(() => {
     showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
-    return trumpSuitBidRound();
+    trumpSuitBidRound();
   }, 1000);
 };
 
@@ -107,9 +107,14 @@ const tricksBidRound = () => {
     return showBidButtons(true);
   }
 
-  // TODO AI bid
-  console.log("ai's turn");
-  game.trickBidsMade++;
+  // AI turn
+  return setTimeout(() => {
+    game.trickBidsMade++;
+    showBid(game.turn, Ai.getTrickBid(game, game.players[game.turn - 1]));
+    game.nextTurn();
+    trumpSuitBidRound();
+  }, 1000);
+  
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
