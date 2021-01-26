@@ -165,8 +165,9 @@ export const throwCard = (player, index, cardImg = null) => {
   if (game.isCardValid(player, player.cards[index])) {
     // putting the clicked card on the game board
     const img = player.cards[index].getImage();
-    const playerCardId = `#player${player.index}Card .usedCardImage`;
-    $(playerCardId).attr('src', img);
+    const playerCardId = `#player${player.index}Card`;
+    console.log($(playerCardId));
+    $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
     game.thrownCards.push([player, player.cards.splice(index, 1)]);
@@ -198,7 +199,7 @@ $(document).ready(() => {
 
   // showing player cards and disable clicking
   showCards(game.players[0].cards);
-  changeCardClickable(false);
+  // changeCardClickable(false);
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
