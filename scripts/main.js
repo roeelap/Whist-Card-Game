@@ -106,7 +106,8 @@ const tricksBidRound = () => {
   // waiting for player to bid
   if (game.turn === 1) {
     const minBid = game.trickBidsMade === 0 ? game.highestBid : 0;
-    createTrickBidButtons(minBid);
+    const forbiddenBid = game.trickBidsMade === 3 ? 13 - game.totalBids : null;
+    createTrickBidButtons(minBid, forbiddenBid);
     return showBidButtons(true);
   }
 
@@ -199,7 +200,7 @@ $(document).ready(() => {
 
   // showing player cards and disable clicking
   showCards(game.players[0].cards);
-  // changeCardClickable(false);
+  changeCardClickable(false);
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {

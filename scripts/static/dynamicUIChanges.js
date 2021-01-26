@@ -118,7 +118,7 @@ const createScoreTable = (game) => {
   $('#score').html(table);
 };
 
-export const createTrickBidButtons = (minBid, forbiddenBid = null) => {
+export const createTrickBidButtons = (minBid, forbiddenBid) => {
   let newDiv = $('<div class="trick-buttons"></div');
   for (let i = 0; i <= 13; i++) {
     const disabled = i < minBid || i === forbiddenBid ? 'disabled' : '';
