@@ -1,8 +1,9 @@
-import Game from './Game.js';
-import { SUITS_TO_PICTURES } from './consts.js';
-import Player from './player.js';
-import Ai from './ai.js';
-import { showBid, showBidButtons, showSuitButtons, changeCardClickable, showCards } from './dynamicUIChanges.js';
+import Game from './classes/Game.js';
+import { SUITS_TO_PICTURES } from './static/consts.js';
+import Player from './classes/Player.js';
+import Ai from './classes/AI.js';
+import { showBid, showBidButtons, showSuitButtons, changeCardClickable, showCards } from './static/dynamicUIChanges.js';
+import { updateScore } from './static/scoreCalculations.js';
 
 const newGame = () => {
   let players = [];
@@ -127,7 +128,7 @@ const onTricksBidButtonClicked = (bidButton) => {
 const gameRound = () => {
   // check if round has ended and calculate scores
   if (game.players.every((player) => player.cards.length === 0)) {
-    Game.updateScore(player);
+    updateScore(player, game.roundMode);
     return game.newRound(false);
   }
 

@@ -1,4 +1,4 @@
-import { SUITS_TO_PICTURES } from './consts.js';
+import { SUITS_TO_PICTURES } from '../static/consts.js';
 
 const mostFreqSuitScores = {
   2: 0.25,
