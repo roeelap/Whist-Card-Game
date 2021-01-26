@@ -8,7 +8,8 @@ import {
   showSuitButtons,
   changeCardClickable,
   showCards,
-  createRoundInfoTable,
+  createTables,
+  createTrickBidButtons,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -104,6 +105,8 @@ const tricksBidRound = () => {
 
   // waiting for player to bid
   if (game.turn === 1) {
+    const minBid = game.trickBidsMade === 0 ? game.highestBid : 0;
+    createTrickBidButtons(minBid);
     return showBidButtons(true);
   }
 
@@ -116,7 +119,6 @@ const tricksBidRound = () => {
     game.nextTurn();
     trumpSuitBidRound();
   }, 1000);
-  
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -165,8 +167,9 @@ export const throwCard = (player, index, cardImg = null) => {
   if (game.isCardValid(player, player.cards[index])) {
     // putting the clicked card on the game board
     const img = player.cards[index].getImage();
-    const playerCardId = `#player${player.index}Card .usedCardImage`;
-    $(playerCardId).attr('src', img);
+    const playerCardId = `#player${player.index}Card`;
+    console.log($(playerCardId));
+    $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
     game.thrownCards.push([player, player.cards.splice(index, 1)]);
@@ -194,11 +197,11 @@ const game = newGame();
 
 $(document).ready(() => {
   bindConstsToWindow();
-  createRoundInfoTable(game);
+  createTables(game);
 
   // showing player cards and disable clicking
   showCards(game.players[0].cards);
-  changeCardClickable(false);
+  // changeCardClickable(false);
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {

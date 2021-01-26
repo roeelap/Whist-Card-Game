@@ -1,5 +1,5 @@
 import Deck from './Deck.js';
-import { updateBoldLabel } from '../static/dynamicUIChanges.js';
+import { createTables, updateBoldLabel } from '../static/dynamicUIChanges.js';
 
 export default class Game {
   constructor(players) {
@@ -135,6 +135,7 @@ export default class Game {
       this.turn++;
     }
 
+    createTables(this);
     updateBoldLabel(this.turn);
   }
 

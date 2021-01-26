@@ -14,42 +14,8 @@
     </nav>
 
     <div id="info">
-      <div id="roundInfo">
-      </div>
-      <div id="score">
-        <table class="table table-sm table-hover text-center">
-          <tr>
-            <th>Player</th>
-            <th>Bid</th>
-            <th>Tricks</th>
-            <th>Score</th>
-          </tr>
-          <tr id="player1info">
-            <td>Player 1</td>
-            <td>5</td>
-            <td>5</td>
-            <td>100</td>
-          </tr>
-          <tr id="player2info">
-            <td>Player 2</td>
-            <td>4</td>
-            <td>4</td>
-            <td>100</td>
-          </tr>
-          <tr id="player3info">
-            <td>Player 3</td>
-            <td>3</td>
-            <td>3</td>
-            <td>100</td>
-          </tr>
-          <tr id="player4info">
-            <td>Player 4</td>
-            <td>2</td>
-            <td>1</td>
-            <td>100</td>
-          </tr>
-        </table>
-      </div>
+      <div id="roundInfo"></div>
+      <div id="score"></div>
     </div>
 
     <div id="main">
@@ -89,50 +55,26 @@
               value="♠"
               onclick="onSuitBidButtonClicked(this)"
             />
-            <input
-              type="button"
-              class="btn btn-secondary bidButton hover-gold"
-              value="NT"
-              onclick="onSuitBidButtonClicked(this)"
-            />
+            <input type="button" class="btn btn-secondary bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
             <input type="button" class="btn btn-secondary bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
           </div>
-          <div id="bid2" style="display: none">
-            <input type="button" class="btn btn-secondary bidButton" value="0" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="1" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="2" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="3" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="4" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="5" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="6" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="7" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="8" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="9" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="10" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="11" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="12" onclick="onTricksBidButtonClicked(this)" />
-            <input type="button" class="btn btn-secondary bidButton" value="13" onclick="onTricksBidButtonClicked(this)" />
-          </div>
+          <div id="bid2"></div>
         </div>
-        <div id="player1Card">
+        <div id="player1Card" class="card-container">
+          <h4 class="bid"></h4>
           <p>You</p>
-          <img src="./images/cards/grey-back.png" class="usedCardImage" />
-          <h4 class="bid"></h4>
         </div>
-        <div id="player2Card">
+        <div id="player2Card" class="card-container">
+          <h4 class="bid"></h4>
           <p>Player 2</p>
-          <img src="./images/cards/grey-back.png" class="usedCardImage" />
-          <h4 class="bid"></h4>
         </div>
-        <div id="player3Card">
+        <div id="player3Card" class="card-container">
+          <h4 class="bid"></h4>
           <p>Player 3</p>
-          <img src="./images/cards/grey-back.png" class="usedCardImage" />
-          <h4 class="bid"></h4>
         </div>
-        <div id="player4Card">
-          <p>Player 4</p>
-          <img src="./images/cards/grey-back.png" class="usedCardImage" />
+        <div id="player4Card" class="card-container">
           <h4 class="bid"></h4>
+          <p>Player 4</p>
         </div>
       </div>
       <div id="player" class="player container"></div>

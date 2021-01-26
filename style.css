@@ -1,16 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-
 .cardImage {
   height: 20vh;
   width: auto;
@@ -45,13 +32,10 @@ body {
 }
 
 .bid {
-  position: relative;
   background: white;
-  margin-top: -75px;
-  width: fit-content;
-  left: 50%;
-  transform: translateX(-50%);
   font-weight: bold;
+  height: fit-content;
+  margin-top: -30px;
 }
 
 .bold {
@@ -61,23 +45,20 @@ body {
 #info {
   display: grid;
   grid-template-columns: 20vw auto;
-  height: fit-content;
-  width: 100vw;
+  width: 100%;
 }
 
 #roundInfo {
-  grid-column: 1;
-  font-size: 25;
-  height: 157px;
+  height: fit-content;
   border-right: 1px solid black;
 }
 
-#score {
-  grid-column: 2;
-  height: fit-content;
+#roundInfo td {
+  padding-left: 15px;
+  font-weight: bold;
 }
 
-#score table {
+.table {
   margin: 0;
 }
 
@@ -96,46 +77,62 @@ body {
   height: 100%;
 }
 
+.trick-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.trick-buttons > input {
+  width: 50px;
+}
+
+.trick-buttons > input:disabled {
+  cursor: not-allowed;
+}
+
 #gameBoard {
-  grid-row: 1;
   display: grid;
-  grid-template-rows: 13% 29% 29% 29%;
-  grid-template-columns: 50% 50%;
+  grid-template-rows: 18% 29% 29% 29%;
+  grid-template-columns: 1fr 1fr;
 }
 
 #gameBoard p {
   font-size: 20px;
-  margin-bottom: 0;
+  margin-bottom: -25px;
+  margin-top: auto;
 }
 
 #bidArea {
-  grid-row: 1;
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column: 1/4;
   padding: 10px;
   height: fit-content;
 }
 
 #player1Card {
   grid-row: 4;
-  grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column: 1/4;
 }
 
 #player2Card {
   grid-row: 3;
-  grid-column: 1;
 }
 
 #player3Card {
+  grid-column: 1/4;
   grid-row: 2;
-  grid-column-start: 1;
-  grid-column-end: 3;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: url('./images/cards/grey-back.png') no-repeat center center/contain;
+  justify-self: center;
+  width: 100px;
 }
 
 #player4Card {
   grid-row: 3;
-  grid-column: 2;
 }
 
 #bidAmount {

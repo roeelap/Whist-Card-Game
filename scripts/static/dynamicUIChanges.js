@@ -56,7 +56,7 @@ export const updateBoldLabel = (playerIndex) => {
   $(playerLabels[playerIndex - 1]).addClass('bold');
 };
 
-export const createRoundInfoTable = (game) => {
+const createRoundInfoTable = (game) => {
   const data = [
     { id: 'roundNumber', text: `Round ${game.round} of 14` },
     { id: 'trumpSuit', text: `Trump Suit: ${SUITS_TO_PICTURES[game.trumpSuit]}` },
@@ -75,40 +75,61 @@ export const createRoundInfoTable = (game) => {
 
   let tableBody = $('<tbody></tbody>');
 
-  for (let header of data) {
+  for (let row of data) {
     tableBody.append(`
-    <tr id="${header.id}">
-      <th>${header.text}</th>
+    <tr id="${row.id}">
+      <td>${row.text}</td>
     </tr>`);
   }
   table.append(tableBody);
   $('#roundInfo').html(table);
 };
 
-// <table class="table table-sm table-hover">
-//   <tr class="text-center">
-//     <th>
-//       <strong>Round Information</strong>
-//     </th>
-//   </tr>
-//   <tr id="roundNumber">
-//     <td>
-//       <strong>Round 1 of 14</strong>
-//     </td>
-//   </tr>
-//   <tr id="trumpSuit">
-//     <td>
-//       <strong>Trump Suit: </strong>Spades
-//     </td>
-//   </tr>
-//   <tr id="totalBids">
-//     <td>
-//       <strong>Total Bids: </strong>14
-//     </td>
-//   </tr>
-//   <tr id="roundMode">
-//     <td>
-//       <strong>Over 1</strong>
-//     </td>
-//   </tr>
-// </table>;
+const createScoreTable = (game) => {
+  let data = [];
+  for (let player of game.players) {
+    const { index, bid, tricks, score } = player;
+    data.push({ id: `player${index}info`, player: `Player ${index}`, bid, tricks, score });
+  }
+
+  let table = $('<table></table>').addClass('table table-sm table-hover text-center').html(` 
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Bid</th>
+      <th>Tricks</th>
+      <th>Score</th>
+    </tr>
+  </thead>`);
+
+  let tableBody = $('<tbody></tbody>');
+
+  for (let row of data) {
+    const { id, player, bid, tricks, score } = row;
+    tableBody.append(`
+    <tr id="${id}">
+      <td>${player}</td>
+      <td>${bid}</td>
+      <td>${tricks}</td>
+      <td>${score}</td>
+    </tr>`);
+  }
+  table.append(tableBody);
+  $('#score').html(table);
+};
+
+export const createTrickBidButtons = (minBid, forbiddenBid = null) => {
+  let newDiv = $('<div class="trick-buttons"></div');
+  for (let i = 0; i <= 13; i++) {
+    const disabled = i < minBid || i === forbiddenBid ? 'disabled' : '';
+    newDiv.append(
+      `<input type="button" class="btn btn-secondary bidButton" value="${i}" onclick="onTricksBidButtonClicked(this)" ${disabled}/>`
+    );
+  }
+  $('#bid2').html(newDiv);
+};
+
+export const createTables = (game) => {
+  createRoundInfoTable(game);
+  createScoreTable(game);
+};
