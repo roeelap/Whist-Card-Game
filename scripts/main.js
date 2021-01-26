@@ -168,35 +168,37 @@ const gameRound = () => {
   // AI turn
   let player = game.players[game.turn - 1];
   if (game.roundMode > 0) {
-    throwCard(player, AI.getCardToThrowOver(game, player));
+    onCardClicked(player, AI.getCardToThrowOver(game, player));
     return gameRound();
   }
-  throwCard(player, AI.getCardToThrowUnder(game, player));
+  onCardClicked(player, AI.getCardToThrowUnder(game, player));
   return gameRound();
 };
 
-export const throwCard = (player, index, cardImg = null) => {
-  if (game.isCardValid(player, player.cards[index])) {
-    // putting the clicked card on the game board
-    const img = player.cards[index].getImage();
-    const playerCardId = `#player${player.index}Card`;
-    $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
-
-    // removing the card from the player's hand
-    game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
-
-    if (cardImg !== null) {
-      $(cardImg.parentElement).remove();
-    }
-
-    if (player.index === 1) {
-      changeCardClickable(true);
-    }
-
-    // next turn
-    game.nextTurn();
-    return gameRound();
+export const onCardClicked = (player, index, cardImg = null) => {
+  if (!game.isCardValid(player, player.cards[index])) {
+    return alert('Card is not valid!');
   }
+
+  // putting the clicked card on the game board
+  const img = player.cards[index].getImage();
+  const playerCardId = `#player${player.index}Card`;
+  $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
+
+  // removing the card from the player's hand
+  game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
+
+  if (cardImg !== null) {
+    $(cardImg.parentElement).remove();
+  }
+
+  if (player.index === 1) {
+    changeCardClickable(true);
+  }
+
+  // next turn
+  game.nextTurn();
+  return gameRound();
 };
 
 const bindConstsToWindow = () => {
@@ -220,7 +222,7 @@ $(document).ready(() => {
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
     cardImg.onclick = function () {
-      throwCard(game.players[0], $(cardImg.parentElement).index(), cardImg);
+      onCardClicked(game.players[0], $(cardImg.parentElement).index(), cardImg);
     };
   });
 
