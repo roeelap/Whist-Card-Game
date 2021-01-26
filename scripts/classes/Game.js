@@ -143,10 +143,6 @@ export default class Game {
     const firstCard = this.thrownCards[0][1];
 
     // removing all the cards that don't match the played suit or the trump suit
-
-    // I do not understand this condition
-    // Why do we need trumpCount (filter will just not do anything if trumpCount is 0)
-    // is sub-round actually called 'Trick'?
     for (let i = 0; i < this.thrownCards.length; i++) {
       const card = this.thrownCards[i][1];
       if (card.suit !== firstCard.suit && card.suit !== this.trumpSuit) {
