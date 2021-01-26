@@ -7,6 +7,12 @@ export default class Player {
     this.tricks = 0;
   }
 
+  resetStats() {
+    this.bid = 0;
+    this.tricks = 0;
+    this.cards = [];
+  }
+
   sortCards() {
     this.cards.sort((a, b) => {
       return a.value - b.value;

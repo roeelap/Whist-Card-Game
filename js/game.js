@@ -17,8 +17,18 @@ export default class Game {
     this.firstPlayerToPlay = 0;
   }
 
+  determineFirstPlayer(isAllPassed) {
+    // in case all the players passed, don't pass the turn to next player
+    if (isAllPassed) {
+      return this.turn;
+    }
+    if (this.firstPlayerToPlay === 4) {
+      return 1;
+    }
+    return this.firstPlayerToPlay + 1;
+  }
+
   newRound(isAllPassed) {
-    // resetting the stats
     this.highestBid = 5;
     this.trumpSuit = 0;
     this.totalBids = 0;
@@ -28,22 +38,11 @@ export default class Game {
     this.passCount = 0;
     this.trickBidsMade = 0;
 
-    // in case all the players passed, don't pass the turn to next player
-    if (isAllPassed) {
-      this.firstPlayerToPlay = this.turn;
-    } else {
-      if (this.firstPlayerToPlay === 4) {
-        this.firstPlayerToPlay = 1;
-      } else {
-        this.firstPlayerToPlay++;
-      }
-    }
+    this.firstPlayerToPlay = this.determineFirstPlayer(isAllPassed);
 
     //resetting the stats of each player
     this.players.forEach((player) => {
-      player.bid = 0;
-      player.tricks = 0;
-      player.cards = [];
+      player.resetStats();
     });
 
     //creating a new deck
@@ -51,7 +50,6 @@ export default class Game {
     this.deck.shuffle();
     this.dealCards();
 
-    // making the label of the first-player-to-act bold
     Game.updateBoldLabel(this.firstPlayerToPlay);
   }
 
@@ -64,7 +62,6 @@ export default class Game {
     }
   }
 
-  // showing the player's hand
   showCards() {
     let output = '';
     let index = 0;
@@ -91,67 +88,57 @@ export default class Game {
     //if the player tries to bid
     if (bidAmount < this.highestBid) {
       return false;
-    } else if (bidAmount === this.highestBid) {
-      if (bidSuit > this.trumpSuit) {
-        console.log('good bid');
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      console.log('good bid');
-      return true;
     }
+
+    if (bidAmount === this.highestBid && bidSuit <= this.trumpSuit) {
+      return false;
+    }
+
+    console.log('good bid');
+    return true;
   }
 
   isTrickBidValid(bid) {
-    if (this.trickBidsMade !== 3 || this.trickBidsMade !== 0) {
-      return true;
-    } else if (this.trickBidsMade === 3) {
-      if (this.totalBids + bid === 13) {
-        return false;
-      } else {
-        return true;
-      }
-    } else if (this.trickBidsMade === 0) {
-      if (bid < this.highestBid) {
-        return false;
-      } else {
-        return true;
-      }
+    const isFirstBidValid = this.trickBidsMade === 0 && bid < this.highestBid;
+    const isLastBidValid = this.trickBidsMade === 3 && this.totalBids + bid === 13;
+    if (!isFirstBidValid || !isLastBidValid) {
+      return false;
     }
+    return true;
   }
 
   isCardValid(player, card) {
-    // if it's the first player's turn
+    // first player card is always valid
     if (this.thrownCards.length === 0) {
       return true;
     }
 
     // the suit of the first card played
-    playedSuit = this.thrownCards[0][1].suit;
-    // if the suit if the same
+    const playedSuit = this.thrownCards[0][1].suit;
+
+    // valid if the suits are identical
     if (card.suit === playedSuit) {
       return true;
-    } else {
-      // checking if the player has cards of the same suit
-      player.cards.forEach((card) => {
-        if (card.suit === playedSuit) {
-          return false;
-        } else {
-          return true;
-        }
-      });
     }
+
+    // checking if the player has cards of the same suit
+    player.cards.forEach((card) => {
+      if (card.suit === playedSuit) {
+        return false;
+      }
+    });
+
+    // all other cases
+    return true;
   }
 
+  // over or under
   getRoundMode() {
     this.roundMode = this.totalBids - 13;
     if (this.roundMode > 0) {
       return `Over ${this.roundMode}`;
-    } else {
-      return `Under ${13 - this.totalBids}`;
     }
+    return `Under ${13 - this.totalBids}`;
   }
 
   nextTurn() {
@@ -166,12 +153,18 @@ export default class Game {
 
   determineTrickWinner() {
     let trumpCount = 0;
+    const firstCard = this.thrownCards[0][1];
 
     // removing all the cards that don't match the played suit or the trump suit
+
+    // I do not understand this condition
+    // Why do we need trumpCount (filter will just not do anything if trumpCount is 0)
+    // is sub-round actually called 'Trick'?
     for (let i = 0; i < this.thrownCards.length; i++) {
-      if (this.thrownCards[i][1].suit !== this.thrownCards[0][1].suit && this.thrownCards[i][1].suit !== this.trumpSuit) {
+      const card = this.thrownCards[i][1];
+      if (card.suit !== firstCard.suit && card.suit !== this.trumpSuit) {
         this.thrownCards.splice(i, 1);
-      } else if (this.thrownCards[i][1].suit === this.trumpSuit) {
+      } else if (card.suit === this.trumpSuit) {
         trumpCount++;
       }
     }
@@ -188,10 +181,7 @@ export default class Game {
     let winningPlayer = this.thrownCards[0][0];
     winningPlayer.tricks++;
 
-    // resetting the thrown cards list
     this.thrownCards = [];
-
-    // updating the turn according to the winning player
     this.turn = winningPlayer.index;
 
     Game.updateBoldLabel(winningPlayer.index);
