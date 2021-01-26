@@ -179,7 +179,7 @@ export const throwCard = (player, index, cardImg = null) => {
     $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
-    game.thrownCards.push([player, player.cards.splice(index, 1)]);
+    game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
 
     if (cardImg !== null) {
       $(cardImg.parentElement).remove();

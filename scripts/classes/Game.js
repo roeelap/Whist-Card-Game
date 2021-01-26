@@ -163,7 +163,7 @@ export default class Game {
 
     // getting the winner and giving him the trick
     const winningPlayerIndex = this.thrownCards[0][0].index;
-    this.players[winningPlayerIndex].tricks++;
+    this.players[winningPlayerIndex - 1].tricks++;
 
     this.thrownCards = [];
     this.turn = winningPlayerIndex;
