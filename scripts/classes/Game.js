@@ -165,12 +165,12 @@ export default class Game {
     this.thrownCards.sort((a, b) => b[1].value - a[1].value);
 
     // getting the winner and giving him the trick
-    let winningPlayer = this.thrownCards[0][0];
-    winningPlayer.tricks++;
+    const winningPlayerIndex = this.thrownCards[0][0].index;
+    this.players[winningPlayerIndex].tricks++;
 
     this.thrownCards = [];
-    this.turn = winningPlayer.index;
+    this.turn = winningPlayerIndex;
 
-    updateBoldLabel(winningPlayer.index);
+    updateBoldLabel(winningPlayerIndex);
   }
 }

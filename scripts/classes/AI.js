@@ -13,7 +13,7 @@ const mostFreqSuitScores = {
   11: 1,
   12: 1,
   13: 1,
-  14: 1,
+  14: 1
 };
 
 const otherSuitScores = {
@@ -29,7 +29,7 @@ const otherSuitScores = {
   11: 0,
   12: 0.5,
   13: 1,
-  14: 1,
+  14: 1
 };
 
 export default class Ai {
@@ -93,7 +93,7 @@ export default class Ai {
 
         return `${i}${SUITS_TO_PICTURES[suit]}`;
       }
-    }
+    };
 
     // updating the pass count
     game.passCount++;
