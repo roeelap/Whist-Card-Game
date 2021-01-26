@@ -1,7 +1,7 @@
 import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
 
 
-export default class Ai {
+export default class AI {
   static isCardInArray(array, value) {
     for (let i = 0; i < array.length; i++) {
       if (array[i].value === value) {
@@ -40,7 +40,7 @@ export default class Ai {
 
   static getTrumpSuitBid(game, player) {
     // figure out which suit is the most common
-    const cards = Ai.divideCardsBySuits(player.cards).sort((a, b) => b.length - a.length);
+    const cards = AI.divideCardsBySuits(player.cards).sort((a, b) => b.length - a.length);
 
     // if the most common suit is less than 5 cards, just pass
     if (cards[0].length < 5) {
@@ -49,7 +49,7 @@ export default class Ai {
     }
 
     // calculate the wanted suit and bid
-    const [bid, suit] = Ai.calculateBidForTrumpSuitRound(cards);
+    const [bid, suit] = AI.calculateBidForTrumpSuitRound(cards);
 
     // figure out the minimum bid which will be higher than the highest bid,
     // and lower/equal to the wanted bid.
@@ -84,7 +84,7 @@ export default class Ai {
   }
 
   static getTrickBid(game, player) {
-    const bid = Ai.calculateBidForTrickBidRound(player.cards, game.trumpSuit);
+    const bid = AI.calculateBidForTrickBidRound(player.cards, game.trumpSuit);
 
     if (game.isTrickBidValid(bid)) {
       return bid;
@@ -121,7 +121,7 @@ export default class Ai {
     const cards = player.cards;
 
     if (game.thrownCards.length === 0) {
-      return Ai.getIndexOfHighestCardInHand(cards);
+      return AI.getIndexOfHighestCardInHand(cards);
     }
 
     const playedSuit = game.thrownCards[0][1].suit;
@@ -134,14 +134,14 @@ export default class Ai {
       };
     }
 
-    return Ai.getIndexOfLowestCardInHand(cards);
+    return AI.getIndexOfLowestCardInHand(cards);
   }
 
   static getCardToThrowUnder(game, player) {
     const cards = player.cards;
 
     if (game.thrownCards.length === 0) {
-      return Ai.getIndexOfLowestCardInHand(cards);
+      return AI.getIndexOfLowestCardInHand(cards);
     }
 
     const playedSuit = game.thrownCards[0][1].suit;
@@ -154,6 +154,6 @@ export default class Ai {
       };
     }
 
-    return Ai.getIndexOfHighestCardInHand(cards);
+    return AI.getIndexOfHighestCardInHand(cards);
   }
 }

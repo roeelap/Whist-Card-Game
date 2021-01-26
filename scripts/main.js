@@ -1,7 +1,7 @@
 import Game from './classes/Game.js';
 import { SUITS_TO_PICTURES } from './static/consts.js';
 import Player from './classes/Player.js';
-import Ai from './classes/AI.js';
+import AI from './classes/AI.js';
 import {
   showBid,
   showBidButtons,
@@ -60,7 +60,7 @@ const trumpSuitBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
+    showBid(game.turn, AI.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     trumpSuitBidRound();
   }, 1000);
@@ -112,7 +112,7 @@ const tricksBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    let bid = Ai.getTrickBid(game, game.players[game.turn - 1])
+    let bid = AI.getTrickBid(game, game.players[game.turn - 1])
     showBid(game.turn, bid);
     game.totalBids += bid;
     game.trickBidsMade++;
@@ -159,13 +159,13 @@ const gameRound = () => {
     return changeCardClickable(true);
   }
 
-  // ai turn
+  // AI turn
   let player = game.players[game.turn - 1];
   if (game.roundMode > 0) {
-    throwCard(player, Ai.getCardToThrowOver(game, player))
+    throwCard(player, AI.getCardToThrowOver(game, player))
     return gameRound();
   }
-  throwCard(player, Ai.getCardToThrowUnder(game, player))
+  throwCard(player, AI.getCardToThrowUnder(game, player))
   return gameRound();
 };
 
