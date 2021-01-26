@@ -1,7 +1,8 @@
-import Game from './game.js';
+import Game from './Game.js';
 import { SUITS_TO_PICTURES } from './consts.js';
 import Player from './player.js';
 import Ai from './ai.js';
+import { showBid, showBidButtons, showSuitButtons, changeCardClickable, showCards } from './dynamicUIChanges.js';
 
 const newGame = () => {
   let players = [];
@@ -28,7 +29,7 @@ const onBidInputChange = (bidInput) => {
 
 const newRound = () => {
   game.newRound(true);
-  game.showCards();
+  showCards(game.players[0].cards);
   trumpSuitBidRound();
 };
 
@@ -45,12 +46,12 @@ const trumpSuitBidRound = () => {
 
   // player turn
   if (game.turn === 1) {
-    return Game.showSuitButtons(true);
+    return showSuitButtons(true);
   }
 
   // AI turn
   setTimeout(() => {
-    Game.showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
+    showBid(game.turn, Ai.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     return trumpSuitBidRound();
   }, 1000);
@@ -69,7 +70,7 @@ const onSuitBidButtonClicked = (bidButton) => {
 
   if (choice === 'pass') {
     game.passCount++;
-    Game.showBid(1, choice);
+    showBid(1, choice);
   } else {
     game.bidCount++;
     game.passCount = 0;
@@ -77,11 +78,11 @@ const onSuitBidButtonClicked = (bidButton) => {
     game.highestBid = game.players[0].bid = bidAmount;
     game.trumpSuit = bidSuit;
 
-    Game.showBid(1, bidAmount + SUITS_TO_PICTURES[bidSuit]);
+    showBid(1, bidAmount + SUITS_TO_PICTURES[bidSuit]);
   }
 
   // updating the turn and letting the cpu act
-  Game.showSuitButtons(false);
+  showSuitButtons(false);
   game.nextTurn();
   return trumpSuitBidRound();
 };
@@ -95,7 +96,7 @@ const tricksBidRound = () => {
 
   // waiting for player to bid
   if (game.turn === 1) {
-    return Game.showBidButtons(true);
+    return showBidButtons(true);
   }
 
   // TODO AI bid
@@ -114,8 +115,8 @@ const onTricksBidButtonClicked = (bidButton) => {
   game.totalBids += bid;
   $('#totalBids').html(`<td><strong>Total Bids: </strong>${game.totalBids}</td>`);
 
-  Game.showBidButtons(false);
-  Game.showBid(1, bid);
+  showBidButtons(false);
+  showBid(1, bid);
   game.trickBidsMade++;
 
   // updating the turn and letting the cpu act
@@ -126,7 +127,7 @@ const onTricksBidButtonClicked = (bidButton) => {
 const gameRound = () => {
   // check if round has ended and calculate scores
   if (game.players.every((player) => player.cards.length === 0)) {
-    Game.calculateScore(player);
+    Game.updateScore(player);
     return game.newRound(false);
   }
 
@@ -138,7 +139,7 @@ const gameRound = () => {
 
   // player turn
   if (game.turn === 1) {
-    return Game.changeCardClickable(true);
+    return changeCardClickable(true);
   }
 
   // ai turn
@@ -157,7 +158,7 @@ export const throwCard = (player, index, cardImg = null) => {
     $(cardImg.parentElement).remove();
 
     if (player.index === 1) {
-      Game.changeCardClickable(true);
+      changeCardClickable(true);
     }
 
     // next turn
@@ -180,8 +181,8 @@ $(document).ready(() => {
   bindConstsToWindow();
 
   // showing player cards and disable clicking
-  game.showCards();
-  Game.changeCardClickable(false);
+  showCards(game.players[0].cards);
+  changeCardClickable(false);
 
   // onclick events for the card images
   document.querySelectorAll('.cardImage').forEach((cardImg) => {

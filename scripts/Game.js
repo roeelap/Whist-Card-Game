@@ -1,4 +1,5 @@
-import Deck from './deck.js';
+import Deck from './Deck.js';
+import { updateBoldLabel } from './dynamicUIChanges.js';
 
 export default class Game {
   constructor(players) {
@@ -49,8 +50,9 @@ export default class Game {
     this.deck = new Deck();
     this.deck.shuffle();
     this.dealCards();
+    console.log(this.players);
 
-    Game.updateBoldLabel(this.firstPlayerToPlay);
+    updateBoldLabel(this.firstPlayerToPlay);
   }
 
   dealCards() {
@@ -60,22 +62,6 @@ export default class Game {
         player.sortCards();
       });
     }
-  }
-
-  showCards() {
-    let output = '';
-    let index = 0;
-    this.players[0].cards.forEach((card) => {
-      output += `
-                <div style:"z-index: ${index};">
-                    <img src="${card.getImage()}" class="cardImage" style="margin-left: -60px">
-                </div>
-            `;
-
-      index++;
-    });
-
-    $('#player').html(output);
   }
 
   // checks if the trump suit bid is valid
@@ -99,9 +85,10 @@ export default class Game {
   }
 
   isTrickBidValid(bid) {
-    const isFirstBidValid = this.trickBidsMade === 0 && bid < this.highestBid;
-    const isLastBidValid = this.trickBidsMade === 3 && this.totalBids + bid === 13;
-    if (!isFirstBidValid || !isLastBidValid) {
+    if (this.trickBidsMade === 0 && bid < this.highestBid) {
+      return false;
+    }
+    if (this.trickBidsMade === 3 && this.totalBids + bid === 13) {
       return false;
     }
     return true;
@@ -148,7 +135,7 @@ export default class Game {
       this.turn++;
     }
 
-    Game.updateBoldLabel(this.turn);
+    updateBoldLabel(this.turn);
   }
 
   determineTrickWinner() {
@@ -184,93 +171,54 @@ export default class Game {
     this.thrownCards = [];
     this.turn = winningPlayer.index;
 
-    Game.updateBoldLabel(winningPlayer.index);
+    updateBoldLabel(winningPlayer.index);
   }
 
-  calculateScoreForBid0(player) {
-    if (this.roundMode > 0) {
-      if (player.tricks == 0) {
-        player.score += 5;
-      } else if (player.tricks >= 1) {
-        player.score += -5 + 5 * (player.tricks - 1);
-      }
-    } else if (this.roundMode === -1) {
-      if (player.tricks === 0) {
-        player.score += 30;
-      } else if (player.tricks >= 1) {
-        player.score += -30 + 10 * (player.tricks - 1);
-      }
-    } else if (this.roundMode === -2) {
-      if (player.tricks === 0) {
-        player.score += 40;
-      } else if (player.tricks >= 1) {
-        player.score += -40 + 10 * (player.tricks - 1);
-      }
-    } else if (this.roundMode <= -3) {
-      if (player.tricks === 0) {
-        player.score += 50;
-      } else if (player.tricks >= 1) {
-        player.score += -50 + 10 * (player.tricks - 1);
-      }
+  calculateScoreForBid0(player, isSuccess) {
+    // score calculations
+    return isSuccess
+      ? this.roundMode > 0
+        ? 5
+        : this.roundMode === -1
+        ? 30
+        : this.roundMode === -2
+        ? 40
+        : 50
+      : this.roundMode > 0
+      ? -5 + 5 * (player.tricks - 1)
+      : this.roundMode === -1
+      ? -30 + 10 * (player.tricks - 1)
+      : this.roundMode === -2
+      ? -40 + 10 * (player.tricks - 1)
+      : -50 + 10 * (player.tricks - 1);
+  }
+
+  static calculateScore(player, isSuccess, tricksBidDifference) {
+    if (isSuccess) {
+      return 10 + player.bid ** 2;
     }
+
+    if (player.bid > 0 && player.bid < 5) {
+      return -5 * tricksBidDifference;
+    }
+    if (player.bid === 5) {
+      return -10 * tricksBidDifference;
+    }
+    if (player.bid === 6) {
+      return -15 * tricksBidDifference;
+    }
+
+    return -20 * tricksBidDifference;
   }
 
-  static calculateScore(player) {
+  static updateScore(player) {
+    const tricksBidDifference = Math.abs((player.tricks = player.bid));
+    const isSuccess = tricksBidDifference === 0;
+
     if (player.bid === 0) {
-      return this.calculateScoreForBid0(player);
+      player.score += this.calculateScoreForBid0(player, isSuccess);
+    } else {
+      player.score += this.calculateScore(player, isSuccess, tricksBidDifference);
     }
-
-    if (player.bid === player.tricks && player.bid > 0) {
-      player.score += 10 + player.bid ** 2;
-    } else if (player.bid != player.tricks && 0 < player.bid < 5) {
-      player.score += -5 * Math.abs(tricks - bid);
-    } else if (player.bid != player.tricks && player.bid == 5) {
-      player.score += -10 * Math.abs(player.tricks - player.bid);
-    } else if (player.bid != player.tricks && player.bid == 6) {
-      player.score += -15 * Math.abs(player.tricks - player.bid);
-    } else if (player.bid != player.tricks && player.bid >= 7) {
-      player.score += -20 * Math.abs(player.tricks - player.bid);
-    }
-  }
-
-  static showSuitButtons(isShow) {
-    if (isShow) {
-      return $('#bid1').show();
-    }
-    $('#bid1').hide();
-  }
-
-  static showBidButtons(isShow) {
-    if (isShow) {
-      return $('#bid2').show();
-    }
-    $('#bid2').hide();
-  }
-
-  static changeCardClickable(isClickable) {
-    if (isClickable) {
-      return document.querySelectorAll('.cardImage').forEach((cardImg) => {
-        $(cardImg).removeClass('nonClickable');
-      });
-    }
-    document.querySelectorAll('.cardImage').forEach((cardImg) => {
-      $(cardImg).addClass('nonClickable');
-    });
-  }
-
-  // shows the bid/pass label
-  static showBid(playerIndex, bid) {
-    let playerCardDiv = `#player${playerIndex}Card h4`;
-    $(playerCardDiv).html(bid);
-  }
-
-  // makes the player's label bold while it's their turn
-  static updateBoldLabel(playerIndex) {
-    let playerLabels = [`#player1Card p`, `#player2Card p`, `#player3Card p`, `#player4Card p`];
-    playerLabels.forEach((label) => {
-      $(label).removeClass('bold');
-    });
-
-    $(playerLabels[playerIndex - 1]).addClass('bold');
   }
 }
