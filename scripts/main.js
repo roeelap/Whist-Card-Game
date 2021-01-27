@@ -11,6 +11,7 @@ import {
   reRenderTables,
   createTrickBidButtons,
   clearCardImages,
+  collapseGameInfo
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -179,7 +180,7 @@ const gameRound = () => {
 };
 
 export const onCardClicked = (cardImg) => {
-  const index = $(cardImg.parentElement).index();
+  const index = $(cardImg).index();
   const player = game.players[0];
   if (!game.isCardValid(player, player.cards[index])) {
     return alert('Card is not valid!');
@@ -193,7 +194,7 @@ export const onCardClicked = (cardImg) => {
   // removing the card from the player's hand
   game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
 
-  $(cardImg.parentElement).remove();
+  $(cardImg).remove();
 
   changeCardClickable(false);
 
@@ -208,6 +209,7 @@ const bindConstsToWindow = () => {
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
   window.onBidInputChange = onBidInputChange;
   window.onCardClicked = onCardClicked;
+  window.collapseGameInfo = collapseGameInfo;
 };
 
 // creating a new game
