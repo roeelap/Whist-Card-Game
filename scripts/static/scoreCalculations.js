@@ -36,7 +36,7 @@ const calculateScore = (player, isSuccess, tricksBidDifference) => {
 };
 
 export const updateScore = (player, roundMode) => {
-  const tricksBidDifference = Math.abs((player.tricks = player.bid));
+  const tricksBidDifference = Math.abs((player.tricks - player.bid));
   const isSuccess = tricksBidDifference === 0;
 
   if (player.bid === 0) {

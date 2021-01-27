@@ -8,7 +8,7 @@ import {
   showSuitButtons,
   changeCardClickable,
   showCards,
-  createTables,
+  reRenderTables,
   createTrickBidButtons,
   clearCardImages,
 } from './static/dynamicUIChanges.js';
@@ -20,11 +20,7 @@ const newGame = () => {
     players.push(new Player(i));
   }
 
-  const game = new Game(players);
-
-  game.newRound(false);
-
-  return game;
+  return new Game(players);
 };
 
 // Correct bid
@@ -37,10 +33,12 @@ const onBidInputChange = (bidInput) => {
   }
 };
 
-const newRound = () => {
-  game.newRound(true);
+const newRound = (isAllPassed) => {
+  game.newRound(isAllPassed);
   showCards(game.players[0].cards);
   trumpSuitBidRound();
+  changeCardClickable(false);
+  reRenderTables(game);
 };
 
 const trumpSuitBidRound = () => {
@@ -50,8 +48,8 @@ const trumpSuitBidRound = () => {
     return tricksBidRound();
   } else if (game.passCount === 4) {
     return setTimeout(() => {
-      return newRound();
-    }, 0);
+      return newRound(true);
+    }, 1000);
   }
 
   // player turn
@@ -64,7 +62,7 @@ const trumpSuitBidRound = () => {
     showBid(game.turn, AI.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     trumpSuitBidRound();
-  }, 0);
+  }, 1000);
 };
 
 // on suit bid click
@@ -120,7 +118,7 @@ const tricksBidRound = () => {
     game.trickBidsMade++;
     game.nextTurn();
     trumpSuitBidRound();
-  }, 0);
+  }, 1000);
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -146,18 +144,21 @@ const onTricksBidButtonClicked = (bidButton) => {
 const gameRound = () => {
   // check if round has ended and calculate scores
   if (game.players.every((player) => player.cards.length === 0)) {
-    updateScore(player, game.roundMode);
-    return game.newRound(false);
+    for (const player of game.players) {
+      updateScore(player, game.roundMode);
+    }
+    return newRound(false);
   }
 
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
+    console.log(game.thrownCards);
     return setTimeout(() => {
       game.determineTrickWinner();
-      createTables(game);
+      reRenderTables(game);
       clearCardImages();
-      gameRound();
-    }, 1000);
+      return gameRound();
+    }, 3000);
   }
 
   // player turn
@@ -166,16 +167,18 @@ const gameRound = () => {
   }
 
   // AI turn
-  let player = game.players[game.turn - 1];
+  const player = game.players[game.turn - 1];
   if (game.roundMode > 0) {
-    onCardClicked(player, AI.getCardToThrowOver(game, player));
+    AI.throwCard(player, AI.getCardToThrowOver(game, player));
     return gameRound();
   }
-  onCardClicked(player, AI.getCardToThrowUnder(game, player));
+  AI.throwCard(player, AI.getCardToThrowUnder(game, player));
   return gameRound();
 };
 
-export const onCardClicked = (player, index, cardImg = null) => {
+export const onCardClicked = (cardImg) => {
+  const index = $(cardImg.parentElement).index();
+  const player = game.players[0];
   if (!game.isCardValid(player, player.cards[index])) {
     return alert('Card is not valid!');
   }
@@ -188,13 +191,9 @@ export const onCardClicked = (player, index, cardImg = null) => {
   // removing the card from the player's hand
   game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
 
-  if (cardImg !== null) {
-    $(cardImg.parentElement).remove();
-  }
+  $(cardImg.parentElement).remove();
 
-  if (player.index === 1) {
-    changeCardClickable(true);
-  }
+  changeCardClickable(false);
 
   // next turn
   game.nextTurn();
@@ -206,6 +205,7 @@ const bindConstsToWindow = () => {
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
   window.onBidInputChange = onBidInputChange;
+  window.onCardClicked = onCardClicked;
 };
 
 // creating a new game
@@ -213,19 +213,5 @@ const game = newGame();
 
 $(document).ready(() => {
   bindConstsToWindow();
-  createTables(game);
-
-  // showing player cards and disable clicking
-  showCards(game.players[0].cards);
-  changeCardClickable(false);
-
-  // onclick events for the card images
-  document.querySelectorAll('.cardImage').forEach((cardImg) => {
-    cardImg.onclick = function () {
-      onCardClicked(game.players[0], $(cardImg.parentElement).index(), cardImg);
-    };
-  });
-
-  // starting the trump suit bid round
-  trumpSuitBidRound();
+  newRound(false);
 });

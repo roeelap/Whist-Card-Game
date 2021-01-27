@@ -1,6 +1,5 @@
 import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
 
-
 export default class AI {
   static isCardInArray(array, value) {
     for (let i = 0; i < array.length; i++) {
@@ -62,7 +61,7 @@ export default class AI {
 
         return `${i}${SUITS_TO_PICTURES[suit]}`;
       }
-    };
+    }
 
     // updating the pass count
     game.passCount++;
@@ -72,7 +71,7 @@ export default class AI {
   static calculateBidForTrickBidRound(cards, trumpSuit) {
     let bid = 0;
 
-    cards.forEach(card => {
+    cards.forEach((card) => {
       if (card.suit === trumpSuit) {
         bid += TRUMP_SUIT_SCORER[card.value];
       } else {
@@ -92,7 +91,7 @@ export default class AI {
 
     if (Math.random() > 0.5) {
       return bid + 1;
-    } 
+    }
 
     return bid - 1;
   }
@@ -100,20 +99,20 @@ export default class AI {
   static getIndexOfHighestCardInHand(cards) {
     let highestCardIndex = 0;
     for (let i = 1; i < cards.length; i++) {
-      if(cards[i].value > cards[highestCardIndex].value) {
+      if (cards[i].value > cards[highestCardIndex].value) {
         highestCardIndex = i;
       }
-    };
+    }
     return highestCardIndex;
   }
 
   static getIndexOfLowestCardInHand(cards) {
     let lowestCardIndex = 0;
     for (let i = 1; i < cards.length; i++) {
-      if(cards[i].value < cards[lowestCardIndex].value) {
+      if (cards[i].value < cards[lowestCardIndex].value) {
         lowestCardIndex = i;
       }
-    };
+    }
     return lowestCardIndex;
   }
 
@@ -126,12 +125,12 @@ export default class AI {
 
     const playedSuit = game.thrownCards[0][1].suit;
 
-    if (cards.filter(card => card.suit === playedSuit).length > 0) {
+    if (cards.filter((card) => card.suit === playedSuit).length > 0) {
       for (let i = cards.length - 1; i > -1; i--) {
-        if(cards[i].suit === playedSuit) {
+        if (cards[i].suit === playedSuit) {
           return i;
         }
-      };
+      }
     }
 
     return AI.getIndexOfLowestCardInHand(cards);
@@ -146,14 +145,27 @@ export default class AI {
 
     const playedSuit = game.thrownCards[0][1].suit;
 
-    if (cards.filter(card => card.suit === playedSuit).length > 0) {
+    if (cards.filter((card) => card.suit === playedSuit).length > 0) {
       for (let i = 0; i < cards.length; i++) {
-        if(cards[i].suit === playedSuit) {
+        if (cards[i].suit === playedSuit) {
           return i;
         }
-      };
+      }
     }
 
     return AI.getIndexOfHighestCardInHand(cards);
   }
+
+  static throwCard = (player, index) => {
+    // putting the clicked card on the game board
+    const img = player.cards[index].getImage();
+    const playerCardId = `#player${player.index}Card`;
+    $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
+
+    // removing the card from the player's hand
+    game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
+
+    // next turn
+    game.nextTurn();
+  };
 }

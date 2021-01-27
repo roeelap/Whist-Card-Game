@@ -1,5 +1,5 @@
 import Deck from './Deck.js';
-import { createTables, updateBoldLabel } from '../static/dynamicUIChanges.js';
+import { reRenderTables, updateBoldLabel } from '../static/dynamicUIChanges.js';
 
 export default class Game {
   constructor(players) {
@@ -109,12 +109,11 @@ export default class Game {
     }
 
     // checking if the player has cards of the same suit
-    player.cards.forEach((card) => {
+    for (let card of player.cards) {
       if (card.suit === playedSuit) {
         return false;
       }
-    });
-
+    }
     // all other cases
     return true;
   }
@@ -135,7 +134,7 @@ export default class Game {
       this.turn++;
     }
 
-    createTables(this);
+    reRenderTables(this);
     updateBoldLabel(this.turn);
   }
 
@@ -155,7 +154,7 @@ export default class Game {
 
     // removing all the card that don't match the trump suit
     if (trumpCount > 0) {
-      this.thrownCards.filter((PlayerCardPair) => PlayerCardPair[1].suit === this.trumpSuit);
+      this.thrownCards = this.thrownCards.filter((cardPair) => cardPair[1].suit === this.trumpSuit);
     }
 
     // sorting the list by descending values

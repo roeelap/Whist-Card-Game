@@ -1,4 +1,10 @@
-export const SUITS_TO_PICTURES = { 1: '♣', 2: '♦', 3: '♥', 4: '♠', 5: 'NT' };
+export const SUITS_TO_PICTURES = {
+  1: '<i class="bi bi-suit-club-fill"></i>',
+  2: '<i class="bi bi-suit-diamond-fill red"></i>',
+  3: '<i class="bi bi-suit-heart-fill red"></i>',
+  4: '<i class="bi bi-suit-spade-fill"></i>',
+  5: 'NT',
+};
 
 export const TRUMP_SUIT_SCORER = {
   2: 0.25,
@@ -13,7 +19,7 @@ export const TRUMP_SUIT_SCORER = {
   11: 1,
   12: 1,
   13: 1,
-  14: 1
+  14: 1,
 };
 
 export const OTHER_SUIT_SCORER = {
@@ -29,5 +35,5 @@ export const OTHER_SUIT_SCORER = {
   11: 0,
   12: 0.5,
   13: 1,
-  14: 1
+  14: 1,
 };

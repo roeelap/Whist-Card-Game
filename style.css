@@ -1,8 +1,15 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
+
 .cardImage {
   height: 20vh;
   width: auto;
   cursor: pointer;
   left: 30%;
+  transition: 0.3s;
+}
+
+.cardImage:hover {
+  transform: translateY(-5px);
 }
 
 .usedCardImage {
@@ -29,6 +36,10 @@
 
 .hover-gold:hover {
   color: gold;
+}
+
+.red {
+  color: red;
 }
 
 .bid {

@@ -34,15 +34,11 @@ export const showCards = (playerCards) => {
   let output = '';
   let index = 0;
   playerCards.forEach((card) => {
-    output += `
-              <div style:"z-index: ${index};">
-                  <img src="${card.getImage()}" class="cardImage" style="margin-left: -60px">
-              </div>
-          `;
-
+    output += `<div style:"z-index: ${index};">
+                  <img src="${card.getImage()}" class="cardImage" style="margin-left: -60px" onclick="onCardClicked(this)">
+              </div>`;
     index++;
   });
-
   $('#player').html(output);
 };
 
@@ -129,7 +125,7 @@ export const createTrickBidButtons = (minBid, forbiddenBid) => {
   $('#bid2').html(newDiv);
 };
 
-export const createTables = (game) => {
+export const reRenderTables = (game) => {
   createRoundInfoTable(game);
   createScoreTable(game);
 };
