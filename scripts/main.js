@@ -49,7 +49,7 @@ const trumpSuitBidRound = () => {
   } else if (game.passCount === 4) {
     return setTimeout(() => {
       return newRound(true);
-    }, 1000);
+    }, 0);
   }
 
   // player turn
@@ -62,7 +62,7 @@ const trumpSuitBidRound = () => {
     showBid(game.turn, AI.getTrumpSuitBid(game, game.players[game.turn - 1]));
     game.nextTurn();
     trumpSuitBidRound();
-  }, 1000);
+  }, 0);
 };
 
 // on suit bid click
@@ -120,7 +120,7 @@ const tricksBidRound = () => {
     game.trickBidsMade++;
     game.nextTurn();
     trumpSuitBidRound();
-  }, 1000);
+  }, 0);
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -160,7 +160,7 @@ const gameRound = () => {
       reRenderTables(game);
       clearCardImages();
       return gameRound();
-    }, 3000);
+    }, 0);
   }
 
   // player turn
@@ -179,13 +179,19 @@ const gameRound = () => {
 };
 
 export const onCardClicked = (cardImg) => {
-  const index = $(cardImg.parentElement).index();
+  if ($(cardImg).hasClass('nonClickable')) {
+    return;
+  }
+
+  const index = $(cardImg).index();
   const player = game.players[0];
+  
   if (!game.isCardValid(player, player.cards[index])) {
     return alert('Card is not valid!');
   }
 
   // putting the clicked card on the game board
+  console.log(player.cards, index);
   const img = player.cards[index].getImage();
   const playerCardId = `#player${player.index}Card`;
   $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
@@ -193,7 +199,7 @@ export const onCardClicked = (cardImg) => {
   // removing the card from the player's hand
   game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
 
-  $(cardImg.parentElement).remove();
+  $(cardImg).remove();
 
   changeCardClickable(false);
 
