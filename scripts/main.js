@@ -11,6 +11,7 @@ import {
   reRenderTables,
   createTrickBidButtons,
   clearCardImages,
+  collapseGameInfo
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -214,6 +215,7 @@ const bindConstsToWindow = () => {
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
   window.onBidInputChange = onBidInputChange;
   window.onCardClicked = onCardClicked;
+  window.collapseGameInfo = collapseGameInfo;
 };
 
 // creating a new game

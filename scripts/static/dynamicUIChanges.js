@@ -118,7 +118,7 @@ export const createTrickBidButtons = (minBid, forbiddenBid) => {
   for (let i = 0; i <= 13; i++) {
     const disabled = i < minBid || i === forbiddenBid ? 'disabled' : '';
     newDiv.append(
-      `<input type="button" class="btn btn-secondary bidButton" value="${i}" onclick="onTricksBidButtonClicked(this)" ${disabled}/>`
+      `<input type="button" class="btn btn-primary bidButton" value="${i}" onclick="onTricksBidButtonClicked(this)" ${disabled}/>`
     );
   }
   $('#bid2').html(newDiv);
@@ -135,3 +135,13 @@ export const clearCardImages = () => {
     $(playerCardId).css('background', `url('../../images/cards/grey-back.png') no-repeat center center/contain`);
   }
 };
+
+export const collapseGameInfo = (button) => {
+  if ($(button).hasClass('accordion-button-active')) {
+      $(button).removeClass('accordion-button-active');
+      $("#info").css('maxHeight', '0');
+  } else {
+      $(button).addClass('accordion-button-active');
+      $("#info").css('maxHeight', '200px');
+  };
+}

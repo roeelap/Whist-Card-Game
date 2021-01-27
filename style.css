@@ -40,6 +40,7 @@ body {
 }
 
 .nonClickable {
+  pointer-events: none;
   cursor: default;
 }
 
@@ -64,7 +65,6 @@ body {
 }
 
 .bid {
-  background: white;
   font-weight: bold;
   height: fit-content;
   margin-top: -30px;
@@ -78,7 +78,11 @@ body {
   display: grid;
   grid-template-columns: 20vw auto;
   width: 100%;
+  overflow: hidden;
+  max-height: 0vw;
+  transition: max-height 0.3s;
 }
+
 
 #roundInfo {
   height: fit-content;
@@ -124,7 +128,7 @@ body {
 
 #gameBoard p {
   font-size: 20px;
-  margin-bottom: -25px;
+  margin-bottom: -35px;
   margin-top: auto;
 }
 
@@ -137,10 +141,12 @@ body {
 .card-container {
   display: grid;
   grid-template-columns: 1fr;
-  background: url('./images/cards/grey-back.png') no-repeat center center/contain;
+  /* background: url('./images/cards/grey-back.png') no-repeat center center/contain; */
   justify-self: center;
-  width: 100px;
+  width: 80px;
   color: black;
+  background: rgba(249, 247, 238, 0.6);
+  border-radius: 7px;
 }
 
 #player1Card {
@@ -164,4 +170,17 @@ body {
 #bidAmount {
   width: 70px;
   font-size: 20px;
+}
+
+.accordion-button {
+  padding: 0.2%;
+  font-weight: bold;
+  border: none;
+  outline-width: 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.accordion-button-active {
+  background: #555555;
 }
