@@ -5,11 +5,23 @@
   width: auto;
   cursor: pointer;
   left: 30%;
+}
+
+#player {
+  display: flex;
+  justify-content: center;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+}
+
+#player > div {
+  position: relative;
   transition: 0.3s;
 }
 
-.cardImage:hover {
-  transform: translateY(-5px);
+#player > div:hover {
+  transform: translateY(-10px);
 }
 
 .usedCardImage {
@@ -78,14 +90,6 @@
   grid-template-rows: 50vh auto;
   gap: 10%;
   border-top: 1px solid black;
-}
-
-#player {
-  display: flex;
-  justify-content: center;
-  grid-row: 2;
-  width: 100%;
-  height: 100%;
 }
 
 .trick-buttons {
