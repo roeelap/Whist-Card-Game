@@ -14,7 +14,15 @@ body {
   height: 20vh;
   width: auto;
   cursor: pointer;
-  margin-right: -60px
+  margin-right: -60px;
+  position: relative;
+  transition: 0.3s;
+  backface-visibility: hidden;
+  transform: translateZ(0) scale(1, 1);
+}
+
+.cardImage:hover {
+  transform: translateY(-15px);
 }
 
 #player {
@@ -23,15 +31,7 @@ body {
   grid-row: 2;
   width: 100%;
   height: 100%;
-}
-
-#player > div {
-  position: relative;
-  transition: 0.3s;
-}
-
-#player > div:hover {
-  transform: translateY(-15px);
+  transform: translateX(-30px);
 }
 
 .usedCardImage {
@@ -40,7 +40,6 @@ body {
 }
 
 .nonClickable {
-  pointer-events: none;
   cursor: default;
 }
 

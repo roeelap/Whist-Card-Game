@@ -34,9 +34,7 @@ export const showCards = (playerCards) => {
   let output = '';
   let index = 0;
   playerCards.forEach((card) => {
-    output += `<div style:"z-index: ${index};">
-                  <img src="${card.getImage()}" class="cardImage" onclick="onCardClicked(this)">
-              </div>`;
+    output += `<img src="${card.getImage()}" class="cardImage" style:"z-index: ${index};" onclick="onCardClicked(this)">`;
     index++;
   });
   $('#player').html(output);
