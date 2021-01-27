@@ -1,3 +1,4 @@
+import { onCardClicked } from '../main.js';
 import { SUITS_TO_PICTURES } from './consts.js';
 
 export const showSuitButtons = (isShow) => {
