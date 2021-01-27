@@ -3,7 +3,7 @@
 body {
   width: 100%;
   height: 100%;
-  background-image: url("./images/background/wooden-table.jpg");
+  background-image: url('./images/background/wooden-table.jpg');
   background-repeat: no-repeat;
   background-position-y: center;
   background-attachment: fixed;

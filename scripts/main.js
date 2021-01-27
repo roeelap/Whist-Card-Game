@@ -145,12 +145,6 @@ const onTricksBidButtonClicked = (bidButton) => {
 
 const gameRound = () => {
   // check if round has ended and calculate scores
-  if (game.players.every((player) => player.cards.length === 0)) {
-    for (const player of game.players) {
-      updateScore(player, game.roundMode);
-    }
-    return newRound(false);
-  }
 
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
@@ -160,7 +154,14 @@ const gameRound = () => {
       reRenderTables(game);
       clearCardImages();
       return gameRound();
-    }, 0);
+    }, 3000);
+  }
+
+  if (game.players.every((player) => player.cards.length === 0)) {
+    for (const player of game.players) {
+      updateScore(player, game.roundMode);
+    }
+    return newRound(false);
   }
 
   // player turn
@@ -185,13 +186,12 @@ export const onCardClicked = (cardImg) => {
 
   const index = $(cardImg).index();
   const player = game.players[0];
-  
+
   if (!game.isCardValid(player, player.cards[index])) {
     return alert('Card is not valid!');
   }
 
   // putting the clicked card on the game board
-  console.log(player.cards, index);
   const img = player.cards[index].getImage();
   const playerCardId = `#player${player.index}Card`;
   $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
