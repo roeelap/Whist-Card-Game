@@ -1,5 +1,15 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
 
+body {
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/background/wooden-table.jpg");
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
 .cardImage {
   height: 20vh;
   width: auto;
@@ -83,6 +93,7 @@
 
 .table {
   margin: 0;
+  background-color: white;
 }
 
 #main {
@@ -124,6 +135,15 @@
   height: fit-content;
 }
 
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: url('./images/cards/grey-back.png') no-repeat center center/contain;
+  justify-self: center;
+  width: 100px;
+  color: black;
+}
+
 #player1Card {
   grid-row: 4;
   grid-column: 1/4;
@@ -136,14 +156,6 @@
 #player3Card {
   grid-column: 1/4;
   grid-row: 2;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: url('./images/cards/grey-back.png') no-repeat center center/contain;
-  justify-self: center;
-  width: 100px;
 }
 
 #player4Card {
