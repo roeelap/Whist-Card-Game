@@ -22,7 +22,7 @@ const calculateScore = (player, isSuccess, tricksBidDifference) => {
     return 10 + player.bid ** 2;
   }
 
-  if (player.bid > 0 && player.bid < 5) {
+  if (player.bid < 5) {
     return -5 * tricksBidDifference;
   }
   if (player.bid === 5) {

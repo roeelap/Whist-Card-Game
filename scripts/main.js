@@ -96,6 +96,7 @@ const onSuitBidButtonClicked = (bidButton) => {
 };
 
 const tricksBidRound = () => {
+  reRenderTables(game);
   // Tricks round ended
   if (game.trickBidsMade === 4) {
     $('#roundMode').html(`<td><strong>${game.getRoundMode()}</strong></td>`);
@@ -114,6 +115,7 @@ const tricksBidRound = () => {
   return setTimeout(() => {
     let bid = AI.getTrickBid(game, game.players[game.turn - 1]);
     showBid(game.turn, bid);
+    game.players[game.turn - 1].bid = bid;
     game.totalBids += bid;
     game.trickBidsMade++;
     game.nextTurn();
