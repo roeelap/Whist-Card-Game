@@ -36,9 +36,9 @@ const onBidInputChange = (bidInput) => {
 const newRound = (isAllPassed) => {
   game.newRound(isAllPassed);
   showCards(game.players[0].cards);
-  trumpSuitBidRound();
   changeCardClickable(false);
   reRenderTables(game);
+  return trumpSuitBidRound();
 };
 
 const trumpSuitBidRound = () => {

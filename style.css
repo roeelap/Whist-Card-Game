@@ -4,7 +4,7 @@
   height: 20vh;
   width: auto;
   cursor: pointer;
-  left: 30%;
+  margin-right: -60px
 }
 
 #player {
@@ -21,7 +21,7 @@
 }
 
 #player > div:hover {
-  transform: translateY(-10px);
+  transform: translateY(-15px);
 }
 
 .usedCardImage {
