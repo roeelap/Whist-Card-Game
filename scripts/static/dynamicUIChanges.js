@@ -39,7 +39,17 @@ export const showCards = (playerCards) => {
     index++;
   });
   $('#player').html(output);
+  makeHandRotated(playerCards.length)
 };
+
+export const makeHandRotated = (playerCardsLength) => {
+  $.each($(".cardImage"), (index, card) => {
+    // let rotationAngle = (index - playerCards.length)
+    let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
+    let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
+    $(card).css("transform", `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+  })
+}
 
 // makes the player's label bold while it's their turn
 export const updateBoldLabel = (playerIndex) => {
@@ -132,7 +142,7 @@ export const reRenderTables = (game) => {
 export const clearCardImages = () => {
   for (let i = 1; i <= 4; i++) {
     const playerCardId = `#player${i}Card`;
-    $(playerCardId).css('background', `url('../../images/cards/grey-back.png') no-repeat center center/contain`);
+    $(playerCardId).css('background', `rgba(249, 247, 238, 0.6)`);
   }
 };
 
