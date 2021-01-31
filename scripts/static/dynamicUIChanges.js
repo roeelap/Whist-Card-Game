@@ -138,10 +138,10 @@ export const clearCardImages = () => {
 
 export const collapseGameInfo = (button) => {
   if ($(button).hasClass('accordion-button-active')) {
-      $(button).removeClass('accordion-button-active');
-      $("#info").css('maxHeight', '0');
+    $(button).removeClass('accordion-button-active');
+    $('#info').css('maxHeight', '0');
   } else {
-      $(button).addClass('accordion-button-active');
-      $("#info").css('maxHeight', '200px');
-  };
-}
+    $(button).addClass('accordion-button-active');
+    $('#info').css('maxHeight', '200px');
+  }
+};

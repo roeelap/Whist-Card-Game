@@ -11,7 +11,7 @@ import {
   reRenderTables,
   createTrickBidButtons,
   clearCardImages,
-  collapseGameInfo
+  collapseGameInfo,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
