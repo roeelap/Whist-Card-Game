@@ -202,6 +202,9 @@ export const onCardClicked = (cardImg) => {
 
   $(cardImg).remove();
 
+  // making the cards in the player's hand look rotated (like a fan)
+  makeHandRotated(game.players[0].cards.length);
+
   changeCardClickable(false);
 
   // next turn
