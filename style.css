@@ -40,7 +40,6 @@ body {
 }
 
 .nonClickable {
-  pointer-events: none;
   cursor: default;
 }
 
@@ -82,7 +81,6 @@ body {
   max-height: 0vw;
   transition: max-height 0.3s;
 }
-
 
 #roundInfo {
   height: fit-content;

@@ -168,5 +168,6 @@ export default class Game {
     this.turn = winningPlayerIndex;
 
     updateBoldLabel(winningPlayerIndex);
+    return winningPlayerIndex;
   }
 }

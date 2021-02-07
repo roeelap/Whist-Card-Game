@@ -12,7 +12,7 @@ import {
   createTrickBidButtons,
   clearCardImages,
   collapseGameInfo,
-  makeHandRotated
+  makeHandRotated,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -145,14 +145,22 @@ const onTricksBidButtonClicked = (bidButton) => {
   return tricksBidRound();
 };
 
+const printRoundCards = () => {
+  let printMsg = '';
+  for (let card of game.thrownCards) {
+    printMsg += `player: ${card[0].index}, card: ${card[1].value},${card[1].suit}\n`;
+  }
+  console.log(printMsg);
+};
+
 const gameRound = () => {
   // check if round has ended and calculate scores
 
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
-    console.log(game.thrownCards);
+    printRoundCards();
     return setTimeout(() => {
-      game.determineTrickWinner();
+      console.log(game.determineTrickWinner());
       reRenderTables(game);
       clearCardImages();
       return gameRound();
