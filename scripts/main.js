@@ -12,7 +12,6 @@ import {
   createTrickBidButtons,
   clearCardImages,
   collapseGameInfo,
-  makeHandRotated,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -212,7 +211,7 @@ export const onCardClicked = (cardImg) => {
   $(cardImg).remove();
 
   // making the cards in the player's hand look rotated (like a fan)
-  makeHandRotated(game.players[0].cards.length);
+  // makeHandRotated(game.players[0].cards.length);
 
   changeCardClickable(false);
 

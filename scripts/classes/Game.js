@@ -139,7 +139,6 @@ export default class Game {
   }
 
   determineTrickWinner() {
-    let trumpCount = 0;
     const firstCard = this.thrownCards[0][1];
 
     // removing all the cards that don't match the played suit or the trump suit
@@ -147,14 +146,11 @@ export default class Game {
       const card = this.thrownCards[i][1];
       if (card.suit !== firstCard.suit && card.suit !== this.trumpSuit) {
         this.thrownCards.splice(i, 1);
+        i--;
       } else if (card.suit === this.trumpSuit) {
-        trumpCount++;
+        this.thrownCards = this.thrownCards.filter((cardPair) => cardPair[1].suit === this.trumpSuit);
+        break;
       }
-    }
-
-    // removing all the card that don't match the trump suit
-    if (trumpCount > 0) {
-      this.thrownCards = this.thrownCards.filter((cardPair) => cardPair[1].suit === this.trumpSuit);
     }
 
     // sorting the list by descending values

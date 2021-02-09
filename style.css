@@ -74,6 +74,7 @@ body {
 }
 
 #info {
+  position: absolute;
   display: grid;
   grid-template-columns: 20vw auto;
   width: 100%;
@@ -100,8 +101,9 @@ body {
 #main {
   display: grid;
   grid-template-rows: 50vh auto;
-  gap: 10%;
+  gap: 20%;
   border-top: 1px solid black;
+  padding: 20px;
 }
 
 .trick-buttons {

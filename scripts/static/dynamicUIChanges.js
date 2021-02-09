@@ -39,17 +39,17 @@ export const showCards = (playerCards) => {
     index++;
   });
   $('#player').html(output);
-  makeHandRotated(playerCards.length)
+  // makeHandRotated(playerCards.length)
 };
 
-export const makeHandRotated = (playerCardsLength) => {
-  $.each($(".cardImage"), (index, card) => {
-    // let rotationAngle = (index - playerCards.length)
-    let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
-    let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
-    $(card).css("transform", `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
-  })
-}
+// export const makeHandRotated = (playerCardsLength) => {
+//   $.each($(".cardImage"), (index, card) => {
+//     // let rotationAngle = (index - playerCards.length)
+//     let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
+//     let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
+//     $(card).css("transform", `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+//   })
+// }
 
 // makes the player's label bold while it's their turn
 export const updateBoldLabel = (playerIndex) => {
