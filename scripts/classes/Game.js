@@ -101,7 +101,8 @@ export default class Game {
     }
 
     // the suit of the first card played
-    const playedSuit = this.thrownCards[0][1].suit;
+    const playedCard = this.throwCards[0];
+    const playedSuit = playedCard.card.suit;
 
     // valid if the suits are identical
     if (card.suit === playedSuit) {
@@ -139,25 +140,25 @@ export default class Game {
   }
 
   determineTrickWinner() {
-    const firstCard = this.thrownCards[0][1];
+    const firstCard = this.thrownCards[0].card;
 
     // removing all the cards that don't match the played suit or the trump suit
     for (let i = 0; i < this.thrownCards.length; i++) {
-      const card = this.thrownCards[i][1];
+      const card = this.thrownCards[i].card;
       if (card.suit !== firstCard.suit && card.suit !== this.trumpSuit) {
         this.thrownCards.splice(i, 1);
         i--;
       } else if (card.suit === this.trumpSuit) {
-        this.thrownCards = this.thrownCards.filter((cardPair) => cardPair[1].suit === this.trumpSuit);
+        this.thrownCards = this.thrownCards.filter((cardPair) => cardPair.card.suit === this.trumpSuit);
         break;
       }
     }
 
     // sorting the list by descending values
-    this.thrownCards.sort((a, b) => b[1].value - a[1].value);
+    this.thrownCards.sort((a, b) => b.card.value - a.card.value);
 
     // getting the winner and giving him the trick
-    const winningPlayerIndex = this.thrownCards[0][0].index;
+    const winningPlayerIndex = this.thrownCards[0].player.index;
     this.players[winningPlayerIndex - 1].tricks++;
 
     this.thrownCards = [];
