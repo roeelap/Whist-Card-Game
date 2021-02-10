@@ -101,7 +101,7 @@ export default class Game {
     }
 
     // the suit of the first card played
-    const playedCard = this.throwCards[0];
+    const playedCard = this.thrownCards[0];
     const playedSuit = playedCard.card.suit;
 
     // valid if the suits are identical

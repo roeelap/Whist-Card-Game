@@ -123,7 +123,7 @@ export default class AI {
       return AI.getIndexOfHighestCardInHand(cards);
     }
 
-    const playedCard = game.throwCards[0];
+    const playedCard = game.thrownCards[0];
     const playedSuit = playedCard.card.suit;
 
     if (cards.filter((card) => card.suit === playedSuit).length > 0) {
