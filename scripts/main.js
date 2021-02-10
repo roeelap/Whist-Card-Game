@@ -206,7 +206,7 @@ export const onCardClicked = (cardImg) => {
   $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
   // removing the card from the player's hand
-  game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
+  game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
 
   $(cardImg).remove();
 

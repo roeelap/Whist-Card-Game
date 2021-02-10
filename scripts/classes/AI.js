@@ -123,7 +123,8 @@ export default class AI {
       return AI.getIndexOfHighestCardInHand(cards);
     }
 
-    const playedSuit = game.thrownCards[0][1].suit;
+    const playedCard = game.throwCards[0];
+    const playedSuit = playedCard.card.suit;
 
     if (cards.filter((card) => card.suit === playedSuit).length > 0) {
       for (let i = cards.length - 1; i > -1; i--) {
@@ -143,7 +144,8 @@ export default class AI {
       return AI.getIndexOfLowestCardInHand(cards);
     }
 
-    const playedSuit = game.thrownCards[0][1].suit;
+    const playedCard = game.throwCards[0];
+    const playedSuit = playedCard.card.suit;
 
     if (cards.filter((card) => card.suit === playedSuit).length > 0) {
       for (let i = 0; i < cards.length; i++) {
@@ -163,7 +165,7 @@ export default class AI {
     $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
-    game.thrownCards.push([player, player.cards.splice(index, 1)[0]]);
+    game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
 
     // next turn
     game.nextTurn();
