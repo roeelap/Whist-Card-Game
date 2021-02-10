@@ -147,7 +147,7 @@ const onTricksBidButtonClicked = (bidButton) => {
 const printRoundCards = () => {
   let printMsg = '';
   for (let card of game.thrownCards) {
-    printMsg += `player: ${card[0].index}, card: ${card[1].value},${card[1].suit}\n`;
+    printMsg += `player: ${card.player.index}, card: ${card.card.value},${card.card.suit}\n`;
   }
   console.log(printMsg);
 };
