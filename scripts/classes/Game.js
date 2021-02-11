@@ -29,6 +29,18 @@ export default class Game {
     return this.firstPlayerToPlay + 1;
   }
 
+  calculateRemainingCards() {
+    for (const player of this.players) {
+      let remainingCards = [];
+      for (let i = 1; i <= 4; i++) {
+        if (player.index !== i) {
+          remainingCards.push(...this.players[i - 1].cards);
+        }
+      }
+      player.remainingCards = remainingCards;
+    }
+  }
+
   newRound(isAllPassed) {
     this.highestBid = 5;
     this.trumpSuit = 0;
@@ -135,6 +147,7 @@ export default class Game {
       this.turn++;
     }
 
+    this.calculateRemainingCards();
     reRenderTables(this);
     updateBoldLabel(this.turn);
   }

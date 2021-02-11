@@ -1,13 +1,11 @@
 import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
+import Player from './Player.js';
+import * as cardIndexes from '../static/cardIndexes.js';
 
-export default class AI {
-  static isCardInArray(array, value) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].value === value) {
-        return true;
-      }
-    }
-    return false;
+export default class AI extends Player {
+  constructor(index) {
+    super(index);
+    this.remainingCards = [];
   }
 
   static divideCardsBySuits(cards) {
@@ -96,55 +94,36 @@ export default class AI {
     return bid - 1;
   }
 
-  static getIndexOfHighestCardInHand(cards) {
-    let highestCardIndex = 0;
-    for (let i = 1; i < cards.length; i++) {
-      if (cards[i].value > cards[highestCardIndex].value) {
-        highestCardIndex = i;
-      }
+  startingTheRoundOver() {
+    const indexOfHighest = cardIndexes.getIndexOfHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
+
+    if (!indexOfHighest) {
+      return; // If only trump cards in hand TODO
     }
-    return highestCardIndex;
+
+    const isHighestCard = cardIndexes.isHighestCardOfSameSuit(this.cards[indexOfHighest], this.remainingCards);
+    if (!isHighestCard) {
+      return; // If not highest card TODO
+    }
+
+    return indexOfHighest;
   }
 
-  static getIndexOfLowestCardInHand(cards) {
-    let lowestCardIndex = 0;
-    for (let i = 1; i < cards.length; i++) {
-      if (cards[i].value < cards[lowestCardIndex].value) {
-        lowestCardIndex = i;
-      }
-    }
-    return lowestCardIndex;
-  }
-
-  static getCardToThrowOver(game, player) {
-    const cards = player.cards;
-
+  getThrowingCardIndexOver() {
+    // if starting the game
     if (game.thrownCards.length === 0) {
-      return AI.getIndexOfHighestCardInHand(cards);
+      return this.startingTheRoundOver();
+    }
+
+    return cardIndexes.getIndexOfLowestCardInHand(this.cards);
+  }
+
+  getThrowingCardIndexUnder() {
+    if (game.thrownCards.length === 0) {
+      return cardIndexes.getIndexOfLowestCardInHand(this.cards);
     }
 
     const playedCard = game.thrownCards[0];
-    const playedSuit = playedCard.card.suit;
-
-    if (cards.filter((card) => card.suit === playedSuit).length > 0) {
-      for (let i = cards.length - 1; i > -1; i--) {
-        if (cards[i].suit === playedSuit) {
-          return i;
-        }
-      }
-    }
-
-    return AI.getIndexOfLowestCardInHand(cards);
-  }
-
-  static getCardToThrowUnder(game, player) {
-    const cards = player.cards;
-
-    if (game.thrownCards.length === 0) {
-      return AI.getIndexOfLowestCardInHand(cards);
-    }
-
-    const playedCard = game.throwCards[0];
     const playedSuit = playedCard.card.suit;
 
     if (cards.filter((card) => card.suit === playedSuit).length > 0) {
@@ -155,17 +134,19 @@ export default class AI {
       }
     }
 
-    return AI.getIndexOfHighestCardInHand(cards);
+    return cardIndexes.getIndexOfHighestCardInHand(cards);
   }
 
-  static throwCard = (player, index) => {
+  throwCard = () => {
+    const thrownCardIndex = game.roundMode > 0 ? this.getThrowingCardIndexOver() : this.getThrowingCardIndexUnder();
+
     // putting the clicked card on the game board
-    const img = player.cards[index].getImage();
-    const playerCardId = `#player${player.index}Card`;
+    const img = this.cards[thrownCardIndex].getImage();
+    const playerCardId = `#player${this.index}Card`;
     $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
 
     // removing the card from the player's hand
-    game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
+    game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });
 
     // next turn
     game.nextTurn();

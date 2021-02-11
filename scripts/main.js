@@ -17,8 +17,9 @@ import { updateScore } from './static/scoreCalculations.js';
 
 const newGame = () => {
   let players = [];
-  for (let i = 1; i <= 4; i++) {
-    players.push(new Player(i));
+  players.push(new Player(1));
+  for (let i = 2; i <= 4; i++) {
+    players.push(new AI(i));
   }
 
   return new Game(players);
@@ -159,7 +160,7 @@ const gameRound = () => {
   if (game.thrownCards.length === 4) {
     printRoundCards();
     return setTimeout(() => {
-      console.log(game.determineTrickWinner());
+      console.log(`Winner: player ${game.determineTrickWinner()}`);
       reRenderTables(game);
       clearCardImages();
       return gameRound();
@@ -179,12 +180,8 @@ const gameRound = () => {
   }
 
   // AI turn
-  const player = game.players[game.turn - 1];
-  if (game.roundMode > 0) {
-    AI.throwCard(player, AI.getCardToThrowOver(game, player));
-    return gameRound();
-  }
-  AI.throwCard(player, AI.getCardToThrowUnder(game, player));
+  const ai = game.players[game.turn - 1];
+  ai.throwCard();
   return gameRound();
 };
 
