@@ -7,6 +7,14 @@
 //   return false;
 // }
 
+export const getCardIndex = (card, cards) => {
+  for (const [index, cardEntry] of cards.entries()) {
+    if (card.suit === cardEntry.suit && card.value === cardEntry.value) {
+      return index;
+    }
+  }
+};
+
 export const getIndexOfHighestCardInHand = (cards) => {
   let highestCardIndex = 0;
   for (let i = 1; i < cards.length; i++) {
@@ -20,6 +28,29 @@ export const getIndexOfHighestCardInHand = (cards) => {
 export const getIndexOfLowestCardInHand = (cards) => {
   let lowestCardIndex = 0;
   for (let i = 1; i < cards.length; i++) {
+    if (cards[i].value < cards[lowestCardIndex].value) {
+      lowestCardIndex = i;
+    }
+  }
+  return lowestCardIndex;
+};
+
+export const getIndexOfLowestCardExcludingTrumpSuit = (cards, trumpSuit) => {
+  let lowestCardIndex = 0;
+  while (cards[lowestCardIndex].suit === trumpSuit && lowestCardIndex < cards.length) {
+    lowestCardIndex++;
+  }
+
+  // only trump cards
+  if (lowestCardIndex === cards.length) {
+    return null;
+  }
+
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].suit === trumpSuit) {
+      continue;
+    }
+
     if (cards[i].value < cards[lowestCardIndex].value) {
       lowestCardIndex = i;
     }
@@ -60,6 +91,6 @@ export const isHighestCardOfSameSuit = (card, cards) => {
       return false;
     }
   }
-  
+
   return true;
 };

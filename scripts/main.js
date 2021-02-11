@@ -102,6 +102,12 @@ const tricksBidRound = () => {
   // Tricks round ended
   if (game.trickBidsMade === 4) {
     $('#roundMode').html(`<td><strong>${game.getRoundMode()}</strong></td>`);
+
+    // update playing mode for AI
+    for (let ai of game.players) {
+      ai.playingMode = game.roundMode;
+    }
+
     return gameRound();
   }
 

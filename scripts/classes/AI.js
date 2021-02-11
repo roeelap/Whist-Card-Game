@@ -3,9 +3,10 @@ import Player from './Player.js';
 import * as cardIndexes from '../static/cardIndexes.js';
 
 export default class AI extends Player {
-  constructor(index) {
+  constructor(index, roundMode) {
     super(index);
     this.remainingCards = [];
+    this.playingMode = roundMode;
   }
 
   static divideCardsBySuits(cards) {
@@ -97,22 +98,55 @@ export default class AI extends Player {
   startingTheRoundOver() {
     const indexOfHighest = cardIndexes.getIndexOfHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
 
+    // only trump cards in hand - pick random one
     if (!indexOfHighest) {
-      return; // If only trump cards in hand TODO
+      return Math.floor(Math.random() * this.cards.length);
     }
 
     const isHighestCard = cardIndexes.isHighestCardOfSameSuit(this.cards[indexOfHighest], this.remainingCards);
+
+    // if not the highest, throw the lowest card
     if (!isHighestCard) {
-      return; // If not highest card TODO
+      return cardIndexes.getIndexOfLowestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
     }
 
     return indexOfHighest;
+  }
+
+  // returns cards AND INDEXES
+  getPlayableCards(playedSuit) {
+    let playableCards = [];
+    for (const [index, card] of this.cards.entries()) {
+      if (card.suit === playedSuit) {
+        playableCards.push({ index, card });
+      }
+    }
+
+    if (!playableCards.length) {
+      return this.cards;
+    }
+
+    return playableCards;
   }
 
   getThrowingCardIndexOver() {
     // if starting the game
     if (game.thrownCards.length === 0) {
       return this.startingTheRoundOver();
+    }
+
+    const playedCard = game.thrownCards[0];
+    const playedSuit = playedCard.card.suit;
+    const playableCards = this.getPlayableCards(playedSuit);
+
+    // can play any cards
+    if (playableCards.length === this.cards.length) {
+      return; // TODO - put trump over any card played
+    }
+
+    const highestCardOfPlayableCard = playableCards[playableCards.length - 1];
+    if (cardIndexes.isHighestCardOfSameSuit(highestCardOfPlayableCard.card, this.remainingCards)) {
+      return highestCardOfPlayableCard.index;
     }
 
     return cardIndexes.getIndexOfLowestCardInHand(this.cards);
@@ -138,7 +172,7 @@ export default class AI extends Player {
   }
 
   throwCard = () => {
-    const thrownCardIndex = game.roundMode > 0 ? this.getThrowingCardIndexOver() : this.getThrowingCardIndexUnder();
+    const thrownCardIndex = this.playingMode > 0 ? this.getThrowingCardIndexOver() : this.getThrowingCardIndexUnder();
 
     // putting the clicked card on the game board
     const img = this.cards[thrownCardIndex].getImage();
@@ -147,6 +181,11 @@ export default class AI extends Player {
 
     // removing the card from the player's hand
     game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });
+
+    // calculate playingMode for AI
+    if (this.tricks == this.bid) {
+      this.playingMode = -1;
+    }
 
     // next turn
     game.nextTurn();
