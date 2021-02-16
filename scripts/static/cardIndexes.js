@@ -1,11 +1,11 @@
-// export const isCardInArray = (array, value)=> {
-//   for (let i = 0; i < array.length; i++) {
-//     if (array[i].value === value) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+export const isCardInArray = (array, value)=> {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].value === value) {
+      return true;
+    }
+  }
+  return false;
+}
 
 export const getCardIndex = (card, cards) => {
   for (const [index, cardEntry] of cards.entries()) {

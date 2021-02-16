@@ -141,7 +141,7 @@ export default class AI extends Player {
 
     // can play any cards
     if (playableCards.length === this.cards.length) {
-      return; // TODO - put trump over any card played
+      return; // TODO - put lowest trump card, if no trump card available, put the lowest card in hand.
     }
 
     const highestCardOfPlayableCard = playableCards[playableCards.length - 1];
