@@ -117,9 +117,9 @@ export const isHighestCardOfSameSuit = (card, cards) => {
   return true;
 };
 
-export const isCardWinningInUnder = (card, cards) => {
-  let lowerCardsCounter = 0
-  for (const cardInstance of cards) {
+export const isCardWinningInUnder = (card, remainingCards) => {
+  let lowerCardsCounter = 0;
+  for (const cardInstance of remainingCards) {
     if (card.suit !== cardInstance.suit) {
       continue;
     }
@@ -130,8 +130,17 @@ export const isCardWinningInUnder = (card, cards) => {
   }
 
   if (lowerCardsCounter >= 3) {
-    return false;
+    return true;
   }
 
-  return true;
+  return false;
+};
+
+export const getLosingCard = (cards, remainingCards) => {
+  for (const card of cards) {
+    if (isCardWinningInUnder(card, remainingCards)) {
+      return card;
+    }
+  }
+  return null;
 };
