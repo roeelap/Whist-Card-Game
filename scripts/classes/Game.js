@@ -148,7 +148,6 @@ export default class Game {
       this.turn++;
     }
 
-    this.calculateRemainingCards();
     reRenderTables(this);
     updateBoldLabel(this.turn);
   }

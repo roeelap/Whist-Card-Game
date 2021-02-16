@@ -162,6 +162,11 @@ const printRoundCards = () => {
 const gameRound = () => {
   // check if round has ended and calculate scores
 
+  // calculate remaining cards at the start of each round
+  if (game.thrownCards.length === 0) {
+    game.calculateRemainingCards();
+  }
+
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
     printRoundCards();

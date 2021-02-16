@@ -37,14 +37,44 @@ export const getHighestCardInHand = (cards) => {
   return highestCard;
 };
 
-export const getLowestTrumpCard = (cards, trumpSuit) => {
+export const getLowestWinningTrumpCard = (cards, trumpSuit, thrownCards) => {
+  const highestThrownTrumpCard = highestThrownTrumpCard(thrownCards, trumpSuit);
+
   for (const card of cards) {
-    if (card.suit === trumpSuit) {
+    if (card.suit === trumpSuit && card.value > highestThrownTrumpCard.value) {
       return card;
     }
   }
 
   return null;
+};
+
+export const getTrumpCard = (cards, trumpSuit) => {
+  for (const card of cards) {
+    if (card.suit === trumpSuit) {
+      return card;
+    }
+  }
+  return null;
+};
+
+export const highestThrownTrumpCard = (thrownCards, trumpSuit) => {
+  let highest = getTrumpCard(thrownCards, trumpSuit);
+
+  if (!highest) {
+    return null;
+  }
+
+  for (const card of thrownCards) {
+    if (card.suit !== trumpSuit) {
+      continue;
+    }
+
+    if (card.value > highest.value) {
+      highest = card;
+    }
+  }
+  return highest;
 };
 
 export const getLowestCardInHand = (cards) => {
@@ -82,7 +112,7 @@ export const getLowestCardExcludingTrumpSuit = (cards, trumpSuit) => {
 
 export const getHighestCardExcludingTrumpSuit = (cards, trumpSuit) => {
   let highestCardIndex = 0;
-  while (cards[highestCardIndex].suit === trumpSuit && highestCardIndex < cards.length) {
+  while (highestCardIndex < cards.length && cards[highestCardIndex].suit === trumpSuit) {
     highestCardIndex++;
   }
 
@@ -117,7 +147,7 @@ export const isHighestCardOfSameSuit = (card, cards) => {
   return true;
 };
 
-export const isCardWinningInUnder = (card, remainingCards) => {
+export const isCardLosingInUnder = (card, remainingCards) => {
   let lowerCardsCounter = 0;
   for (const cardInstance of remainingCards) {
     if (card.suit !== cardInstance.suit) {
@@ -130,15 +160,15 @@ export const isCardWinningInUnder = (card, remainingCards) => {
   }
 
   if (lowerCardsCounter >= 3) {
-    return true;
+    return false;
   }
 
-  return false;
+  return true;
 };
 
 export const getLosingCard = (cards, remainingCards) => {
   for (const card of cards) {
-    if (isCardWinningInUnder(card, remainingCards)) {
+    if (isCardLosingInUnder(card, remainingCards)) {
       return card;
     }
   }

@@ -121,7 +121,7 @@ export default class AI extends Player {
       return this.cards[Math.floor(Math.random() * this.cards.length)];
     }
 
-    const isLowestCard = cardIndexes.isCardWinningInUnder(this.cards[lowestCard], this.remainingCards);
+    const isLowestCard = cardIndexes.isCardLosingInUnder(this.cards[lowestCard], this.remainingCards);
 
     // if lowest card not found, return the certain losing card
     if (!isLowestCard) {
@@ -165,9 +165,9 @@ export default class AI extends Player {
 
     // can play any cards
     if (playableCards.length === this.cards.length) {
-      const lowestTrumpCard = cardIndexes.getLowestTrumpCard(this.cards, game.trumpSuit);
-      if (lowestTrumpCard) {
-        return lowestTrumpCard;
+      const lowestWinningTrumpCard = cardIndexes.getLowestWinningTrumpCard(this.cards, game.trumpSuit,game.thrownCards);
+      if (lowestWinningTrumpCard ) {
+        return lowestWinningTrumpCard;
       }
       // if no trump cards in hand, put the lowest card
       return cardIndexes.getLowestCardInHand(this.cards);
@@ -180,7 +180,7 @@ export default class AI extends Player {
     }
 
     // if none of the above, put lowest card in hand
-    return cardIndexes.getLowestCardInHand(this.cards);
+    return cardIndexes.getLowestCardInHand(playableCards);
   }
 
   getThrowingCardUnder() {
