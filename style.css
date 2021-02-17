@@ -19,10 +19,22 @@ body {
   transition: 0.3s;
   backface-visibility: hidden;
   transform: translateZ(0) scale(1, 1);
+  
 }
 
 .cardImage:hover {
   transform: translateY(-15px);
+}
+
+.dark {
+  filter: brightness(85%);
+  transform: translateY(15px);
+  box-shadow: none;
+  cursor: default;
+}
+
+.highlight {
+  box-shadow: 0 0 10px white;
 }
 
 #player {

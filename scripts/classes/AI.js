@@ -140,22 +140,6 @@ export default class AI extends Player {
     return lowestCard;
   }
 
-  // returns cards
-  getPlayableCards(playedSuit) {
-    let playableCards = [];
-    for (const card of this.cards) {
-      if (card.suit === playedSuit) {
-        playableCards.push(card);
-      }
-    }
-
-    if (!playableCards.length) {
-      return this.cards;
-    }
-
-    return playableCards;
-  }
-
   getThrowingCardOver() {
     // if starting the game
     if (game.thrownCards.length === 0) {
@@ -164,7 +148,7 @@ export default class AI extends Player {
 
     const playedCard = game.thrownCards[0];
     const playedSuit = playedCard.card.suit;
-    const playableCards = this.getPlayableCards(playedSuit);
+    const playableCards = cf.getPlayableCards(this.cards, playedSuit);
 
     // can play any cards
     if (playableCards.length === this.cards.length) {
@@ -200,7 +184,7 @@ export default class AI extends Player {
 
     const playedCard = game.thrownCards[0];
     const playedSuit = playedCard.card.suit;
-    const playableCards = this.getPlayableCards(playedSuit);
+    const playableCards = cf.getPlayableCards(this.cards, playedSuit);
 
     // can play any cards
     if (playableCards.length === this.cards.length) {

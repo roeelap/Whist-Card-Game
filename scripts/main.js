@@ -12,6 +12,7 @@ import {
   createTrickBidButtons,
   clearCardImages,
   collapseGameInfo,
+  highlightPlayableCards,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -187,6 +188,8 @@ const gameRound = () => {
 
   // player turn
   if (game.turn === 1) {
+    const playedSuit = game.thrownCards.length ? game.thrownCards[0].card.suit : null;
+    highlightPlayableCards(game.players[0].cards, playedSuit);
     return changeCardClickable(true);
   }
 

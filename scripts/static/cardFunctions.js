@@ -183,3 +183,33 @@ export const getLosingCard = (cards, remainingCards) => {
   }
   return null;
 };
+
+export const getPlayableCards = (cards, playedSuit) => {
+  let playableCards = [];
+  for (const card of cards) {
+    if (card.suit === playedSuit) {
+      playableCards.push(card);
+    }
+  }
+
+  if (!playableCards.length) {
+    return cards;
+  }
+
+  return playableCards;
+};
+
+export const getUnplayableCards = (cards, playedSuit) => {
+  let unplayableCards = [];
+  for (const card of cards) {
+    if (card.suit !== playedSuit) {
+      unplayableCards.push(card);
+    }
+  }
+
+  if ((unplayableCards.length === cards.length)) {
+    return [];
+  }
+
+  return unplayableCards;
+};

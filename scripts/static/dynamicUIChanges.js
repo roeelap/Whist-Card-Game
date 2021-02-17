@@ -1,5 +1,5 @@
-import { onCardClicked } from '../main.js';
 import { SUITS_TO_PICTURES } from './consts.js';
+import { getUnplayableCards, getCardIndex } from './cardFunctions.js';
 
 export const showSuitButtons = (isShow) => {
   if (isShow) {
@@ -148,10 +148,33 @@ export const clearCardImages = () => {
 
 export const collapseGameInfo = (button) => {
   if ($(button).hasClass('accordion-button-active')) {
-      $(button).removeClass('accordion-button-active');
-      $("#info").css('maxHeight', '0');
+    $(button).removeClass('accordion-button-active');
+    $('#info').css('maxHeight', '0');
   } else {
-      $(button).addClass('accordion-button-active');
-      $("#info").css('maxHeight', '200px');
-  };
-}
+    $(button).addClass('accordion-button-active');
+    $('#info').css('maxHeight', '200px');
+  }
+};
+
+const removeAllFilters = (cardTags) => {
+  for (const cardTag of cardTags) {
+    $(cardTag).removeClass('dark highlight');
+  }
+};
+
+export const highlightPlayableCards = (cards, playedSuit) => {
+  const unplayableCards = playedSuit ? getUnplayableCards(cards, playedSuit) : [];
+  const cardImages = $('.cardImage');
+
+  removeAllFilters(cardImages);
+
+  for (const card of cards) {
+    const cardIndex = getCardIndex(card, cards);
+    // if card unplayable - darken, else - highlight.
+    if (unplayableCards.some((unplayableCard) => unplayableCard.value === card.value && unplayableCard.suit === card.suit)) {
+      $(cardImages[cardIndex]).addClass('dark');
+    } else {
+      $(cardImages[cardIndex]).addClass('highlight');
+    }
+  }
+};
