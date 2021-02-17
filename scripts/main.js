@@ -13,7 +13,7 @@ import {
   clearCardImages,
   collapseGameInfo,
   highlightPlayableCards,
-  makeHandRotated
+  makeHandRotated,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -191,6 +191,7 @@ const gameRound = () => {
   if (game.turn === 1) {
     const playedSuit = game.thrownCards.length ? game.thrownCards[0].card.suit : null;
     highlightPlayableCards(game.players[0].cards, playedSuit);
+    makeHandRotated(game.players[0].cards.length);
     return changeCardClickable(true);
   }
 
@@ -221,10 +222,6 @@ export const onCardClicked = (cardImg) => {
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
 
   $(cardImg).remove();
-
-  // making the cards in the player's hand look rotated (like a fan)
-  makeHandRotated(game.players[0].cards.length);
-
   changeCardClickable(false);
 
   // next turn

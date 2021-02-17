@@ -44,9 +44,18 @@ export const showCards = (playerCards) => {
 
 export const makeHandRotated = (playerCardsLength) => {
   $.each($('.cardImage'), (index, card) => {
-    let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
-    let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
-    $(card).css('transform', `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+    const yPos = (index + 0.5 - playerCardsLength / 2) ** 2;
+    const rotationAngle = (index - (playerCardsLength - 1) / 2) * 2;
+    $(card).attr('style', `transform: translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+
+    $(card).hover(
+      function () {
+        $(this).attr('style', `transform: translate(${rotationAngle / 5}px, ${yPos - 20}px) rotate(${rotationAngle}deg)`);
+      },
+      function () {
+        $(this).attr('style', `transform: translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+      }
+    );
   });
 };
 

@@ -21,19 +21,20 @@ body {
   transform: translateZ(0) scale(1, 1);
 }
 
-.cardImage:hover {
-  transform: translateY(-15px);
-}
+/* .cardImage:hover {
+  transform: translateY(-15px) !important;
+  transform: translateX(-15%) !important;
+} */
 
 .dark {
   filter: brightness(85%);
-  transform: translateY(15px);
   box-shadow: none;
   cursor: default;
 }
 
 .highlight {
-  box-shadow: 0 0 10px white;
+  border-radius: 12px;
+  box-shadow: 0 0 5px white;
 }
 
 #player {
