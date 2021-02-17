@@ -1,6 +1,6 @@
 import Deck from './Deck.js';
 import { reRenderTables, updateBoldLabel } from '../static/dynamicUIChanges.js';
-import * as cardIndexes from '../static/cardIndexes.js';
+import * as cardIndexes from '../static/cardFunctions.js';
 
 export default class Game {
   constructor(players) {

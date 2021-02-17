@@ -21,11 +21,17 @@ export const getHighestThrownCard = (thrownCards) => {
 };
 
 export const getHighestLosingCard = (cards, highestCard) => {
-  for (const card of cards) {
-    if (card.value > highestCard) {
-      return card;
+  for (let i = 0; i < cards.length - 1; i++) {
+    if (cards[i].value < highestCard.value && cards[i + 1].value > highestCard.value) {
+      return cards[i];
     }
   }
+
+  const lastCard = cards[cards.length - 1];
+  if (lastCard.value < highestCard.value) {
+    return lastCard;
+  }
+
   return null;
 };
 
@@ -39,7 +45,7 @@ export const getHighestCardInHand = (cards) => {
   return highestCard;
 };
 
-const getTrumpCard = (thrownCards, trumpSuit) => {
+export const getTrumpCard = (thrownCards, trumpSuit) => {
   for (const cardInstance of thrownCards) {
     if (cardInstance.card.suit === trumpSuit) {
       return cardInstance.card;
@@ -92,7 +98,7 @@ export const getLowestCardInHand = (cards) => {
 
 export const getLowestCardExcludingTrumpSuit = (cards, trumpSuit) => {
   let lowestCardIndex = 0;
-  while (cards[lowestCardIndex].suit === trumpSuit && lowestCardIndex < cards.length) {
+  while (lowestCardIndex < cards.length && cards[lowestCardIndex].suit === trumpSuit) {
     lowestCardIndex++;
   }
 

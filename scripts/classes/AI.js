@@ -1,6 +1,6 @@
 import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
 import Player from './Player.js';
-import * as cardIndexes from '../static/cardIndexes.js';
+import * as cf from '../static/cardFunctions.js';
 
 export default class AI extends Player {
   constructor(index, roundMode) {
@@ -96,40 +96,40 @@ export default class AI extends Player {
   }
 
   startingTheRoundOver() {
-    const HighestCard = cardIndexes.getHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
+    const HighestCard = cf.getHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
 
     // only trump cards in hand - pick random one
     if (!HighestCard) {
       return this.cards[Math.floor(Math.random() * this.cards.length)];
     }
 
-    const isHighestCard = cardIndexes.isHighestCardOfSameSuit(HighestCard, this.remainingCards);
+    const isHighestCard = cf.isHighestCardOfSameSuit(HighestCard, this.remainingCards);
 
     // if not the highest, throw the lowest card
     if (!isHighestCard) {
-      return cardIndexes.getLowestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
+      return cf.getLowestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
     }
 
     return HighestCard;
   }
 
   startingTheRoundUnder() {
-    const lowestCard = cardIndexes.getLowestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
+    const lowestCard = cf.getLowestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
 
     // only trump cards in hand - pick random one
     if (!lowestCard) {
       return this.cards[Math.floor(Math.random() * this.cards.length)];
     }
 
-    const isLowestCard = cardIndexes.isCardLosingInUnder(lowestCard, this.remainingCards);
+    const isLowestCard = cf.isCardLosingInUnder(lowestCard, this.remainingCards);
 
     // if lowest card not found, return the certain losing card
     if (!isLowestCard) {
-      const losingCard = cardIndexes.getLosingCard(this.cards, this.remainingCards);
+      const losingCard = cf.getLosingCard(this.cards, this.remainingCards);
 
       // if no certain losing card, return the lowest card in hand
       if (!losingCard) {
-        return cardIndexes.getLowestCardInHand(this.cards);
+        return cf.getLowestCardInHand(this.cards);
       }
       return losingCard;
     }
@@ -165,22 +165,28 @@ export default class AI extends Player {
 
     // can play any cards
     if (playableCards.length === this.cards.length) {
-      const lowestWinningTrumpCard = cardIndexes.getLowestWinningTrumpCard(this.cards, game.trumpSuit,game.thrownCards);
-      if (lowestWinningTrumpCard ) {
+      const lowestWinningTrumpCard = cf.getLowestWinningTrumpCard(this.cards, game.trumpSuit, game.thrownCards);
+      if (lowestWinningTrumpCard) {
         return lowestWinningTrumpCard;
       }
       // if no trump cards in hand, put the lowest card
-      return cardIndexes.getLowestCardInHand(this.cards);
+      return cf.getLowestCardInHand(this.cards);
+    }
+
+    // check if trump card has been played. If so - put lowest playable card
+    const playedTrumpCard = cf.getTrumpCard(game.thrownCards, game.trumpSuit);
+    if (playedTrumpCard) {
+      return cf.getLowestCardInHand(playableCards);
     }
 
     // can play only of specific suit
     const highestPlayableCard = playableCards[playableCards.length - 1];
-    if (cardIndexes.isHighestCardOfSameSuit(highestPlayableCard, this.remainingCards)) {
+    if (cf.isHighestCardOfSameSuit(highestPlayableCard, this.remainingCards)) {
       return highestPlayableCard;
     }
 
     // if none of the above, put lowest card in hand
-    return cardIndexes.getLowestCardInHand(playableCards);
+    return cf.getLowestCardInHand(playableCards);
   }
 
   getThrowingCardUnder() {
@@ -195,31 +201,29 @@ export default class AI extends Player {
 
     // can play any cards
     if (playableCards.length === this.cards.length) {
-      const highestCardInHand = cardIndexes.getHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
+      const highestCardInHand = cf.getHighestCardExcludingTrumpSuit(this.cards, game.trumpSuit);
       if (highestCardInHand) {
         return highestCardInHand;
       }
       // only trump cards in hand
-      return cardIndexes.getHighestCardInHand(this.cards);
+      return cf.getHighestCardInHand(this.cards);
     }
 
-    // can play only of specific suit
-
-    // put highest card that cannot win
-    const highestThrownCard = cardIndexes.getHighestThrownCard(game.thrownCards);
-    const highestLosingCard = cardIndexes.getHighestLosingCard(playableCards, highestThrownCard);
+    // can play only of specific suit - put highest card that cannot win
+    const highestThrownCard = cf.getHighestThrownCard(game.thrownCards);
+    const highestLosingCard = cf.getHighestLosingCard(playableCards, highestThrownCard);
 
     if (highestLosingCard) {
       return highestLosingCard;
     }
 
     // if none of the above, put highest card in hand
-    return cardIndexes.getHighestCardInHand(playableCards);
+    return cf.getHighestCardInHand(playableCards);
   }
 
   throwCard = () => {
     const thrownCard = this.playingMode > 0 ? this.getThrowingCardOver() : this.getThrowingCardUnder();
-    const thrownCardIndex = cardIndexes.getCardIndex(thrownCard, this.cards);
+    const thrownCardIndex = cf.getCardIndex(thrownCard, this.cards);
 
     // putting the card on the game board
     const img = this.cards[thrownCardIndex].getImage();

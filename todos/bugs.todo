@@ -3,5 +3,5 @@
 ☐ set timeout on ai round doesn't work
 ☐ AI is dumb
 ☐ Under - AI is not throwing losing card
-☐ Over - will still put their highest card after someone put trump card
+✔ Over - will still put their highest card after someone put trump card @done(21-02-17 17:09)
 ☐ Round number doesn't change (UI)
