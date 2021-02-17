@@ -16,10 +16,9 @@ body {
   cursor: pointer;
   margin-right: -60px;
   position: relative;
-  transition: 0.3s;
+  transition: 0.5s;
   backface-visibility: hidden;
   transform: translateZ(0) scale(1, 1);
-  
 }
 
 .cardImage:hover {

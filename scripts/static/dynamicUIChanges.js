@@ -39,17 +39,16 @@ export const showCards = (playerCards) => {
     index++;
   });
   $('#player').html(output);
-  // makeHandRotated(playerCards.length)
+  makeHandRotated(playerCards.length);
 };
 
-// export const makeHandRotated = (playerCardsLength) => {
-//   $.each($(".cardImage"), (index, card) => {
-//     // let rotationAngle = (index - playerCards.length)
-//     let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
-//     let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
-//     $(card).css("transform", `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
-//   })
-// }
+export const makeHandRotated = (playerCardsLength) => {
+  $.each($('.cardImage'), (index, card) => {
+    let yPos = (index - Math.floor(playerCardsLength / 2)) ** 2;
+    let rotationAngle = (index - Math.floor(playerCardsLength / 2)) * 2;
+    $(card).css('transform', `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+  });
+};
 
 // makes the player's label bold while it's their turn
 export const updateBoldLabel = (playerIndex) => {
@@ -156,17 +155,17 @@ export const collapseGameInfo = (button) => {
   }
 };
 
-const removeAllFilters = (cardTags) => {
-  for (const cardTag of cardTags) {
-    $(cardTag).removeClass('dark highlight');
-  }
+const removeAllFilters = () => {
+  $.each($('.cardImage'), (index, card) => {
+    $(card).removeClass('dark highlight');
+  });
 };
 
 export const highlightPlayableCards = (cards, playedSuit) => {
   const unplayableCards = playedSuit ? getUnplayableCards(cards, playedSuit) : [];
   const cardImages = $('.cardImage');
 
-  removeAllFilters(cardImages);
+  removeAllFilters();
 
   for (const card of cards) {
     const cardIndex = getCardIndex(card, cards);
