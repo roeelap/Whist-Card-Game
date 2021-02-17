@@ -21,11 +21,6 @@ body {
   transform: translateZ(0) scale(1, 1);
 }
 
-/* .cardImage:hover {
-  transform: translateY(-15px) !important;
-  transform: translateX(-15%) !important;
-} */
-
 .dark {
   filter: brightness(85%);
   box-shadow: none;
