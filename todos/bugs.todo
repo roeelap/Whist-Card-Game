@@ -1,4 +1,7 @@
 ✔ New round doesn't reset card images @done(21-01-30 17:48)
-☐ set timeout on ai round doesn't work
-☐ AI is dumb af
 ✔ Check if score calc. is corrected @done(21-02-01 00:53)
+☐ set timeout on ai round doesn't work
+☐ AI is dumb
+☐ Under - AI is not throwing losing card
+☐ Over - will still put their highest card after someone put trump card
+☐ Round number doesn't change (UI)

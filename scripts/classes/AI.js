@@ -121,7 +121,7 @@ export default class AI extends Player {
       return this.cards[Math.floor(Math.random() * this.cards.length)];
     }
 
-    const isLowestCard = cardIndexes.isCardLosingInUnder(this.cards[lowestCard], this.remainingCards);
+    const isLowestCard = cardIndexes.isCardLosingInUnder(lowestCard, this.remainingCards);
 
     // if lowest card not found, return the certain losing card
     if (!isLowestCard) {

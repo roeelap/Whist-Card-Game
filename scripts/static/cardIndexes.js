@@ -1,3 +1,5 @@
+import { Card } from '../classes/Deck.js';
+
 export const getCardIndex = (card, cards) => {
   for (const [index, cardEntry] of cards.entries()) {
     if (card.suit === cardEntry.suit && card.value === cardEntry.value) {
@@ -37,8 +39,37 @@ export const getHighestCardInHand = (cards) => {
   return highestCard;
 };
 
+const getTrumpCard = (thrownCards, trumpSuit) => {
+  for (const cardInstance of thrownCards) {
+    if (cardInstance.card.suit === trumpSuit) {
+      return cardInstance.card;
+    }
+  }
+  return null;
+};
+
+const getHighestThrownTrumpCard = (thrownCards, trumpSuit) => {
+  let highest = getTrumpCard(thrownCards, trumpSuit);
+
+  // returning new card with value 0 (to be ignored)
+  if (!highest) {
+    return new Card(0, 0);
+  }
+
+  for (const cardInstance of thrownCards) {
+    if (cardInstance.card.suit !== trumpSuit) {
+      continue;
+    }
+
+    if (cardInstance.card.value > highest.value) {
+      highest = cardInstance.card;
+    }
+  }
+  return highest;
+};
+
 export const getLowestWinningTrumpCard = (cards, trumpSuit, thrownCards) => {
-  const highestThrownTrumpCard = highestThrownTrumpCard(thrownCards, trumpSuit);
+  const highestThrownTrumpCard = getHighestThrownTrumpCard(thrownCards, trumpSuit);
 
   for (const card of cards) {
     if (card.suit === trumpSuit && card.value > highestThrownTrumpCard.value) {
@@ -47,34 +78,6 @@ export const getLowestWinningTrumpCard = (cards, trumpSuit, thrownCards) => {
   }
 
   return null;
-};
-
-export const getTrumpCard = (cards, trumpSuit) => {
-  for (const card of cards) {
-    if (card.suit === trumpSuit) {
-      return card;
-    }
-  }
-  return null;
-};
-
-export const highestThrownTrumpCard = (thrownCards, trumpSuit) => {
-  let highest = getTrumpCard(thrownCards, trumpSuit);
-
-  if (!highest) {
-    return null;
-  }
-
-  for (const card of thrownCards) {
-    if (card.suit !== trumpSuit) {
-      continue;
-    }
-
-    if (card.value > highest.value) {
-      highest = card;
-    }
-  }
-  return highest;
 };
 
 export const getLowestCardInHand = (cards) => {
