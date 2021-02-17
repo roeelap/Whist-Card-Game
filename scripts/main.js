@@ -175,7 +175,7 @@ const gameRound = () => {
       reRenderTables(game);
       clearCardImages();
       return gameRound();
-    }, 3000);
+    }, 0);
   }
 
   if (game.players.every((player) => player.cards.length === 0)) {

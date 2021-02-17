@@ -2,6 +2,9 @@ import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../stat
 import Player from './Player.js';
 import * as cf from '../static/cardFunctions.js';
 
+const OVER = 1;
+const UNDER = -1;
+
 export default class AI extends Player {
   constructor(index, roundMode) {
     super(index);
@@ -222,7 +225,7 @@ export default class AI extends Player {
   }
 
   throwCard = () => {
-    const thrownCard = this.playingMode > 0 ? this.getThrowingCardOver() : this.getThrowingCardUnder();
+    const thrownCard = this.playingMode === OVER ? this.getThrowingCardOver() : this.getThrowingCardUnder();
     const thrownCardIndex = cf.getCardIndex(thrownCard, this.cards);
 
     // putting the card on the game board
@@ -234,11 +237,17 @@ export default class AI extends Player {
     game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });
 
     // calculate playingMode for AI
-    if (this.tricks == this.bid) {
-      this.playingMode = -1;
-    }
+    this.playingMode = this.tricks === this.bid ? UNDER : this.didSomeoneFail(game.players) ? OVER : this.playingMode;
 
-    // next turn
     game.nextTurn();
+  };
+
+  didSomeoneFail = (players) => {
+    for (const player of players) {
+      if (player.tricks > player.bet && player.index !== this.index) {
+        return true;
+      }
+    }
+    return false;
   };
 }

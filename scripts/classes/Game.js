@@ -6,7 +6,7 @@ export default class Game {
   constructor(players) {
     this.players = players;
     this.deck;
-    this.round = 1;
+    this.round = 0;
     this.highestBid = 5;
     this.trumpSuit = 0;
     this.totalBids = 0;
@@ -51,6 +51,10 @@ export default class Game {
     this.bidCount = 0;
     this.passCount = 0;
     this.trickBidsMade = 0;
+
+    if (!isAllPassed) {
+      this.round++;
+    }
 
     this.firstPlayerToPlay = this.determineFirstPlayer(isAllPassed);
 
