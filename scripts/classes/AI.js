@@ -1,9 +1,7 @@
-import { SUITS_TO_PICTURES, TRUMP_SUIT_SCORER, OTHER_SUIT_SCORER } from '../static/consts.js';
+import { SUITS_TO_PICTURES, OVER, UNDER, MIN_VALID_TRUMP_BID } from '../static/consts.js';
 import Player from './Player.js';
 import * as cf from '../static/cardFunctions.js';
-
-const OVER = 1;
-const UNDER = -1;
+import { selectTrump, handEvaluation, convertScoreToBid } from '../static/bidCalculations.js';
 
 export default class AI extends Player {
   constructor(index, roundMode) {
@@ -12,53 +10,19 @@ export default class AI extends Player {
     this.playingMode = roundMode;
   }
 
-  static divideCardsBySuits(cards) {
-    const clubs = cards.filter((card) => card.suit === 1);
-    const diamonds = cards.filter((card) => card.suit === 2);
-    const hearts = cards.filter((card) => card.suit === 3);
-    const spades = cards.filter((card) => card.suit === 4);
-
-    return [clubs, diamonds, hearts, spades];
-  }
-
-  static calculateBidForTrumpSuitRound(cards) {
-    const mostFreqSuit = cards[0][0].suit;
-    let bid = 0;
-
-    // for each card, add it's score to the bid variable
-    cards.forEach((suitArray) => {
-      suitArray.forEach((card) => {
-        if (card.suit === mostFreqSuit) {
-          bid += TRUMP_SUIT_SCORER[card.value];
-        } else {
-          bid += OTHER_SUIT_SCORER[card.value];
-        }
-      });
-    });
-
-    return [Math.floor(bid), mostFreqSuit];
-  }
-
-  static getTrumpSuitBid(game, player) {
-    // figure out which suit is the most common
-    const cards = AI.divideCardsBySuits(player.cards).sort((a, b) => b.length - a.length);
-
-    // if the most common suit is less than 5 cards, just pass
-    if (cards[0].length < 5) {
-      game.passCount++;
-      return 'pass';
-    }
-
+  trumpSuitBid(game) {
     // calculate the wanted suit and bid
-    const [bid, suit] = AI.calculateBidForTrumpSuitRound(cards);
+    const obj = selectTrump(this.cards);
+    const suit = obj.suit;
+    const bid = obj.bid;
 
-    // figure out the minimum bid which will be higher than the highest bid,
-    // and lower/equal to the wanted bid.
-    for (let i = 0; i <= bid; i++) {
+    /* figure out the minimum bid which will be higher than the highest bid,
+       and lower/equal to the wanted bid. */
+    for (let i = MIN_VALID_TRUMP_BID; i <= bid; i++) {
       if (game.isTrumpSuitBidValid(i, suit)) {
         game.bidCount++;
         game.passCount = 0;
-        game.highestBid = player.bid = i;
+        game.highestBid = this.bid = i;
         game.trumpSuit = suit;
 
         return `${i}${SUITS_TO_PICTURES[suit]}`;
@@ -70,22 +34,9 @@ export default class AI extends Player {
     return 'pass';
   }
 
-  static calculateBidForTrickBidRound(cards, trumpSuit) {
-    let bid = 0;
-
-    cards.forEach((card) => {
-      if (card.suit === trumpSuit) {
-        bid += TRUMP_SUIT_SCORER[card.value];
-      } else {
-        bid += OTHER_SUIT_SCORER[card.value];
-      }
-    });
-
-    return Math.floor(bid);
-  }
-
-  static getTrickBid(game, player) {
-    const bid = AI.calculateBidForTrickBidRound(player.cards, game.trumpSuit);
+  tricksBid(game) {
+    const totalScore = handEvaluation(this.cards, game.trumpSuit);
+    const bid = convertScoreToBid(totalScore);
 
     if (game.isTrickBidValid(bid)) {
       return bid;
@@ -198,7 +149,7 @@ export default class AI extends Player {
 
     // can play only of specific suit - put highest card that cannot win
     const highestThrownCard = cf.getHighestThrownCard(game.thrownCards);
-    const highestLosingCard = cf.getHighestLosingCard(playableCards, highestThrownCard);
+    const highestLosingCard = cf.getHighestLosingCard(playableCards, highestThrownCard, this.remainingCards);
 
     if (highestLosingCard) {
       return highestLosingCard;
@@ -209,6 +160,8 @@ export default class AI extends Player {
   }
 
   throwCard = () => {
+    const roundMode = game.roundMode > 0 ? OVER : UNDER;
+    this.playingMode = this.determinePlayingMode(game.players, roundMode);
     const thrownCard = this.playingMode === OVER ? this.getThrowingCardOver() : this.getThrowingCardUnder();
     const thrownCardIndex = cf.getCardIndex(thrownCard, this.cards);
 
@@ -220,18 +173,25 @@ export default class AI extends Player {
     // removing the card from the player's hand
     game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });
 
-    // calculate playingMode for AI
-    this.playingMode = this.tricks === this.bid ? UNDER : this.didSomeoneFail(game.players) ? OVER : this.playingMode;
-
     game.nextTurn();
   };
 
-  didSomeoneFail = (players) => {
+  determinePlayingMode = (players, roundMode) => {
+    if (this.tricks >= this.bid) {
+      return UNDER;
+    }
+
+    let failCount = 0;
     for (const player of players) {
       if (player.tricks > player.bet && player.index !== this.index) {
-        return true;
+        failCount += player.tricks - player.bet;
       }
     }
-    return false;
+
+    if (failCount >= Math.abs(roundMode)) {
+      return OVER;
+    }
+
+    return roundMode;
   };
 }

@@ -27,6 +27,7 @@ export class Card {
     let value = this.value;
     let suit = this.suit;
 
+  
     if (value === 11) {
       value = 'J';
     } else if (value === 12) {

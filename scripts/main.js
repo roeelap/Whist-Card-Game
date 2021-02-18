@@ -63,7 +63,7 @@ const trumpSuitBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    showBid(game.turn, AI.getTrumpSuitBid(game, game.players[game.turn - 1]));
+    showBid(game.turn, game.players[game.turn - 1].trumpSuitBid(game));
     game.nextTurn();
     trumpSuitBidRound();
   }, 0);
@@ -123,9 +123,10 @@ const tricksBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    let bid = AI.getTrickBid(game, game.players[game.turn - 1]);
+    const AI = game.players[game.turn - 1];
+    const bid = AI.tricksBid(game);
+    AI.bid = bid;
     showBid(game.turn, bid);
-    game.players[game.turn - 1].bid = bid;
     game.totalBids += bid;
     game.trickBidsMade++;
     game.nextTurn();
@@ -177,7 +178,7 @@ const gameRound = () => {
       reRenderTables(game);
       clearCardImages();
       return gameRound();
-    }, 0);
+    }, 3000);
   }
 
   if (game.players.every((player) => player.cards.length === 0)) {

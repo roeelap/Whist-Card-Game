@@ -20,16 +20,11 @@ export const getHighestThrownCard = (thrownCards) => {
   return highest;
 };
 
-export const getHighestLosingCard = (cards, highestCard) => {
-  for (let i = 0; i < cards.length - 1; i++) {
-    if (cards[i].value < highestCard.value && cards[i + 1].value > highestCard.value) {
+export const getHighestLosingCard = (cards, highestCard, remainingCards) => {
+  for (let i = cards.length - 1; i >= 0; i--) {
+    if (cards[i].value < highestCard.value || isCardLosingInUnder(cards[i], remainingCards)) {
       return cards[i];
     }
-  }
-
-  const lastCard = cards[cards.length - 1];
-  if (lastCard.value < highestCard.value) {
-    return lastCard;
   }
 
   return null;
@@ -207,7 +202,7 @@ export const getUnplayableCards = (cards, playedSuit) => {
     }
   }
 
-  if ((unplayableCards.length === cards.length)) {
+  if (unplayableCards.length === cards.length) {
     return [];
   }
 
