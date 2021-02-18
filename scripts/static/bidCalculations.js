@@ -5,32 +5,33 @@ const count = (value, array) => {
 };
 
 export const convertScoreToBid = (totalScore) => {
+  const addedValue = 2;
   const bid =
-    totalScore <= 5
+    totalScore <= 2 + addedValue
       ? 0
-      : totalScore <= 9
+      : totalScore <= 9 + addedValue
       ? 1
-      : totalScore <= 12
+      : totalScore <= 12 + addedValue
       ? 2
-      : totalScore <= 15
+      : totalScore <= 15 + addedValue
       ? 3
-      : totalScore <= 18
+      : totalScore <= 18 + addedValue
       ? 4
-      : totalScore <= 21
+      : totalScore <= 21 + addedValue
       ? 5
-      : totalScore <= 24
+      : totalScore <= 24 + addedValue
       ? 6
-      : totalScore <= 27
+      : totalScore <= 27 + addedValue
       ? 7
-      : totalScore <= 30
+      : totalScore <= 30 + addedValue
       ? 8
-      : totalScore <= 32
+      : totalScore <= 32 + addedValue
       ? 9
-      : totalScore <= 34
+      : totalScore <= 34 + addedValue
       ? 10
-      : totalScore <= 36
+      : totalScore <= 36 + addedValue
       ? 11
-      : totalScore <= 38
+      : totalScore <= 38 + addedValue
       ? 12
       : 13;
 
@@ -133,9 +134,9 @@ const calculateShortagePoints = (suitsCountArray, trumpSuit) => {
   let SP = 0;
   const trumpCount = suitsCountArray[trumpSuit];
   if (trumpCount === 3) {
-    SP += count(0, suitsCountArray) * 3 + count(1, suitsCountArray) * 2 + count(2, suitsCountArray) * 1;
+    SP += count(0, suitsCountArray) * 3 + count(1, suitsCountArray) * 2 + count(2, suitsCountArray) * 0.5;
   } else if (trumpCount >= 4) {
-    SP += count(0, suitsCountArray) * 5 + count(1, suitsCountArray) * 3 + count(2, suitsCountArray) * 1;
+    SP += count(0, suitsCountArray) * 4 + count(1, suitsCountArray) * 3 + count(2, suitsCountArray) * 1;
   }
 
   return SP;
