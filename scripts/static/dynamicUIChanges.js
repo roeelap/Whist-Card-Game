@@ -164,7 +164,7 @@ export const collapseGameInfo = (button) => {
   }
 };
 
-const removeAllFilters = () => {
+export const removeAllFilters = () => {
   $.each($('.cardImage'), (index, card) => {
     $(card).removeClass('dark highlight');
   });

@@ -1,5 +1,5 @@
 import Game from './classes/Game.js';
-import { SUITS_TO_PICTURES } from './static/consts.js';
+import { SUITS_TO_PICTURES, TURN_TIMEOUT, ROUND_TIMEOUT } from './static/consts.js';
 import Player from './classes/Player.js';
 import AI from './classes/AI.js';
 import {
@@ -14,6 +14,7 @@ import {
   collapseGameInfo,
   highlightPlayableCards,
   makeHandRotated,
+  removeAllFilters,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -52,8 +53,8 @@ const trumpSuitBidRound = () => {
     return tricksBidRound();
   } else if (game.passCount === 4) {
     return setTimeout(() => {
-      return newRound(true);
-    }, 0);
+      newRound(true);
+    }, ROUND_TIMEOUT);
   }
 
   // player turn
@@ -66,7 +67,7 @@ const trumpSuitBidRound = () => {
     showBid(game.turn, game.players[game.turn - 1].trumpSuitBid(game));
     game.nextTurn();
     trumpSuitBidRound();
-  }, 0);
+  }, TURN_TIMEOUT);
 };
 
 // on suit bid click
@@ -131,7 +132,7 @@ const tricksBidRound = () => {
     game.trickBidsMade++;
     game.nextTurn();
     trumpSuitBidRound();
-  }, 0);
+  }, TURN_TIMEOUT);
 };
 
 const onTricksBidButtonClicked = (bidButton) => {
@@ -177,11 +178,12 @@ const gameRound = () => {
       console.log(`Winner: player ${game.determineTrickWinner()}`);
       reRenderTables(game);
       clearCardImages();
-      return gameRound();
-    }, 3000);
+      gameRound();
+    }, ROUND_TIMEOUT);
   }
 
-  if (game.players.every((player) => player.cards.length === 0)) {
+  const isRoundEnd = game.players.every((player) => player.cards.length === 0);
+  if (isRoundEnd) {
     for (const player of game.players) {
       updateScore(player, game.roundMode);
     }
@@ -197,9 +199,11 @@ const gameRound = () => {
   }
 
   // AI turn
-  const ai = game.players[game.turn - 1];
-  ai.throwCard();
-  return gameRound();
+  return setTimeout(() => {
+    const ai = game.players[game.turn - 1];
+    ai.throwCard();
+    gameRound();
+  }, TURN_TIMEOUT);
 };
 
 export const onCardClicked = (cardImg) => {
@@ -224,6 +228,9 @@ export const onCardClicked = (cardImg) => {
 
   $(cardImg).remove();
   changeCardClickable(false);
+
+  // removing highlight and dark filters from the cards
+  removeAllFilters();
 
   // next turn
   game.nextTurn();

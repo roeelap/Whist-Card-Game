@@ -10,3 +10,7 @@ export const NO_TRUMP = 5;
 export const OVER = 1;
 export const UNDER = -1;
 export const MIN_VALID_TRUMP_BID = 5;
+
+const SECOND = 0;
+export const TURN_TIMEOUT = 1 * SECOND;
+export const ROUND_TIMEOUT = 3 * SECOND;
