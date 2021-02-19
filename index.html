@@ -10,8 +10,16 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index.html">Whist Card Game</a>
-      <input type="button" class="accordion-button btn-secondary" value="Game Information" onclick="collapseGameInfo(this)">
+      <div class="navbar-wrapper">
+        <div>
+          <a class="navbar-brand" href="index.html">Whist Card Game</a>
+        </div>
+        <div class="links">
+          <a type="button" class="navbar-button" onclick="collapseGameInfo(this)">Round History</a>
+          <a type="button" class="navbar-button">Instructions</a>
+          <a type="button" class="navbar-button">New Game</a>
+        </div>
+      </div>
     </nav>
 
     <div id="info">
@@ -22,44 +30,24 @@
     <div id="main">
       <div id="gameBoard" class="container text-center">
         <div id="bidArea" class="container">
-          <div id="bid1" style="display: none">
+          <div id="suit-bid" style="display: none">
             <input
               type="number"
               id="bidAmount"
-              class="btn btn-primary"
+              class="bidButton"
               min="5"
               max="13"
               value="5"
               onchange="onBidInputChange(this)"
             />
-            <input
-              type="button"
-              class="btn btn-primary bidButton hover-black"
-              value="♣"
-              onclick="onSuitBidButtonClicked(this)"
-            />
-            <input
-              type="button"
-              class="btn btn-primary bidButton hover-red"
-              value="♦"
-              onclick="onSuitBidButtonClicked(this)"
-            />
-            <input
-              type="button"
-              class="btn btn-primary bidButton hover-red"
-              value="♥"
-              onclick="onSuitBidButtonClicked(this)"
-            />
-            <input
-              type="button"
-              class="btn btn-primary bidButton hover-black"
-              value="♠"
-              onclick="onSuitBidButtonClicked(this)"
-            />
-            <input type="button" class="btn btn-primary bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="btn btn-primary bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton suit hover-black" value="♣" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton suit red" value="♦" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton suit red" value="♥" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton suit hover-black" value="♠" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
+            <input type="button" class="bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
           </div>
-          <div id="bid2"></div>
+          <div id="tricks-bid"></div>
         </div>
         <div id="player1Card" class="card-container">
           <h4 class="bid"></h4>

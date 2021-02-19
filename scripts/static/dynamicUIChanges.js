@@ -3,16 +3,16 @@ import { getUnplayableCards, getCardIndex } from './cardFunctions.js';
 
 export const showSuitButtons = (isShow) => {
   if (isShow) {
-    return $('#bid1').show();
+    return $('#suit-bid').show();
   }
-  $('#bid1').hide();
+  $('#suit-bid').hide();
 };
 
 export const showBidButtons = (isShow) => {
   if (isShow) {
-    return $('#bid2').show();
+    return $('#tricks-bid').show();
   }
-  $('#bid2').hide();
+  $('#tricks-bid').hide();
 };
 
 export const changeCardClickable = (isClickable) => {
@@ -139,7 +139,7 @@ export const createTrickBidButtons = (minBid, forbiddenBid) => {
       `<input type="button" class="btn btn-primary bidButton" value="${i}" onclick="onTricksBidButtonClicked(this)" ${disabled}/>`
     );
   }
-  $('#bid2').html(newDiv);
+  $('#tricks-bid').html(newDiv);
 };
 
 export const reRenderTables = (game) => {
