@@ -18,17 +18,16 @@ export default class AI extends Player {
 
     /* figure out the minimum bid which will be higher than the highest bid,
        and lower/equal to the wanted bid. */
-    for (let i = MIN_VALID_TRUMP_BID; i <= bid; i++) {
-      if (game.isTrumpSuitBidValid(i, suit)) {
+    for (let value = MIN_VALID_TRUMP_BID; value <= bid; value++) {
+      if (game.isTrumpSuitBidValid(value, suit)) {
         game.bidCount++;
         game.passCount = 0;
-        game.highestBid = this.bid = i;
+        game.highestBid = this.bid = value;
         game.trumpSuit = suit;
 
-        return `${i}${SUITS_TO_PICTURES[suit]}`;
+        return { value, suit: SUITS_TO_PICTURES[suit] };
       }
     }
-
     // updating the pass count
     game.passCount++;
     return 'pass';

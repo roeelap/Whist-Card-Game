@@ -3,7 +3,6 @@ import { SUITS_TO_PICTURES, TURN_TIMEOUT, ROUND_TIMEOUT } from './static/consts.
 import Player from './classes/Player.js';
 import AI from './classes/AI.js';
 import {
-  showBid,
   showBidButtons,
   showSuitButtons,
   changeCardClickable,
@@ -15,6 +14,10 @@ import {
   highlightPlayableCards,
   makeHandRotated,
   removeAllFilters,
+  showPass,
+  showTrumpBid,
+  showTricksBid,
+  clearAllBidText,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -64,7 +67,8 @@ const trumpSuitBidRound = () => {
 
   // AI turn
   return setTimeout(() => {
-    showBid(game.turn, game.players[game.turn - 1].trumpSuitBid(game));
+    const AiBid = game.players[game.turn - 1].trumpSuitBid(game);
+    AiBid === 'pass' ? showPass(game.turn) : showTrumpBid(game.turn, AiBid.value, AiBid.suit);
     game.nextTurn();
     trumpSuitBidRound();
   }, TURN_TIMEOUT);
@@ -83,7 +87,7 @@ const onSuitBidButtonClicked = (bidButton) => {
 
   if (choice === 'pass') {
     game.passCount++;
-    showBid(1, choice);
+    showPass(1);
   } else {
     game.bidCount++;
     game.passCount = 0;
@@ -91,7 +95,7 @@ const onSuitBidButtonClicked = (bidButton) => {
     game.highestBid = game.players[0].bid = bidAmount;
     game.trumpSuit = bidSuit;
 
-    showBid(1, bidAmount + SUITS_TO_PICTURES[bidSuit]);
+    showTrumpBid(1, bidAmount, SUITS_TO_PICTURES[bidSuit]);
   }
 
   // updating the turn and letting the cpu act
@@ -101,6 +105,8 @@ const onSuitBidButtonClicked = (bidButton) => {
 };
 
 const tricksBidRound = () => {
+  console.log('hi');
+  clearAllBidText();
   reRenderTables(game);
   // Tricks round ended
   if (game.trickBidsMade === 4) {
@@ -127,7 +133,7 @@ const tricksBidRound = () => {
     const AI = game.players[game.turn - 1];
     const bid = AI.tricksBid(game);
     AI.bid = bid;
-    showBid(game.turn, bid);
+    showTricksBid(game.turn, bid);
     game.totalBids += bid;
     game.trickBidsMade++;
     game.nextTurn();
@@ -147,7 +153,7 @@ const onTricksBidButtonClicked = (bidButton) => {
   $('#totalBids').html(`<td><strong>Total Bids: </strong>${game.totalBids}</td>`);
 
   showBidButtons(false);
-  showBid(1, bid);
+  showTricksBid(1, bid);
   game.trickBidsMade++;
 
   // updating the turn and letting the cpu act

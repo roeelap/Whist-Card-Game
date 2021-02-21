@@ -84,9 +84,12 @@ body {
 }
 
 .bid {
-  font-weight: bold;
-  height: fit-content;
-  margin-top: -30px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* font-weight: bold; */
+  /* height: fit-content; */
 }
 
 .bold {
@@ -154,7 +157,7 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-rows: 3fr 1fr;
   justify-self: center;
   width: 80px;
   color: black;
@@ -164,7 +167,7 @@ body {
 
 .card-container > p {
   font-size: 1.4em;
-  margin-bottom: -35px;
+  margin-bottom: -30px;
   margin-top: auto;
 }
 
@@ -230,4 +233,13 @@ body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
+}
+
+#round-number {
+  position: absolute;
+  width: fit-content;
+  font-size: 2em;
+  font-weight: bold;
+  left: 88%;
+  color: black;
 }
