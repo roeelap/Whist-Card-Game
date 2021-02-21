@@ -1,4 +1,4 @@
-import { SUITS_TO_PICTURES, OVER, UNDER, MIN_VALID_TRUMP_BID } from '../static/consts.js';
+import { SUITS_TO_ICONS, OVER, UNDER, MIN_VALID_TRUMP_BID } from '../static/consts.js';
 import Player from './Player.js';
 import * as cf from '../static/cardFunctions.js';
 import { selectTrump, handEvaluation, convertScoreToBid } from '../static/bidCalculations.js';
@@ -25,7 +25,7 @@ export default class AI extends Player {
         game.highestBid = this.bid = value;
         game.trumpSuit = suit;
 
-        return { value, suit: SUITS_TO_PICTURES[suit] };
+        return { value, suit: SUITS_TO_ICONS[suit] };
       }
     }
     // updating the pass count
@@ -167,7 +167,7 @@ export default class AI extends Player {
     // putting the card on the game board
     const img = this.cards[thrownCardIndex].getImage();
     const playerCardId = `#player${this.index}Card`;
-    $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
+    $(playerCardId).css('background', `url(${img}) no-repeat center center/cover`);
 
     // removing the card from the player's hand
     game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });

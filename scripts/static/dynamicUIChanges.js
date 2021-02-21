@@ -1,4 +1,4 @@
-import { SUITS_TO_PICTURES } from './consts.js';
+import { SUITS_TO_ICONS, SUITS_TO_IMAGES } from './consts.js';
 import { getUnplayableCards, getCardIndex } from './cardFunctions.js';
 
 export const showSuitButtons = (isShow) => {
@@ -67,6 +67,12 @@ export const showCards = (playerCards) => {
   makeHandRotated(playerCards.length);
 };
 
+export const showGameMode = () => {
+  $('.suit-background').css('background-image', `url(${SUITS_TO_IMAGES[game.trumpSuit]})`);
+  const roundModeText = game.roundMode > 0 ? `+${game.roundMode}` : game.roundMode;
+  $('.round-mode').html(roundModeText);
+};
+
 export const makeHandRotated = (playerCardsLength) => {
   $.each($('.cardImage'), (index, card) => {
     const yPos = (index + 0.5 - playerCardsLength / 2) ** 2;
@@ -97,7 +103,7 @@ export const updateBoldLabel = (playerIndex) => {
 const createRoundInfoTable = (game) => {
   const data = [
     { id: 'roundNumber', text: `Round ${game.round} of 14` },
-    { id: 'trumpSuit', text: `Trump Suit: ${SUITS_TO_PICTURES[game.trumpSuit]}` },
+    { id: 'trumpSuit', text: `Trump Suit: ${SUITS_TO_ICONS[game.trumpSuit]}` },
     { id: 'totalBids', text: `Total Bids: ${game.totalBids}` },
     { id: 'roundMode', text: game.getRoundMode() },
   ];
@@ -218,5 +224,10 @@ export const updateRoundNumber = (roundNumber) => {
 };
 
 export const updateScoreList = (playerList) => {
-  
-}
+  let scoreOutput = '';
+  for (const player of playerList) {
+    scoreOutput += `<p>${player.score}</p>`;
+  }
+
+  $('#scores').html(scoreOutput);
+};

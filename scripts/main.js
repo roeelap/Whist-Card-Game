@@ -1,5 +1,5 @@
 import Game from './classes/Game.js';
-import { SUITS_TO_PICTURES, TURN_TIMEOUT, ROUND_TIMEOUT } from './static/consts.js';
+import { SUITS_TO_ICONS, TURN_TIMEOUT, ROUND_TIMEOUT, SUITS_TO_IMAGES } from './static/consts.js';
 import Player from './classes/Player.js';
 import AI from './classes/AI.js';
 import {
@@ -18,6 +18,7 @@ import {
   showTrumpBid,
   showTricksBid,
   clearAllBidText,
+  showGameMode,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -99,7 +100,7 @@ const onSuitBidButtonClicked = (bidButton) => {
     game.highestBid = game.players[0].bid = bidAmount;
     game.trumpSuit = bidSuit;
 
-    showTrumpBid(1, bidAmount, SUITS_TO_PICTURES[bidSuit]);
+    showTrumpBid(1, bidAmount, SUITS_TO_ICONS[bidSuit]);
   }
 
   // updating the turn and letting the cpu act
@@ -123,7 +124,8 @@ const tricksBidRound = () => {
     for (let ai of game.players) {
       ai.playingMode = game.roundMode;
     }
-    
+
+    showGameMode();
     clearAllBidText();
     return gameRound();
   }
@@ -235,7 +237,7 @@ export const onCardClicked = (cardImg) => {
   // putting the clicked card on the game board
   const img = player.cards[index].getImage();
   const playerCardId = `#player${player.index}Card`;
-  $(playerCardId).css('background', `url(${img}) no-repeat center center/contain`);
+  $(playerCardId).css('background', `url(${img}) no-repeat center center/cover`);
 
   // removing the card from the player's hand
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });

@@ -1,5 +1,5 @@
 import Deck from './Deck.js';
-import { reRenderTables, updateBoldLabel, updateRoundNumber} from '../static/dynamicUIChanges.js';
+import { reRenderTables, updateBoldLabel, updateRoundNumber, updateScoreList } from '../static/dynamicUIChanges.js';
 import * as cardIndexes from '../static/cardFunctions.js';
 
 export default class Game {
@@ -56,8 +56,6 @@ export default class Game {
       this.round++;
     }
 
-    updateRoundNumber(this.round);
-
     this.firstPlayerToPlay = this.determineFirstPlayer(isAllPassed);
 
     //resetting the stats of each player
@@ -71,6 +69,9 @@ export default class Game {
     this.dealCards();
     console.log(this.players);
 
+    // UI updating
+    updateScoreList(this.players);
+    updateRoundNumber(this.round);
     updateBoldLabel(this.firstPlayerToPlay);
   }
 

@@ -27,72 +27,87 @@
       <div id="score"></div>
     </div>
 
-    <div id="score-list">
-     
-    </div>
-
-    <div id="main">
-      <div id="gameBoard" class="container text-center">
-        <div id="bidArea" class="container">
-          <div id="suit-bid" style="display: none">
-            <input
-              type="number"
-              id="bidAmount"
-              class="bidButton"
-              min="5"
-              max="13"
-              value="5"
-              onchange="onBidInputChange(this)"
-            />
-            <input type="button" class="bidButton suit hover-black" value="♣" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="bidButton suit red" value="♦" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="bidButton suit red" value="♥" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="bidButton suit hover-black" value="♠" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
-            <input type="button" class="bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
-          </div>
-          <div id="tricks-bid"></div>
-          <div id="round-number"></div>
+    <div id="score-board">
+      <div id="score-board-wrapper">
+        <div class="header">
+          <h2>Score Board</h2>
         </div>
-        <div id="player1Card" class="card-container">
-          <div class="bid">
-            <div>
-              <h4></h4>
-              <h1></h1>
-            </div>
+        <div class="scores">
+          <div id="players">
+            <p>You</p>
+            <p>Player 2</p>
+            <p>Player 3</p>
+            <p>Player 4</p>
           </div>
-          <p>You</p>
-        </div>
-        <div id="player2Card" class="card-container">
-          <div class="bid">
-            <div>
-              <h4></h4>
-              <h1></h1>
-            </div>
-          </div>
-          <p>Player 2</p>
-        </div>
-        <div id="player3Card" class="card-container">
-          <div class="bid">
-            <div>
-              <h4></h4>
-              <h1></h1>
-            </div>
-          </div>
-          <p>Player 3</p>
-        </div>
-        <div id="player4Card" class="card-container">
-          <div class="bid">
-            <div>
-              <h4></h4>
-              <h1></h1>
-            </div>
-          </div>
-          <p>Player 4</p>
+          <div id="divider"></div>
+          <div id="scores"></div>
         </div>
       </div>
-      <div id="player" class="player container"></div>
     </div>
+
+    <div id="round-number"></div>
+
+    <div id="gameBoard" class="container text-center">
+      <div id="bidArea" class="container">
+        <div id="suit-bid" style="display: none">
+          <input
+            type="number"
+            id="bidAmount"
+            class="bidButton"
+            min="5"
+            max="13"
+            value="5"
+            onchange="onBidInputChange(this)"
+          />
+          <input type="button" class="bidButton suit hover-black" value="♣" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton suit red" value="♦" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton suit red" value="♥" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton suit hover-black" value="♠" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
+        </div>
+        <div id="tricks-bid"></div>
+      </div>
+      <div id="player1Card" class="card-container">
+        <div class="bid">
+          <div>
+            <h4></h4>
+            <h1></h1>
+          </div>
+        </div>
+        <p>You</p>
+      </div>
+      <div id="player2Card" class="card-container">
+        <div class="bid">
+          <div>
+            <h4></h4>
+            <h1></h1>
+          </div>
+        </div>
+        <p>Player 2</p>
+      </div>
+      <div id="player3Card" class="card-container">
+        <div class="bid">
+          <div>
+            <h4></h4>
+            <h1></h1>
+          </div>
+        </div>
+        <p>Player 3</p>
+      </div>
+      <div id="player4Card" class="card-container">
+        <div class="bid">
+          <div>
+            <h4></h4>
+            <h1></h1>
+          </div>
+        </div>
+        <p>Player 4</p>
+      </div>
+      <div class="suit-background"></div>
+      <h1 class="round-mode"></h1>
+    </div>
+    <div id="player" class="player container"></div>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
