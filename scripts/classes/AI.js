@@ -2,6 +2,7 @@ import { SUITS_TO_ICONS, OVER, UNDER, MIN_VALID_TRUMP_BID } from '../static/cons
 import Player from './Player.js';
 import * as cf from '../static/cardFunctions.js';
 import { selectTrump, handEvaluation, convertScoreToBid } from '../static/bidCalculations.js';
+import { showCard } from '../static/dynamicUIChanges.js';
 
 export default class AI extends Player {
   constructor(index, roundMode) {
@@ -165,8 +166,8 @@ export default class AI extends Player {
 
     // putting the card on the game board
     const img = this.cards[thrownCardIndex].getImage();
-    const playerCardId = `#player${this.index}Card`;
-    $(playerCardId).css('background', `url(${img}) no-repeat center center/cover`);
+    const cardLabel = $(`#player${this.index}Card`);
+    showCard(img, cardLabel);
 
     // removing the card from the player's hand
     game.thrownCards.push({ player: this, card: this.cards.splice(thrownCardIndex, 1)[0] });

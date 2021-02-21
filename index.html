@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div id="round-number"></div>
+    <div id="round-number" class="text-center"></div>
 
     <div id="gameBoard" class="container text-center">
       <div id="bidArea" class="container">
@@ -67,6 +67,9 @@
           <input type="button" class="bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
         </div>
         <div id="tricks-bid"></div>
+        <div id="last-trick">
+          <input type="button" class="bidButton" value="View Last Trick" style="display: none"></input>
+        </div>
       </div>
       <div id="player1Card" class="card-container">
         <p class="progression"></p>

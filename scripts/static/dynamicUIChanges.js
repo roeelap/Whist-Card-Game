@@ -15,6 +15,13 @@ export const showBidButtons = (isShow) => {
   $('#tricks-bid').hide();
 };
 
+export const showLastTrickButton = (isShow) => {
+  if (isShow) {
+    return $('#last-trick').show();
+  }
+  $('#last-trick').hide();
+};
+
 export const changeCardClickable = (isClickable) => {
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
     if (isClickable) {
@@ -56,7 +63,7 @@ export const clearAllBidText = () => {
   }
 };
 
-export const showCards = (playerCards) => {
+export const showPlayerCards = (playerCards) => {
   let output = '';
   let index = 0;
   playerCards.forEach((card) => {
@@ -257,4 +264,10 @@ export const removeAllProgressionLabels = () => {
     const progression = `#player${player.index}Card .progression`;
     $(progression).empty();
   }
+};
+
+export const showCard = (img, cardLabel) => {
+  cardLabel.css('opacity', 0.4);
+  cardLabel.css('background', `url(${img}) no-repeat center center/cover`);
+  cardLabel.fadeTo(300, 1);
 };
