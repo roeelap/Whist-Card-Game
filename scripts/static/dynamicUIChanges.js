@@ -216,3 +216,7 @@ export const updateRoundNumber = (roundNumber) => {
   const output = `Round ${roundNumber}/14`;
   $('#round-number').html(output);
 };
+
+export const updateScoreList = (playerList) => {
+  
+}
