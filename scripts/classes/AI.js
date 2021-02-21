@@ -159,8 +159,7 @@ export default class AI extends Player {
   }
 
   throwCard = () => {
-    const roundMode = game.roundMode > 0 ? OVER : UNDER;
-    this.playingMode = this.determinePlayingMode(game.players, roundMode);
+    this.playingMode = this.determinePlayingMode(game.players, game.roundMode);
     const thrownCard = this.playingMode === OVER ? this.getThrowingCardOver() : this.getThrowingCardUnder();
     const thrownCardIndex = cf.getCardIndex(thrownCard, this.cards);
 
@@ -182,8 +181,8 @@ export default class AI extends Player {
 
     let failCount = 0;
     for (const player of players) {
-      if (player.tricks > player.bet && player.index !== this.index) {
-        failCount += player.tricks - player.bet;
+      if (player.tricks > player.bid && player.index !== this.index) {
+        failCount += player.tricks - player.bid;
       }
     }
 
@@ -191,6 +190,6 @@ export default class AI extends Player {
       return OVER;
     }
 
-    return roundMode;
+    return roundMode > 0 ? OVER : UNDER;
   };
 }

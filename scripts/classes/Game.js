@@ -1,6 +1,12 @@
 import Deck from './Deck.js';
-import { reRenderTables, updateBoldLabel, updateRoundNumber, updateScoreList } from '../static/dynamicUIChanges.js';
-import * as cardIndexes from '../static/cardFunctions.js';
+import {
+  reRenderTables,
+  updateTurnGlow,
+  updateRoundNumber,
+  updateScoreList,
+  removeAllProgressionLabels,
+  removeGameModeLabel
+} from '../static/dynamicUIChanges.js';
 
 export default class Game {
   constructor(players) {
@@ -72,7 +78,9 @@ export default class Game {
     // UI updating
     updateScoreList(this.players);
     updateRoundNumber(this.round);
-    updateBoldLabel(this.firstPlayerToPlay);
+    updateTurnGlow(this.firstPlayerToPlay);
+    removeAllProgressionLabels();
+    removeGameModeLabel();
   }
 
   dealCards() {
@@ -156,7 +164,7 @@ export default class Game {
     }
 
     reRenderTables(this);
-    updateBoldLabel(this.turn);
+    updateTurnGlow(this.turn);
   }
 
   determineTrickWinner() {
@@ -184,7 +192,7 @@ export default class Game {
     this.thrownCards = [];
     this.turn = winningPlayerIndex;
 
-    updateBoldLabel(winningPlayerIndex);
+    updateTurnGlow(winningPlayerIndex);
     return winningPlayerIndex;
   }
 }

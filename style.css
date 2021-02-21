@@ -98,8 +98,16 @@ body {
   font-size: 3.5em;
 }
 
-.bold {
-  font-weight: bold;
+.glowing-border {
+  box-shadow: 0 0 1em gold;
+  /* border: 4px solid gold; */
+  animation: borderBlink 1.2s ease-in-out infinite;
+}
+
+@keyframes borderBlink {
+  50% {
+    box-shadow: 0 0 1em transparent;
+  }
 }
 
 #info {
@@ -135,6 +143,7 @@ body {
 
 .trick-buttons > input {
   width: 50px;
+  padding: 5px 0;
 }
 
 .trick-buttons > input:disabled {
@@ -157,20 +166,29 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: 1fr 3fr 1fr;
   justify-self: center;
   justify-content: center;
   width: 80px;
   color: black;
-  background: rgba(249, 247, 238, 0.6);
+  background: rgba(249, 247, 238, 0.8);
   border-radius: 7px;
 }
 
-.card-container > p {
+.card-container p {
   font-size: 1.4em;
-  margin-bottom: -30px;
-  margin-top: auto;
   width: max-content;
+  justify-self: center;
+}
+
+.progression {
+  margin-bottom: auto;
+  margin-top: -30px;
+}
+
+.player-name {
+  margin-bottom: -35px;
+  margin-top: auto;
 }
 
 #player1Card {
@@ -202,7 +220,7 @@ body {
 .suit-background {
   display: grid;
   z-index: -1;
-  height: 75%;
+  height: 65%;
   align-self: center;
   grid-row: 3;
   grid-column: 2;
@@ -212,11 +230,21 @@ body {
   background-size: contain;
 }
 
+.no-trump-image {
+  height: 300%;
+}
+
 .round-mode {
   align-self: center;
   color: black;
   grid-row: 3;
   grid-column: 2;
+  background: rgba(249, 247, 238, 0.6);
+  width: fit-content;
+  justify-self: center;
+  border-radius: 5px;
+  padding: 2px 2px 0 2px;
+  font-size: 2em;
 }
 
 .navbar-wrapper {
@@ -302,6 +330,7 @@ body {
 }
 
 #score-board-wrapper .header {
+  text-decoration: underline;
   text-align: center;
 }
 

@@ -37,8 +37,8 @@ export const showTrumpBid = (playerIndex, value, suit) => {
 // shows the pass label
 export const showPass = (playerIndex) => {
   const playerCardDiv = `#player${playerIndex}Card .bid div`;
-  const bidSuit = $(`${playerCardDiv} h4`);
-  $(bidSuit).html('PASS');
+  $(`${playerCardDiv} h1`).empty();
+  $(`${playerCardDiv} h4`).html('PASS');
 };
 
 // shows the tricks bid
@@ -67,10 +67,23 @@ export const showCards = (playerCards) => {
   makeHandRotated(playerCards.length);
 };
 
-export const showGameMode = () => {
+export const showTrumpSuit = () => {
   $('.suit-background').css('background-image', `url(${SUITS_TO_IMAGES[game.trumpSuit]})`);
+  if (game.trumpSuit === 5) {
+    $('.suit-background').addClass('no-trump-image');
+  } else {
+    $('.suit-background').removeClass('no-trump-image');
+  }
+};
+
+export const showGameMode = () => {
   const roundModeText = game.roundMode > 0 ? `+${game.roundMode}` : game.roundMode;
   $('.round-mode').html(roundModeText);
+};
+
+export const removeGameModeLabel = () => {
+  $('.suit-background').css('background', '');
+  $('.round-mode').empty();
 };
 
 export const makeHandRotated = (playerCardsLength) => {
@@ -90,14 +103,14 @@ export const makeHandRotated = (playerCardsLength) => {
   });
 };
 
-// makes the player's label bold while it's their turn
-export const updateBoldLabel = (playerIndex) => {
-  const playerLabels = [`#player1Card p`, `#player2Card p`, `#player3Card p`, `#player4Card p`];
+// add glow to player label when it's their turn
+export const updateTurnGlow = (playerIndex) => {
+  const playerLabels = ['#player1Card', '#player2Card', '#player3Card', '#player4Card'];
   playerLabels.forEach((label) => {
-    $(label).removeClass('bold');
+    $(label).removeClass('glowing-border');
   });
 
-  $(playerLabels[playerIndex - 1]).addClass('bold');
+  $(playerLabels[playerIndex - 1]).addClass('glowing-border');
 };
 
 const createRoundInfoTable = (game) => {
@@ -230,4 +243,18 @@ export const updateScoreList = (playerList) => {
   }
 
   $('#scores').html(scoreOutput);
+};
+
+export const updateAllProgressions = () => {
+  for (const player of game.players) {
+    const progression = `#player${player.index}Card .progression`;
+    $(progression).html(`${player.tricks}/${player.bid}`);
+  }
+};
+
+export const removeAllProgressionLabels = () => {
+  for (const player of game.players) {
+    const progression = `#player${player.index}Card .progression`;
+    $(progression).empty();
+  }
 };
