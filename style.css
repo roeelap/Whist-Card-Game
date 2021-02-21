@@ -254,9 +254,14 @@ body {
 
 #score-list {
   position: absolute;
-  width:30%;
+  margin-left: 1em;
+  margin-top: -10em;
+}
+
+#score-list .wrapper {
+  width: 50%;
   background-image: url('./images/background/post-it-note.png');
-  background-repeat: no-repeat;  
-  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: contain;
 }
