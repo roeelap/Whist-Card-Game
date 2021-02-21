@@ -175,3 +175,5 @@ export const selectTrump = (cards) => {
   // returns the suit with highest score
   return { suit: scores.indexOf(Math.max(...scores)), bid: convertScoreToBid(Math.max(...scores)) };
 };
+
+  

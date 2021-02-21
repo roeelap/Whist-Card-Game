@@ -27,7 +27,7 @@ export const changeCardClickable = (isClickable) => {
 
 // shows the trump bid
 export const showTrumpBid = (playerIndex, value, suit) => {
-  const playerCardDiv = `#player${playerIndex}Card div`;
+  const playerCardDiv = `#player${playerIndex}Card .bid div`;
   const bidValue = $(`${playerCardDiv} h4`);
   const bidSuit = $(`${playerCardDiv} h1`);
   $(bidValue).html(value);
@@ -36,23 +36,23 @@ export const showTrumpBid = (playerIndex, value, suit) => {
 
 // shows the pass label
 export const showPass = (playerIndex) => {
-  const playerCardDiv = `#player${playerIndex}Card div`;
+  const playerCardDiv = `#player${playerIndex}Card .bid div`;
   const bidSuit = $(`${playerCardDiv} h4`);
   $(bidSuit).html('PASS');
 };
 
 // shows the tricks bid
 export const showTricksBid = (playerIndex, tricks) => {
-  const playerCardDiv = `#player${playerIndex}Card div`;
-  const bidValue = $(`${playerCardDiv} h4`);
+  const playerCardDiv = `#player${playerIndex}Card .bid div`;
+  const bidValue = $(`${playerCardDiv} h1`);
   $(bidValue).html(tricks);
 };
 
 export const clearAllBidText = () => {
   for (let i = 1; i <= 4; i++) {
-    const playerCardDiv = `#player${i}Card div`;
-    $(`${playerCardDiv} h4`).clear();
-    $(`${playerCardDiv} h1`).clear();
+    const playerCardDiv = `#player${i}Card .bid div`;
+    $(`${playerCardDiv} h4`).empty();
+    $(`${playerCardDiv} h1`).empty();
   }
 };
 

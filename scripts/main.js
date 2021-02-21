@@ -52,9 +52,13 @@ const newRound = (isAllPassed) => {
 const trumpSuitBidRound = () => {
   // checking if trump suit bid round has ended
   if (game.passCount === 3 && game.bidCount >= 1) {
-    console.log('phase complete');
-    return tricksBidRound();
-  } else if (game.passCount === 4) {
+    return setTimeout(() => {
+      tricksBidRound();
+    }, ROUND_TIMEOUT);
+  }
+
+  if (game.passCount === 4) {
+    clearAllBidText();
     return setTimeout(() => {
       newRound(true);
     }, ROUND_TIMEOUT);
@@ -105,8 +109,11 @@ const onSuitBidButtonClicked = (bidButton) => {
 };
 
 const tricksBidRound = () => {
-  console.log('hi');
-  clearAllBidText();
+  // clear trump round info
+  if (game.trickBidsMade === 0) {
+    clearAllBidText();
+  }
+
   reRenderTables(game);
   // Tricks round ended
   if (game.trickBidsMade === 4) {
@@ -116,7 +123,8 @@ const tricksBidRound = () => {
     for (let ai of game.players) {
       ai.playingMode = game.roundMode;
     }
-
+    
+    clearAllBidText();
     return gameRound();
   }
 
