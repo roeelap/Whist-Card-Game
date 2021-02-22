@@ -6,4 +6,4 @@
 ✔ Over - will still put their highest card after someone put trump card @done(21-02-17 17:09)
 ✔ Round number doesn't change (UI) @done(21-02-17 17:36)
 ✔ AI over\under calculation (when someone takes more than he bids, ai is playing under DESPITE game being more than over 1...) @done(21-02-18 15:35)
-☐ AI is not playing OVER after someone takes too many tricks
+✔ AI is not playing OVER after someone takes too many tricks @done(21-02-22 02:13)
