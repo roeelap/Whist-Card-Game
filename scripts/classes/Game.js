@@ -58,12 +58,11 @@ export default class Game {
     this.bidCount = 0;
     this.passCount = 0;
     this.trickBidsMade = 0;
+    this.firstPlayerToPlay = this.determineFirstPlayer(isAllPassed);
 
     if (!isAllPassed) {
       this.round++;
     }
-
-    this.firstPlayerToPlay = this.determineFirstPlayer(isAllPassed);
 
     //resetting the stats of each player
     this.players.forEach((player) => {
@@ -77,7 +76,7 @@ export default class Game {
     console.log(this.players);
 
     // UI updating
-    updateScoreList(this.players);
+    updateScoreList(this.players, this.getWinningPlayersIndexes());
     updateRoundNumber(this.round);
     updateTurnGlow(this.firstPlayerToPlay);
     removeAllProgressionLabels();
@@ -216,5 +215,18 @@ export default class Game {
 
     updateTurnGlow(winningPlayerIndex);
     return winningPlayerIndex;
+  }
+
+  getWinningPlayersIndexes() {
+    let winningPlayers = [this.players[0]];
+    for (let i = 1; i < this.players.length; i++) {
+      if (this.players[i].score === winningPlayers[0].score) {
+        winningPlayers.push(this.players[i]);
+      } else if (this.players[i].score > winningPlayers[0].score) {
+        winningPlayers = [this.players[i]];
+      }
+    }
+
+    return winningPlayers.map((player) => player.index);
   }
 }

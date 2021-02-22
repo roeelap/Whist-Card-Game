@@ -67,12 +67,11 @@ export const updateRoundNumber = (roundNumber) => {
   $('#round-number').html(output);
 };
 
-export const updateScoreList = (playerList) => {
+export const updateScoreList = (playerList, winningPlayersIndexes) => {
   let scoreOutput = '';
   for (const player of playerList) {
-    scoreOutput += `<p>${player.score}</p>`;
-  }
-
+      scoreOutput += `<p class= ${winningPlayersIndexes.includes(player.index) ? "bold" : ""}>${player.score}</p>`;
+    }
   $('#scores').html(scoreOutput);
 };
 

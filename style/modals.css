@@ -26,3 +26,40 @@
   position: relative;
   backface-visibility: hidden;
 }
+
+#instructionsModal .modal-content {
+  background: linear-gradient(0deg, rgb(172, 155, 110), rgb(252, 252, 252));
+  border: none;
+  height: 50vh;
+}
+
+#instructionsModal .modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+  align-self: center;
+}
+
+#instructionsModal .modal-body {
+  font-size: 1.5rem;
+  align-self: center;
+}
+
+#instructionsModal .modal-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 5px;
+}
+
+#instructionsModal .modal-bottom button {
+  width: fit-content;
+  justify-self: center;
+  outline: none;
+}
+
+#instructionsModal .modal-bottom button:first-of-type {
+  justify-self: left;
+}
+
+#instructionsModal .modal-bottom button:last-of-type {
+  justify-self: right;
+}

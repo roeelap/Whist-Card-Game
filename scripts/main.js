@@ -2,7 +2,6 @@ import Game from './classes/Game.js';
 import { SUITS_TO_ICONS, TURN_TIMEOUT, ROUND_TIMEOUT, OVER, UNDER } from './static/consts.js';
 import Player from './classes/Player.js';
 import AI from './classes/AI.js';
-
 import { updateScore } from './static/scoreCalculations.js';
 import {
   changeCardClickable,
@@ -23,7 +22,8 @@ import {
   showTrumpSuit,
   updateAllProgressions,
 } from './dynamicUIChanges/mainBoard.js';
-import { updateLastTrick } from './dynamicUIChanges/modals.js';
+import { updateLastTrick, updateInstructionsPage, instructionsChangePage } from './dynamicUIChanges/modals.js';
+import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
 
 const newGame = () => {
   let players = [];
@@ -46,6 +46,10 @@ const onBidInputChange = (bidInput) => {
 };
 
 const newRound = (isAllPassed) => {
+  if (!isAllPassed) {
+    addRoundRow()
+  }
+
   game.newRound(isAllPassed);
   showPlayerCards(game.players[0].cards);
   changeCardClickable(false);
@@ -247,9 +251,9 @@ export const onCardClicked = (cardImg) => {
   const index = $(cardImg).index();
   const player = game.players[0];
 
-  if (!game.isCardValid(player, player.cards[index])) {
-    return alert('Card is not valid!');
-  }
+  // if (!game.isCardValid(player, player.cards[index])) {
+  //   return alert('Card is not valid!');
+  // }
 
   // putting the clicked card on the game board
   const img = player.cards[index].getImage();
@@ -275,6 +279,15 @@ const displayCardsModal = () => {
   $('#cardsModal').modal();
 };
 
+const displayRoundHistoryModal = () => {
+  $('#roundHistoryModal').modal();
+};
+
+const displayInstructionsModal = () => {
+  updateInstructionsPage();
+  $('#instructionsModal').modal();
+};
+
 const bindConstsToWindow = () => {
   window.game = game;
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
@@ -282,6 +295,10 @@ const bindConstsToWindow = () => {
   window.onBidInputChange = onBidInputChange;
   window.onCardClicked = onCardClicked;
   window.displayCardsModal = displayCardsModal;
+  window.displayInstructionsModal = displayInstructionsModal;
+  window.updateInstructionsPage = updateInstructionsPage;
+  window.displayRoundHistoryModal = displayRoundHistoryModal;
+  window.instructionsChangePage = instructionsChangePage;
 };
 
 // creating a new game
@@ -289,5 +306,6 @@ const game = newGame();
 
 $(document).ready(() => {
   bindConstsToWindow();
+  createRoundHistoryTable();
   newRound(false);
 });

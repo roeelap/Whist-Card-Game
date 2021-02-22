@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whist Card Game</title>
+    <title>Israeli Whist Card Game</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
     <link rel="stylesheet" href="./style/style.css" />
     <link rel="shortcut icon" href="#" />
@@ -19,12 +19,12 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="navbar-wrapper">
         <div>
-          <a class="navbar-brand" href="index.html">Whist Card Game</a>
+          <a class="navbar-brand" href="index.html">Israeli Whist Card Game</a>
         </div>
         <div class="links">
-          <a type="button" class="navbar-button">Round History</a>
-          <a type="button" class="navbar-button">Instructions</a>
-          <a type="button" class="navbar-button">New Game</a>
+          <input type="button" class="navbar-button" value="Round History" onclick="displayRoundHistoryModal()" />
+          <input type="button" class="navbar-button" value="Instructions" onclick="displayInstructionsModal()" />
+          <input type="button" class="navbar-button" value="New Game" />
         </div>
       </div>
     </nav>
@@ -43,6 +43,58 @@
           <div class="modal-body"></div>
           <div class="modal-bottom mt-5">
             <button type="button" class="btn bidButton" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="roundHistoryModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="true"
+      data-keyboard="false"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg mt-5 table-modal">
+        <div class="modal-content" style="background: transparent; border: none">
+          <table id="roundHistoryTable"></table>
+
+          <button
+            style="width: fit-content; margin: auto"
+            type="button"
+            class="btn btn-primary bidButton mt-2"
+            data-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="instructionsModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="true"
+      data-keyboard="false"
+      data-page="0"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content p-1">
+          <div class="modal-title"></div>
+          <div class="modal-body"></div>
+          <div class="modal-bottom mt-5">
+            <button type="button" id="previous" class="btn btn-primary bidButton" onclick="instructionsChangePage(false)">
+              <i class="fas fa-arrow-alt-circle-left"></i>
+            </button>
+            <button type="button" class="btn btn-primary bidButton" data-dismiss="modal">Back To Game</button>
+            <button type="button" id="next" class="btn btn-primary bidButton" onclick="instructionsChangePage(true)">
+              <i class="fas fa-arrow-alt-circle-right"></i>
+            </button>
           </div>
         </div>
       </div>

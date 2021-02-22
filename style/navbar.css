@@ -16,9 +16,12 @@
   text-decoration: none;
   font-size: 1.5em;
   color: black;
+  border: none;
   border-left: 1px solid black;
   text-align: center;
   transition: letter-spacing 0.5s ease, margin-right 0.5s ease;
+  background: none;
+  outline: none;
 }
 
 .navbar-button:hover {
