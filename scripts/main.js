@@ -1,31 +1,29 @@
 import Game from './classes/Game.js';
-import { SUITS_TO_ICONS, TURN_TIMEOUT, ROUND_TIMEOUT, SUITS_TO_IMAGES, OVER, UNDER } from './static/consts.js';
+import { SUITS_TO_ICONS, TURN_TIMEOUT, ROUND_TIMEOUT, OVER, UNDER } from './static/consts.js';
 import Player from './classes/Player.js';
 import AI from './classes/AI.js';
+
+import { updateScore } from './static/scoreCalculations.js';
 import {
-  showBidButtons,
-  showSuitButtons,
-  showLastTrickButton,
   changeCardClickable,
-  showPlayerCards,
-  createTrickBidButtons,
-  clearCardImages,
-  collapseGameInfo,
   highlightPlayableCards,
   makeHandRotated,
   removeAllFilters,
-  showPass,
-  showTrumpBid,
-  showTricksBid,
+  showPlayerCards,
+} from './dynamicUIChanges/playerCards.js';
+import { createTrickBidButtons, showBidButtons, showLastTrickButton, showSuitButtons } from './dynamicUIChanges/bidArea.js';
+import {
   clearAllBidText,
-  showGameMode,
-  updateAllProgressions,
+  clearCardImages,
   showCard,
+  showGameMode,
+  showPass,
+  showTricksBid,
+  showTrumpBid,
   showTrumpSuit,
-  updateLastTrick,
-} from './static/dynamicUIChanges.js';
-import { updateScore } from './static/scoreCalculations.js';
-import { handEvaluation } from './static/bidCalculations.js';
+  updateAllProgressions,
+} from './dynamicUIChanges/mainBoard.js';
+import { updateLastTrick } from './dynamicUIChanges/modals.js';
 
 const newGame = () => {
   let players = [];
@@ -195,6 +193,8 @@ const gameRound = () => {
 
   if (game.lastThrownCards.length) {
     $('#last-trick-btn').removeAttr('disabled');
+  } else {
+    $('#last-trick-btn').attr('disabled', true);
   }
 
   // calculate remaining cards at the start of each round
@@ -281,7 +281,6 @@ const bindConstsToWindow = () => {
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
   window.onBidInputChange = onBidInputChange;
   window.onCardClicked = onCardClicked;
-  window.collapseGameInfo = collapseGameInfo;
   window.displayCardsModal = displayCardsModal;
 };
 

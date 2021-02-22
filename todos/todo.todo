@@ -1,12 +1,12 @@
 ✔ AI needs to better calculate their playing mode according to bet-tricks difference. @done(21-02-17 17:55)
 ✔ Highlight playable cards in hand @done(21-02-17 19:07)
 ✔ improve AI bidding ability @done(21-02-18 19:50)
-☐ Option to view last cards taken - modal 3
+✔ Option to view last cards taken - modal 3 @done(21-02-22 15:13)
 ✔ Show on table ===> tricks (for every player) | round mode (over\under) | trump suit | round number. @done(21-02-22 02:13)
-☐ Show round history table (scores, tricks, etc.) 5
-☐ make winning player bold - score board 
 ✘ Show AI hand (flipped cards) @cancelled(21-02-22 02:13)
-☐ RESPONSIVENESS!!!! 8
-☐ Instruction modal 2
+☐ Show round history table (scores, tricks, etc.) 2
+☐ make winning player bold - score board
+☐ Instructions modal 2
 ☐ New game - resets game (show confirmation box) 2
-☐ Show menu on load - name (default: "You"), choose number of rounds (3-20), new game button 5
+☐ Show menu on load - name (default: "You"), choose number of rounds (3-20), new game button 2
+☐ RESPONSIVENESS!!!! 5

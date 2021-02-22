@@ -1,12 +1,11 @@
-import Deck from './Deck.js';
 import {
-  updateTurnGlow,
-  updateRoundNumber,
-  updateScoreList,
   removeAllProgressionLabels,
   removeGameModeLabel,
-} from '../static/dynamicUIChanges.js';
-import { handEvaluation } from '../static/bidCalculations.js';
+  updateRoundNumber,
+  updateScoreList,
+  updateTurnGlow,
+} from '../dynamicUIChanges/mainBoard.js';
+import Deck from './Deck.js';
 
 export default class Game {
   constructor(players) {
@@ -190,6 +189,7 @@ export default class Game {
   }
 
   determineTrickWinner() {
+    this.lastThrownCards = this.thrownCards;
     const firstCard = this.thrownCards[0].card;
 
     // removing all the cards that don't match the played suit or the trump suit
@@ -211,7 +211,6 @@ export default class Game {
     const winningPlayerIndex = this.thrownCards[0].player.index;
     this.players[winningPlayerIndex - 1].tricks++;
 
-    this.lastThrownCards = this.thrownCards;
     this.thrownCards = [];
     this.turn = winningPlayerIndex;
 

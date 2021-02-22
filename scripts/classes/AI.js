@@ -2,7 +2,7 @@ import { SUITS_TO_ICONS, OVER, UNDER, MIN_VALID_TRUMP_BID } from '../static/cons
 import Player from './Player.js';
 import * as cf from '../static/cardFunctions.js';
 import { selectTrump, handEvaluation, convertScoreToBid } from '../static/bidCalculations.js';
-import { showCard } from '../static/dynamicUIChanges.js';
+import { showCard } from '../dynamicUIChanges/mainBoard.js';
 
 export default class AI extends Player {
   constructor(index, roundMode) {
