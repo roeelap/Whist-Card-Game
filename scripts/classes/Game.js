@@ -85,7 +85,7 @@ export default class Game {
     removeGameModeLabel();
   }
 
-  // Fuck up your PC
+  // Fuck up your PC - deals 13 NT hands
   // dealCards() {
   //   let score = 0;
   //   while (score < 33) {

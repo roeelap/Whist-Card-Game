@@ -42,11 +42,11 @@ export default class AI extends Player {
       return bid;
     }
 
-    if (Math.random() > 0.5) {
-      return bid + 1;
+    if (Math.random() < 0.5 && bid !== 0) {
+      return bid - 1;
     }
 
-    return bid - 1;
+    return bid + 1;
   }
 
   startingTheRoundOver() {

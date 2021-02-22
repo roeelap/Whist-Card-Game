@@ -6,32 +6,33 @@ const count = (value, array) => {
 
 export const convertScoreToBid = (totalScore) => {
   const addedValue = 2;
+  totalScore += addedValue;
   const bid =
-    totalScore <= 2 + addedValue
+    totalScore <= 2
       ? 0
-      : totalScore <= 9 + addedValue
+      : totalScore <= 9
       ? 1
-      : totalScore <= 12 + addedValue
+      : totalScore <= 12
       ? 2
-      : totalScore <= 15 + addedValue
+      : totalScore <= 15
       ? 3
-      : totalScore <= 18 + addedValue
+      : totalScore <= 18
       ? 4
-      : totalScore <= 21 + addedValue
+      : totalScore <= 21
       ? 5
-      : totalScore <= 24 + addedValue
+      : totalScore <= 24
       ? 6
-      : totalScore <= 27 + addedValue
+      : totalScore <= 27
       ? 7
-      : totalScore <= 30 + addedValue
+      : totalScore <= 30
       ? 8
-      : totalScore <= 32 + addedValue
+      : totalScore <= 32
       ? 9
-      : totalScore <= 34 + addedValue
+      : totalScore <= 34
       ? 10
-      : totalScore <= 36 + addedValue
+      : totalScore <= 36
       ? 11
-      : totalScore <= 38 + addedValue
+      : totalScore <= 38
       ? 12
       : 13;
 
@@ -175,5 +176,3 @@ export const selectTrump = (cards) => {
   // returns the suit with highest score
   return { suit: scores.indexOf(Math.max(...scores)), bid: convertScoreToBid(Math.max(...scores)) };
 };
-
-  
