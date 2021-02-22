@@ -19,7 +19,6 @@ export const showLastTrickButton = (isShow) => {
   $('#last-trick-btn').hide();
 };
 
-
 export const createTrickBidButtons = (minBid, forbiddenBid) => {
   let newDiv = $('<div class="trick-buttons"></div');
   for (let i = 0; i <= 13; i++) {

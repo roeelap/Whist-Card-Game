@@ -26,6 +26,19 @@ body {
   cursor: default;
 }
 
+#invalidAlert {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  border: none;
+  background: rgba(202, 39, 39, 0.85);
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 3em;
+}
+
 .bidButton {
   text-align: center;
   background: rgba(235, 235, 235, 0.9);

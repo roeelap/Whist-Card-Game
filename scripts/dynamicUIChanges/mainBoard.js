@@ -9,6 +9,13 @@ export const showTrumpBid = (playerIndex, value, suit) => {
   $(bidSuit).html(suit);
 };
 
+export const invalidAlert = (text) => {
+  if (!$('#invalidAlert').is(':visible')) {
+    $('#invalidAlert').html(text);
+    $('#invalidAlert').fadeIn(150).delay(1500).fadeOut();
+  }
+};
+
 // shows the pass label
 export const showPass = (playerIndex) => {
   const playerCardDiv = `#player${playerIndex}Card .bid div`;
@@ -64,15 +71,23 @@ export const updateTurnGlow = (playerIndex) => {
 
 export const updateRoundNumber = (roundNumber) => {
   const output = `Round ${roundNumber}/14`;
-  $('#round-number').html(output);
+  $('#round-number h2').html(output);
 };
 
 export const updateScoreList = (playerList, winningPlayersIndexes) => {
   let scoreOutput = '';
+  let playerOutput = '';
   for (const player of playerList) {
-      scoreOutput += `<p class= ${winningPlayersIndexes.includes(player.index) ? "bold" : ""}>${player.score}</p>`;
+    let isBold = winningPlayersIndexes.includes(player.index) ? 'bold' : '';
+    scoreOutput += `<p class= ${isBold}>${player.score}</p>`;
+    if (player.index === 1) {
+      playerOutput += `<p class=${isBold}>You</p>`;
+    } else {
+      playerOutput += `<p class=${isBold}>Player ${player.index}</p>`;
     }
+  }
   $('#scores').html(scoreOutput);
+  $('#players').html(playerOutput);
 };
 
 export const updateAllProgressions = () => {

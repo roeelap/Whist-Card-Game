@@ -10,4 +10,4 @@
 ✔ show last trick - shows cards after determine winner filter @done(21-02-22 17:48)
 ✔ show last trick button is not disabled after playing one round @done(21-02-22 17:59)
 ✔ round history table - "score" shows the score of the players, not how many points they have lost/won at a specific round @done(21-02-23 00:11)
-☐ AI still bids too much
+✔ AI still bids too much @done(21-02-23 00:44)

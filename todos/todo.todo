@@ -4,7 +4,7 @@
 ✔ Option to view last cards taken - modal 3 @done(21-02-22 15:13)
 ✔ Show on table ===> tricks (for every player) | round mode (over\under) | trump suit | round number. @done(21-02-22 02:13)
 ✘ Show AI hand (flipped cards) @cancelled(21-02-22 02:13)
-☐ Show round history table (scores, tricks, etc.) 2
+✔ Show round history table (scores, tricks, etc.) 2 @done(21-02-23 00:15)
 ✔ make winning player bold - score board @done(21-02-22 21:48)
 ✔ Instructions modal 2 @done(21-02-22 20:27)
 ☐ New game - resets game (show confirmation box) 2

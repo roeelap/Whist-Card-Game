@@ -14,6 +14,7 @@ import { createTrickBidButtons, showBidButtons, showLastTrickButton, showSuitBut
 import {
   clearAllBidText,
   clearCardImages,
+  invalidAlert,
   showCard,
   showGameMode,
   showPass,
@@ -47,7 +48,7 @@ const onBidInputChange = (bidInput) => {
 
 const newRound = (isAllPassed) => {
   if (!isAllPassed) {
-    addRoundRow()
+    addRoundRow();
   }
 
   game.newRound(isAllPassed);
@@ -90,14 +91,14 @@ const trumpSuitBidRound = () => {
 const onSuitBidButtonClicked = (bidButton) => {
   const bidAmount = parseInt($('#bidAmount').val());
   const bidSuit = $(bidButton).index();
-  const choice = game.isTrumpSuitBidValid(bidAmount, bidSuit);
+  const trumpSuitValidity = game.isTrumpSuitBidValid(bidAmount, bidSuit);
 
   // invalid choice
-  if (!choice) {
-    return alert('Not a valid bid, please try again.');
+  if (!trumpSuitValidity) {
+    return invalidAlert('Bid Not Valid!');
   }
 
-  if (choice === 'pass') {
+  if (trumpSuitValidity === 'pass') {
     game.passCount++;
     showPass(1);
   } else {
@@ -167,7 +168,7 @@ const onTricksBidButtonClicked = (bidButton) => {
   const bid = parseInt(bidButton.value);
 
   if (!game.isTrickBidValid(bid)) {
-    return alert('Not a valid bid, please try again.');
+    return invalidAlert('Bid Not Valid!');
   }
 
   game.players[0].bid = bid;
@@ -251,9 +252,9 @@ export const onCardClicked = (cardImg) => {
   const index = $(cardImg).index();
   const player = game.players[0];
 
+  // if card not valid, make a red custom alert
   if (!game.isCardValid(player, player.cards[index])) {
-    // return alert('Card is not valid!');
-    return;
+    return invalidAlert('Card Not Valid!');
   }
 
   // putting the clicked card on the game board

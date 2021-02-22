@@ -6,7 +6,7 @@ const count = (value, array) => {
 
 export const convertScoreToBid = (totalScore) => {
   const addedValue = 2;
-  totalScore += addedValue;
+  totalScore -= addedValue;
   const bid =
     totalScore <= 2
       ? 0

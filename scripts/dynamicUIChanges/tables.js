@@ -56,9 +56,16 @@ export const addRoundRow = () => {
   const data = roundData();
   const tbody = $('#roundHistoryTable').find('tbody')[0];
   const tr = $('<tr>');
+  const scoreIndexes = [5, 8, 11, 14];
 
-  for (const value of data) {
-    $(tr).append($('<td>').append(value));
+  for (const [index, value] of data.entries()) {
+    if (scoreIndexes.includes(index)) {
+      value > 0
+        ? $(tr).append($('<td style="color:green">').append(value))
+        : $(tr).append($('<td style="color:red">').append(value));
+    } else {
+      $(tr).append($('<td>').append(value));
+    }
   }
 
   if (game.round === 1) {
