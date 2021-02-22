@@ -4,8 +4,9 @@ import {
   updateRoundNumber,
   updateScoreList,
   removeAllProgressionLabels,
-  removeGameModeLabel
+  removeGameModeLabel,
 } from '../static/dynamicUIChanges.js';
+import { handEvaluation } from '../static/bidCalculations.js';
 
 export default class Game {
   constructor(players) {
@@ -83,6 +84,26 @@ export default class Game {
     removeAllProgressionLabels();
     removeGameModeLabel();
   }
+
+  // Fuck up your PC
+  // dealCards() {
+  //   let score = 0;
+  //   while (score < 33) {
+  //     this.deck = new Deck();
+  //     this.deck.shuffle();
+  //     this.players.forEach((player) => {
+  //       player.cards = [];
+  //     });
+  //     while (this.deck.cards.length > 0) {
+  //       this.players.forEach((player) => {
+  //         player.cards.push(this.deck.cards.pop());
+  //         player.sortCards();
+  //       });
+  //     }
+  //     score = handEvaluation(this.players[0].cards);
+  //     console.log(score);
+  //   }
+  // }
 
   dealCards() {
     while (this.deck.cards.length > 0) {

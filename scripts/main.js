@@ -25,6 +25,7 @@ import {
   updateLastTrick,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
+import { handEvaluation } from './static/bidCalculations.js';
 
 const newGame = () => {
   let players = [];
