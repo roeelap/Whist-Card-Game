@@ -36,3 +36,6 @@
   margin-top: -10px;
 }
 
+#last-trick-btn:disabled {
+  cursor: not-allowed;
+}

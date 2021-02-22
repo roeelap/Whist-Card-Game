@@ -121,7 +121,7 @@ const tricksBidRound = () => {
   }
 
   // reRenderTables(game);
-  
+
   // Tricks round ended
   if (game.trickBidsMade === 4) {
     return setTimeout(() => {
@@ -191,6 +191,10 @@ const printRoundCards = () => {
 const gameRound = () => {
   // UI - update the tricks for every player
   updateAllProgressions();
+
+  if (game.lastThrownCards.length) {
+    $('#last-trick-btn').removeAttr('disabled');
+  }
 
   // calculate remaining cards at the start of each round
   if (game.thrownCards.length === 0) {

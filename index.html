@@ -79,21 +79,43 @@
           <input
             type="number"
             id="bidAmount"
-            class="bidButton"
+            class="btn btn-primary bidButton"
             min="5"
             max="13"
             value="5"
             onchange="onBidInputChange(this)"
           />
-          <input type="button" class="bidButton suit hover-black" value="♣" onclick="onSuitBidButtonClicked(this)" />
-          <input type="button" class="bidButton suit red" value="♦" onclick="onSuitBidButtonClicked(this)" />
-          <input type="button" class="bidButton suit red" value="♥" onclick="onSuitBidButtonClicked(this)" />
-          <input type="button" class="bidButton suit hover-black" value="♠" onclick="onSuitBidButtonClicked(this)" />
-          <input type="button" class="bidButton hover-gold" value="NT" onclick="onSuitBidButtonClicked(this)" />
-          <input type="button" class="bidButton" value="Pass" onclick="onSuitBidButtonClicked(this)" />
+          <input
+            type="button"
+            class="bidButton btn btn-primary suit hover-black"
+            value="♣"
+            onclick="onSuitBidButtonClicked(this)"
+          />
+          <input type="button" class="bidButton btn btn-primary suit red" value="♦" onclick="onSuitBidButtonClicked(this)" />
+          <input type="button" class="bidButton btn btn-primary suit red" value="♥" onclick="onSuitBidButtonClicked(this)" />
+          <input
+            type="button"
+            class="bidButton btn btn-primary suit hover-black"
+            value="♠"
+            onclick="onSuitBidButtonClicked(this)"
+          />
+          <input
+            type="button"
+            class="bidButton btn btn-primary hover-gold"
+            value="NT"
+            onclick="onSuitBidButtonClicked(this)"
+          />
+          <input type="button" class="bidButton btn btn-primary" value="Pass" onclick="onSuitBidButtonClicked(this)" />
         </div>
         <div id="tricks-bid"></div>
-        <input id="last-trick-btn" type="button" class="bidButton" value="View Last Trick" onclick="displayCardsModal()" />
+        <input
+          id="last-trick-btn"
+          type="button"
+          class="btn btn-primary bidButton p-2"
+          value="View Last Trick"
+          disabled
+          onclick="displayCardsModal()"
+        />
       </div>
       <div id="player1Card" class="card-container">
         <p class="progression"></p>

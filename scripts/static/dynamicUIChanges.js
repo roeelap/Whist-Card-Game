@@ -86,10 +86,12 @@ export const showTrumpSuit = () => {
 export const showGameMode = () => {
   const roundModeText = game.roundMode > 0 ? `+${game.roundMode}` : game.roundMode;
   $('.round-mode').html(roundModeText);
+  $('.round-mode').css('background', 'rgba(249, 247, 238, 0.6)');
 };
 
 export const removeGameModeLabel = () => {
   $('.suit-background').css('background', '');
+  $('.round-mode').css('background', '');
   $('.round-mode').empty();
 };
 
@@ -128,7 +130,7 @@ export const updateTurnGlow = (playerIndex) => {
 //     { id: 'roundMode', text: game.getRoundMode() },
 //   ];
 
-//   let table = $('<table></table>').addClass('table table-sm table-hover').html(` 
+//   let table = $('<table></table>').addClass('table table-sm table-hover').html(`
 //   <thead>
 //     <tr class="text-center">
 //       <th>
@@ -156,7 +158,7 @@ export const updateTurnGlow = (playerIndex) => {
 //     data.push({ id: `player${index}info`, player: `Player ${index}`, bid, tricks, score });
 //   }
 
-//   let table = $('<table></table>').addClass('table table-sm table-hover text-center').html(` 
+//   let table = $('<table></table>').addClass('table table-sm table-hover text-center').html(`
 //   <thead>
 //     <tr>
 //       <th>Player</th>
@@ -273,14 +275,14 @@ export const showCard = (img, cardLabel) => {
 };
 
 export const updateLastTrick = (lastTrick) => {
-  let output = "";
+  let output = '';
   for (const entry of lastTrick) {
-    output+= `
+    output += `
     <div class="modal-card-image">
       <h4 class="text-center">Player ${entry.player.index}</h4>
       <img src=${entry.card.getImage()}>
     </div>`;
   }
 
-  $("#cardsModal .modal-body").html(output);
-}
+  $('#cardsModal .modal-body').html(output);
+};
