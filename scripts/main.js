@@ -8,7 +8,6 @@ import {
   showLastTrickButton,
   changeCardClickable,
   showPlayerCards,
-  reRenderTables,
   createTrickBidButtons,
   clearCardImages,
   collapseGameInfo,
@@ -23,6 +22,7 @@ import {
   updateAllProgressions,
   showCard,
   showTrumpSuit,
+  updateLastTrick,
 } from './static/dynamicUIChanges.js';
 import { updateScore } from './static/scoreCalculations.js';
 
@@ -50,7 +50,7 @@ const newRound = (isAllPassed) => {
   game.newRound(isAllPassed);
   showPlayerCards(game.players[0].cards);
   changeCardClickable(false);
-  reRenderTables(game);
+  // reRenderTables(game);
   return trumpSuitBidRound();
 };
 
@@ -120,7 +120,8 @@ const tricksBidRound = () => {
     showTrumpSuit();
   }
 
-  reRenderTables(game);
+  // reRenderTables(game);
+  
   // Tricks round ended
   if (game.trickBidsMade === 4) {
     return setTimeout(() => {
@@ -201,7 +202,7 @@ const gameRound = () => {
     printRoundCards();
     return setTimeout(() => {
       console.log(`Winner: player ${game.determineTrickWinner()}`);
-      reRenderTables(game);
+      // reRenderTables(game);
       clearCardImages();
       gameRound();
     }, ROUND_TIMEOUT);
@@ -264,6 +265,11 @@ export const onCardClicked = (cardImg) => {
   return gameRound();
 };
 
+const displayCardsModal = () => {
+  updateLastTrick(game.lastThrownCards);
+  $('#cardsModal').modal();
+};
+
 const bindConstsToWindow = () => {
   window.game = game;
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
@@ -271,6 +277,7 @@ const bindConstsToWindow = () => {
   window.onBidInputChange = onBidInputChange;
   window.onCardClicked = onCardClicked;
   window.collapseGameInfo = collapseGameInfo;
+  window.displayCardsModal = displayCardsModal;
 };
 
 // creating a new game

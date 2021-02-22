@@ -1,0 +1,38 @@
+#bidArea {
+  display: grid;
+  grid-column: 1/4;
+  height: fit-content;
+}
+
+#suit-bid {
+  width: 50%;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.trick-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 5px;
+}
+
+.trick-buttons > input {
+  width: 50px;
+  padding: 5px 0;
+}
+
+.trick-buttons > input:disabled {
+  cursor: not-allowed;
+}
+
+#last-trick-btn {
+  display: none;
+  width: fit-content;
+  justify-self: center;
+  font-size: 1.4em;
+  padding: 4px;
+  margin-top: -10px;
+}
+

@@ -1,0 +1,30 @@
+.cardImage {
+  height: 20vh;
+  width: auto;
+  cursor: pointer;
+  margin-right: -60px;
+  position: relative;
+  transition: 0.5s;
+  backface-visibility: hidden;
+  transform: translateZ(0) scale(1, 1);
+}
+
+.dark {
+  filter: brightness(85%);
+  box-shadow: none;
+  cursor: default;
+}
+
+.highlight {
+  border-radius: 12px;
+  box-shadow: 0 0 5px white;
+}
+
+#player {
+  margin-top: 3.5em;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  width: 100%;
+  transform: translateX(-30px);
+}

@@ -1,0 +1,37 @@
+.navbar-wrapper {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-button {
+  width: max-content;
+  padding: 0 1em;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: black;
+  border-left: 1px solid black;
+  text-align: center;
+  transition: letter-spacing 0.5s ease, margin-right 0.5s ease;
+}
+
+.navbar-button:hover {
+  color: black;
+  letter-spacing: 1px;
+  margin-right: -5px;
+}
+
+.navbar-button:first-of-type {
+  border-left: none;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+  font-weight: bold;
+}

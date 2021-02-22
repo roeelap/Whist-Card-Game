@@ -1,0 +1,28 @@
+#cardsModal .modal-content {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+#cardsModal .modal-body {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#cardsModal .modal-bottom {
+  display: grid;
+  justify-content: center;
+}
+
+.modal-card-image {
+  display: grid;
+  justify-content: center;
+}
+
+.modal-card-image img {
+  height: 20vh;
+  width: auto;
+  position: relative;
+  backface-visibility: hidden;
+}

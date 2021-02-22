@@ -1,6 +1,5 @@
 import Deck from './Deck.js';
 import {
-  reRenderTables,
   updateTurnGlow,
   updateRoundNumber,
   updateScoreList,
@@ -19,6 +18,7 @@ export default class Game {
     this.roundMode = 0;
     this.turn = 1;
     this.thrownCards = [];
+    this.lastThrownCards = [];
     this.bidCount = 0;
     this.passCount = 0;
     this.trickBidsMade = 0;
@@ -53,6 +53,7 @@ export default class Game {
     this.trumpSuit = 0;
     this.totalBids = 0;
     this.roundMode = 0;
+    this.lastThrownCards = [];
     this.thrownCards = [];
     this.bidCount = 0;
     this.passCount = 0;
@@ -163,7 +164,7 @@ export default class Game {
       this.turn++;
     }
 
-    reRenderTables(this);
+    // reRenderTables(this);
     updateTurnGlow(this.turn);
   }
 
@@ -189,6 +190,7 @@ export default class Game {
     const winningPlayerIndex = this.thrownCards[0].player.index;
     this.players[winningPlayerIndex - 1].tricks++;
 
+    this.lastThrownCards = this.thrownCards;
     this.thrownCards = [];
     this.turn = winningPlayerIndex;
 
