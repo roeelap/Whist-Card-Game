@@ -40,8 +40,9 @@ export const updateScore = (player, roundMode) => {
   const isSuccess = tricksBidDifference === 0;
 
   if (player.bid === 0) {
-    player.score += calculateScoreForBid0(player, isSuccess,roundMode);
+    player.scoreDelta = calculateScoreForBid0(player, isSuccess,roundMode);
   } else {
-    player.score += calculateScore(player, isSuccess, tricksBidDifference);
+    player.scoreDelta = calculateScore(player, isSuccess, tricksBidDifference);
   }
+  player.score += player.scoreDelta;
 };

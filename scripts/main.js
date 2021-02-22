@@ -251,9 +251,10 @@ export const onCardClicked = (cardImg) => {
   const index = $(cardImg).index();
   const player = game.players[0];
 
-  // if (!game.isCardValid(player, player.cards[index])) {
-  //   return alert('Card is not valid!');
-  // }
+  if (!game.isCardValid(player, player.cards[index])) {
+    // return alert('Card is not valid!');
+    return;
+  }
 
   // putting the clicked card on the game board
   const img = player.cards[index].getImage();

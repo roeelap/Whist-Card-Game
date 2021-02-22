@@ -3,6 +3,7 @@ export default class Player {
     this.index = index;
     this.cards = [];
     this.score = 0;
+    this.scoreDelta = 0;
     this.bid = 0;
     this.tricks = 0;
   }

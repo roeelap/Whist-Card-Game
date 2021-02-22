@@ -4,8 +4,8 @@ const roundData = () => {
   let data = [game.round, game.roundMode, SUITS_TO_ICONS[game.trumpSuit]];
 
   for (const player of game.players) {
-    const { bid, tricks, score } = player;
-    data.push(bid, tricks, score);
+    const { bid, tricks, scoreDelta } = player;
+    data.push(bid, tricks, scoreDelta);
   }
   return data;
 };
