@@ -1,0 +1,163 @@
+.suit-animation {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 80%;
+  align-items: center;
+}
+
+.suit-animation >div{
+  justify-self: center;
+}
+
+.diamond,
+.spade,
+.heart,
+.club {
+  width: 48px;
+  height: 48px;
+  margin: 9px;
+  position: relative;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.diamond .square {
+  background-color: #c41010;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 8px;
+  left: 8px;
+  transition: all 350ms;
+}
+.diamond.circled .square {
+  border-radius: 50%;
+  transform: scale(0.5);
+}
+
+.spade .square,
+.spade .circle1,
+.spade .circle2,
+.spade .circle3,
+.club .square,
+.club .circle1,
+.club .circle2,
+.club .circle3 {
+  background-color: #444444;
+  position: absolute;
+  transition: all 350ms;
+}
+.spade .square,
+.club .square {
+  width: 24px;
+  height: 24px;
+  top: 8px;
+  left: 8px;
+}
+.spade .circle1,
+.spade .circle2,
+.spade .circle3,
+.club .circle1,
+.club .circle2,
+.club .circle3 {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px 12px;
+}
+.spade .circle1,
+.club .circle1 {
+  top: 8px;
+  left: 20px;
+  transition-duration: 297.5ms;
+}
+.spade .circle2,
+.club .circle2 {
+  top: 20px;
+  left: 8px;
+  transition-duration: 297.5ms;
+}
+.spade .circle3,
+.club .circle3 {
+  top: 4px;
+  left: 4px;
+}
+.spade .tail,
+.club .tail {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 35px;
+  left: 35px;
+  border-top: 10px solid #444444;
+  border-right: 10px solid transparent;
+  transition: all 350ms;
+}
+.spade.circled .circle1,
+.club.circled .circle1 {
+  transform: scale(0.5) translate(-16px, 8px);
+  transition-duration: 350ms;
+}
+.spade.circled .circle2,
+.club.circled .circle2 {
+  transform: scale(0.5) translate(8px, -16px);
+  transition-duration: 350ms;
+}
+.spade.circled .circle3,
+.club.circled .circle3 {
+  transform: scale(0.666) translate(12px, 12px);
+}
+.spade.circled .square,
+.club.circled .square {
+  border-radius: 50%;
+  transform: scale(0.666) translate(6px, 6px);
+  transition-duration: 315ms;
+}
+.spade.circled .tail,
+.club.circled .tail {
+  transform: scale(0.666) translate(-20px, -20px);
+}
+
+.heart .square,
+.heart .circle1,
+.heart .circle2 {
+  background-color: #c41010;
+  position: absolute;
+  transition: all 350ms;
+}
+.heart .square {
+  width: 24px;
+  height: 24px;
+  top: 14px;
+  left: 14px;
+  transition-duration: 350ms;
+}
+.heart .circle1,
+.heart .circle2 {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px 12px;
+  transition-duration: 297.5ms;
+}
+.heart .circle1 {
+  top: 2px;
+  left: 14px;
+}
+.heart .circle2 {
+  top: 14px;
+  left: 2px;
+}
+.heart.circled .circle1,
+.heart.circled .circle2 {
+  transition-duration: 350ms;
+}
+.heart.circled .circle1 {
+  transform: scale(0.5) translate(0, 24px);
+}
+.heart.circled .circle2 {
+  transform: scale(0.5) translate(24px, 0);
+}
+.heart.circled .square {
+  border-radius: 50%;
+  transform: scale(0.666) translate(-2px, -2px);
+  transition-duration: 315ms;
+}

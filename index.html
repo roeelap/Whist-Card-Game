@@ -24,16 +24,12 @@
         <div class="links">
           <input type="button" class="navbar-button" value="Round History" onclick="displayRoundHistoryModal()" />
           <input type="button" class="navbar-button" value="Instructions" onclick="displayInstructionsModal()" />
-          <input type="button" class="navbar-button" value="New Game" />
+          <input type="button" class="navbar-button" value="New Game" onclick="displayNewGameModal()" />
         </div>
       </div>
     </nav>
 
-    <div
-      id="invalidAlert"
-      class="alert alert-danger"
-      role="alert"
-    ></div> 
+    <div id="invalidAlert" class="alert alert-danger" role="alert"></div>
 
     <div
       id="cardsModal"
@@ -48,7 +44,48 @@
         <div class="modal-content p-1">
           <div class="modal-body"></div>
           <div class="modal-bottom mt-5">
-            <button type="button" class="btn bidButton" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary bidButton" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="newGameModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content p-3" style="height: 40vh; box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5)">
+          <div class="modal-title">
+            <h1 class="text-center">Israeli Whist Card Game</h1>
+          </div>
+          <div class="modal-body text-center" style="font-size: 1.5em">
+            <label for="rounds-amount"># Rounds</label>
+            <input type="number" id="rounds-amount" min="4" max="24" value="14" onchange="onTotalRoundsInputChange(this)" />
+            <div class="suit-animation">
+              <div class="club circled">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="tail"></div>
+              </div>
+              <div class="diamond circled">
+                <div class="square"></div>
+              </div>
+              <div class="heart circled">
+                <div class="square"></div>
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+              </div>
+              <div class="spade circled">
+                <div class="square"></div>
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="tail"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-bottom my-2 text-center">
+            <button type="button" onclick="createNewGame()" class="btn btn-primary bidButton" data-dismiss="modal">
+              Start New Game
+            </button>
           </div>
         </div>
       </div>
@@ -68,7 +105,7 @@
           <table id="roundHistoryTable"></table>
 
           <button
-            style="width: fit-content; margin: auto;;"
+            style="width: fit-content; margin: auto"
             type="button"
             class="btn btn-primary bidButton my-2"
             data-dismiss="modal"
@@ -118,7 +155,6 @@
         </div>
         <div class="scores">
           <div id="players"></div>
-          <div id="divider"></div>
           <div id="scores"></div>
         </div>
       </div>

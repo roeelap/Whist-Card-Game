@@ -69,8 +69,8 @@ export const updateTurnGlow = (playerIndex) => {
   $(playerLabels[playerIndex - 1]).addClass('glowing-border');
 };
 
-export const updateRoundNumber = (roundNumber) => {
-  const output = `Round ${roundNumber}/14`;
+export const updateRoundNumber = (roundNumber, totalRounds) => {
+  const output = `Round ${roundNumber}/${totalRounds}`;
   $('#round-number h2').html(output);
 };
 

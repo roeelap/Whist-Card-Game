@@ -63,3 +63,15 @@
 #instructionsModal .modal-bottom button:last-of-type {
   justify-self: right;
 }
+
+#newGameModal .modal-content{
+  background: linear-gradient(0deg, rgb(129, 129, 129), rgb(252, 252, 252));
+  border: none;
+  border-radius: 10px;
+}
+
+#rounds-amount {
+  border: 1px solid black;
+  border-radius: 5px;
+  outline: none;
+}

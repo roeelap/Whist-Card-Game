@@ -9,6 +9,7 @@
 @import url('./bid-area.css');
 @import url('./player-cards.css');
 @import url('./table.css');
+@import url('./suits-animation.css');
 
 body {
   width: 100%;

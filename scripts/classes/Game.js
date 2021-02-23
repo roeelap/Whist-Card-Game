@@ -8,7 +8,7 @@ import {
 import Deck from './Deck.js';
 
 export default class Game {
-  constructor(players) {
+  constructor(players, rounds) {
     this.players = players;
     this.deck;
     this.round = 0;
@@ -23,6 +23,7 @@ export default class Game {
     this.passCount = 0;
     this.trickBidsMade = 0;
     this.firstPlayerToPlay = 0;
+    this.totalRounds = rounds;
   }
 
   determineFirstPlayer(isAllPassed) {
@@ -77,10 +78,15 @@ export default class Game {
 
     // UI updating
     updateScoreList(this.players, this.getWinningPlayersIndexes());
-    updateRoundNumber(this.round);
+    updateRoundNumber(this.round, this.totalRounds);
     updateTurnGlow(this.firstPlayerToPlay);
     removeAllProgressionLabels();
     removeGameModeLabel();
+
+    // check if the game is over
+    if (this.round > this.totalRounds) {
+      alert("GAME OVER");
+    }
   }
 
   // Fuck up your PC - deals 13 NT hands

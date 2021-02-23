@@ -7,6 +7,6 @@
 ✔ Show round history table (scores, tricks, etc.) 2 @done(21-02-23 00:15)
 ✔ make winning player bold - score board @done(21-02-22 21:48)
 ✔ Instructions modal 2 @done(21-02-22 20:27)
-☐ New game - resets game (show confirmation box) 2
-☐ Show menu on load - name (default: "You"), choose number of rounds (3-20), new game button 2
+✔ New game - resets game (show confirmation box) 2 @done(21-02-23 02:07)
+✔ Show menu on load - choose number of rounds (4-20), new game button 2 @done(21-02-23 02:07)
 ☐ RESPONSIVENESS!!!! 5

@@ -26,23 +26,33 @@ import {
 import { updateLastTrick, updateInstructionsPage, instructionsChangePage } from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
 
-const newGame = () => {
+const newGame = (numberOfRounds) => {
   let players = [];
   players.push(new Player(1));
   for (let i = 2; i <= 4; i++) {
     players.push(new AI(i));
   }
 
-  return new Game(players);
+  return new Game(players, numberOfRounds);
 };
 
-// Correct bid
+// validate bid
 const onBidInputChange = (bidInput) => {
   if (bidInput.value < 5) {
     return (bidInput.value = 5);
   }
   if (bidInput.value > 13) {
     return (bidInput.value = 13);
+  }
+};
+
+// validate total rounds
+const onTotalRoundsInputChange = (totalRounds) => {
+  if (totalRounds.value < 4) {
+    return (totalRounds.value = 4);
+  }
+  if (totalRounds.value > 24) {
+    return (totalRounds.value = 24);
   }
 };
 
@@ -54,7 +64,6 @@ const newRound = (isAllPassed) => {
   game.newRound(isAllPassed);
   showPlayerCards(game.players[0].cards);
   changeCardClickable(false);
-  // reRenderTables(game);
   return trumpSuitBidRound();
 };
 
@@ -290,24 +299,52 @@ const displayInstructionsModal = () => {
   $('#instructionsModal').modal();
 };
 
+const displayNewGameModal = () => {
+  $('#newGameModal').modal();
+};
+
 const bindConstsToWindow = () => {
-  window.game = game;
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
   window.onBidInputChange = onBidInputChange;
+  window.onTotalRoundsInputChange = onTotalRoundsInputChange;
   window.onCardClicked = onCardClicked;
   window.displayCardsModal = displayCardsModal;
   window.displayInstructionsModal = displayInstructionsModal;
   window.updateInstructionsPage = updateInstructionsPage;
   window.displayRoundHistoryModal = displayRoundHistoryModal;
   window.instructionsChangePage = instructionsChangePage;
+  window.displayNewGameModal = displayNewGameModal;
+  window.createNewGame = createNewGame;
 };
 
-// creating a new game
-const game = newGame();
+const suitsAnimation = () => {
+  setTimeout(function () {
+    $('.diamond, .spade, .heart, .club').removeClass('circled');
+  }, 400);
+
+  $('.diamond, .spade, .heart, .club').hover(
+    function () {
+      $(this).addClass('circled');
+    },
+    function () {
+      $(this).removeClass('circled');
+    }
+  );
+};
+
+// creating a new game object
+let game;
+const createNewGame = () => {
+  const numberOfRounds = $('#rounds-amount').val();
+  game = newGame(numberOfRounds);
+  window.game = game;
+  createRoundHistoryTable();
+  newRound(false);
+};
 
 $(document).ready(() => {
   bindConstsToWindow();
-  createRoundHistoryTable();
-  newRound(false);
+  displayNewGameModal();
+  suitsAnimation();
 });
