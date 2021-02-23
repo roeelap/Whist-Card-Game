@@ -7,11 +7,11 @@ export const SUITS_TO_ICONS = {
 };
 
 export const SUITS_TO_IMAGES = {
-  1: '../../images/suits/clubs.png',
-  2: '../../images/suits/diamond.png',
-  3: '../../images/suits/heart.png',
-  4: '../../images/suits/spade.png',
-  5: '../../images/suits/no-trump.png',
+  1: './images/suits/clubs.png',
+  2: './images/suits/diamond.png',
+  3: './images/suits/heart.png',
+  4: './images/suits/spade.png',
+  5: './images/suits/no-trump.png',
 };
 
 export const NO_TRUMP = 5;
