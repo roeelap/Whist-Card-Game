@@ -23,6 +23,19 @@ body {
   user-select: none;
 }
 
+.suit-background {
+  display: grid;
+  z-index: -1;
+  height: 65%;
+  align-self: center;
+  grid-row: 3;
+  grid-column: 2;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
 .nonClickable {
   cursor: default;
 }
