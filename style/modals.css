@@ -64,7 +64,8 @@
   justify-self: right;
 }
 
-#newGameModal .modal-content{
+#newGameModal .modal-content,
+#gameOverModal .modal-content {
   background: linear-gradient(0deg, rgb(129, 129, 129), rgb(252, 252, 252));
   border: none;
   border-radius: 10px;
@@ -76,7 +77,18 @@
   outline: none;
 }
 
-#newGameModal .exit-button {
+.final-buttons {
+  display: grid;
+  gap: 2em;
+  align-self: center;
+}
+
+.final-buttons button {
+  transition: 0.3s;
+  font-size: 1.2em;
+}
+
+.exit-button {
   position: absolute;
   right: 0;
   top: 0;

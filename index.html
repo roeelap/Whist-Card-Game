@@ -87,9 +87,24 @@
             </div>
           </div>
           <div class="modal-bottom my-2 text-center">
-            <button onclick="createNewGame()" class="btn btn-primary bidButton" data-dismiss="modal">
-              Start New Game
-            </button>
+            <button onclick="createNewGame()" class="btn btn-primary bidButton" data-dismiss="modal">Start New Game</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameOverModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content p-3" style="height: 40vh; box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5)">
+          <div class="modal-title">
+            <h1 class="text-center">Game Over!</h1>
+          </div>
+          <div class="modal-body text-center row" style="font-size: 1.5em; margin-top: -1rem">
+            <div class="final-scores col-8"></div>
+            <div class="final-buttons col">
+              <button onclick="displayRoundHistoryModal()" class="btn-primary bidButton">Round History</button>
+              <button onclick="displayNewGameModal()" class="btn-primary bidButton" data-dismiss="modal">New Game</button>
+            </div>
           </div>
         </div>
       </div>
@@ -104,17 +119,12 @@
       data-keyboard="false"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg mt-5 table-modal">
+      <div class="modal-dialog modal-lg mt-5 table-modal" style="pointer-events: all">
         <div class="modal-content" style="background: transparent; border: none">
           <table id="roundHistoryTable"></table>
         </div>
         <div class="modal-bottom my-2 text-center">
-          <button
-            style="width: fit-content; margin: auto"
-            type="button"
-            class="btn btn-primary bidButton my-2"
-            data-dismiss="modal"
-          >
+          <button style="width: fit-content; margin: auto" class="btn btn-primary bidButton my-2" data-dismiss="modal">
             Close
           </button>
         </div>

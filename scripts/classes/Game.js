@@ -5,6 +5,7 @@ import {
   updateScoreList,
   updateTurnGlow,
 } from '../dynamicUIChanges/mainBoard.js';
+import { displayGameOverModal } from '../dynamicUIChanges/modals.js';
 import Deck from './Deck.js';
 
 export default class Game {
@@ -65,10 +66,17 @@ export default class Game {
       this.round++;
     }
 
-    //resetting the stats of each player
+    // resetting the stats of each player
     this.players.forEach((player) => {
       player.resetStats();
     });
+
+    updateScoreList(this.players, this.getWinningPlayersIndexes());
+
+    // check if the game is over
+    if (this.round > this.totalRounds) {
+      return displayGameOverModal();
+    }
 
     //creating a new deck
     this.deck = new Deck();
@@ -82,11 +90,6 @@ export default class Game {
     updateTurnGlow(this.firstPlayerToPlay);
     removeAllProgressionLabels();
     removeGameModeLabel();
-
-    // check if the game is over
-    if (this.round > this.totalRounds) {
-      alert("GAME OVER");
-    }
   }
 
   // Fuck up your PC - deals 13 NT hands

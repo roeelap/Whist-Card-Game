@@ -74,6 +74,36 @@
     z-index: 10;
   }
 
+  #modalScoreBoard {
+    height: 120%;
+    width: 100%;
+    display: grid;
+    background-image: url('../images/background/post-it-note.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    color: black;
+  }
+
+  .final-scores {
+    padding-left: 0;
+  }
+
+  #modalScoreBoard h2 {
+    font-size: 4vw;
+  }
+
+  #modalScoreBoard .scores {
+    font-size: 1.5vh;
+  }
+
+  #modalScoreBoard #score-board-wrapper {
+    margin: auto;
+    padding-top: 0;
+    height: fit-content;
+    width: 90%;
+  }
+
   #score-board-wrapper {
     padding: 5% 10%;
   }
@@ -87,6 +117,7 @@
   }
 
   .scores {
+    font-size: 2.5em;
     margin-top: 0 !important;
     margin-left: 0 !important;
   }
@@ -259,7 +290,7 @@
     background: rgb(255, 251, 230);
   }
 
-  #newGameModal .exit-button {
+  .exit-button {
     transform: scale(0.75);
   }
 }

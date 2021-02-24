@@ -29,6 +29,21 @@
   color: black;
 }
 
+#modalScoreBoard {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  background-image: url('../images/background/post-it-note.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  color: black;
+}
+
+#modalScoreBoard .scores {
+  margin-right: 2.4em;
+}
+
 #score-board-wrapper {
   height: 100%;
   width: 100%;

@@ -86,9 +86,9 @@ export const updateScoreList = (playerList, winningPlayersIndexes) => {
       playerOutput += `<p class=${isBold}>Player ${player.index}</p>`;
     }
   }
-  $('#scores').html(scoreOutput);
-  $('#players').html(playerOutput);
-  $('#score-board h2').html("Score Board");
+  $('body #score-board #scores').html(scoreOutput);
+  $('body #score-board #players').html(playerOutput);
+  $('#score-board h2').html('Score Board');
 };
 
 export const updateAllProgressions = () => {

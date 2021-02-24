@@ -32,13 +32,14 @@ import {
   showTrumpSuit,
   updateAllProgressions,
 } from './dynamicUIChanges/mainBoard.js';
-import { 
+import {
   updateInstructionsPage,
   instructionsChangePage,
   displayCardsModal,
   displayRoundHistoryModal,
-  displayInstructionsModal, 
+  displayInstructionsModal,
   displayGameInfoMobile,
+  displayGameOverModal,
 } from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
 
@@ -66,9 +67,9 @@ const onBidInputChange = (bidInput) => {
 
 // validate total rounds
 const onTotalRoundsInputChange = (totalRounds) => {
-  if (totalRounds.value < 4) {
-    return (totalRounds.value = 4);
-  }
+  // if (totalRounds.value < 4) {
+  //   return (totalRounds.value = 4);
+  // }
   if (totalRounds.value > 24) {
     return (totalRounds.value = 24);
   }
@@ -287,10 +288,10 @@ export const onCardClicked = (cardImg) => {
   const index = $(cardImg).index();
   const player = game.players[0];
 
-  // if card not valid, make a red custom alert
-  if (!game.isCardValid(player, player.cards[index])) {
-    return invalidAlert('Card Not Valid!');
-  }
+  // // if card not valid, make a red custom alert
+  // if (!game.isCardValid(player, player.cards[index])) {
+  //   return invalidAlert('Card Not Valid!');
+  // }
 
   // putting the clicked card on the game board
   const img = player.cards[index].getImage();
@@ -319,10 +320,10 @@ export const onCardClicked = (cardImg) => {
 
 const disableExitBtnNewGameModal = () => {
   if (!game) {
-     return $("#newGameModal .exit-button").attr("disabled", true);
+    return $('#newGameModal .exit-button').attr('disabled', true);
   }
-  $("#newGameModal .exit-button").attr("disabled", false);
-}
+  $('#newGameModal .exit-button').attr('disabled', false);
+};
 
 const displayNewGameModal = () => {
   disableExitBtnNewGameModal();
@@ -365,7 +366,7 @@ const suitsAnimation = () => {
 
 // creating a new game object
 let game;
-const createNewGame = () => {
+const createNewGame = async () => {
   const numberOfRounds = $('#rounds-amount').val();
   game = newGame(numberOfRounds);
   window.game = game;
