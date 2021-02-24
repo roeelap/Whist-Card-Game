@@ -146,9 +146,11 @@
       </div>
     </div>
 
-    <button id="burger-btn" class="bidButton" onclick="displayGameInfoMobile()">
+    <button id="burger-btn" class="bidButton" onclick="displayGameInfoMobile(this)" data-isInfoShowing="false">
       <i class="fas fa-bars"></i>
     </button>
+
+    <div id="game-info-background-mobile"></div>
 
     <div id="score-board">
       <div id="score-board-wrapper">

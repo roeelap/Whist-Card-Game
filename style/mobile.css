@@ -70,6 +70,7 @@
     right: 0;
     margin-left: -100px;
     margin-right: auto;
+    z-index: 10;
   }
 
   #score-board-wrapper {
@@ -97,6 +98,7 @@
     right: 0;
     margin-left: -100px;
     margin-right: auto;
+    z-index: 10;
   }
 
   #round-number h2 {
@@ -182,6 +184,19 @@
 
   #burger-btn {
     display: block;
+  }
+
+  #game-info-background-mobile {
+    display: block;
+    position: absolute;
+    width: 100px;
+    height: 180px;
+    background: rgb(255, 251, 230);
+    margin-left: -100px;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    border-radius: 0 10px 10px 0;
   }
 }
 

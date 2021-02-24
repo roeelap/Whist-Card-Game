@@ -316,14 +316,23 @@ const displayNewGameModal = () => {
   $('#newGameModal').modal();
 };
 
-const displayGameInfoMobile = (isShow) => {
-  isShow
+const displayGameInfoMobile = (burgerBtn) => {
+  const data = burgerBtn.dataset.isInfoShowing;
 
-  $( "#score-board" ).animate({
-    marginLeft: "+=100"
+  const direction = data === "false" ? -100 : 100;
+  burgerBtn.dataset.isInfoShowing = data === "false" ? "true" : "false";
+
+  $("#score-board").animate({
+    marginLeft: `+=${direction}`
   }, 500);
-  $( "#round-number" ).animate({
-    marginLeft: "+=100"
+  $("#round-number").animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+  $(burgerBtn).animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+  $("#game-info-background-mobile").animate({
+    marginLeft: `+=${direction}`
   }, 500);
 };
 
