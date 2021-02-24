@@ -272,13 +272,14 @@ export const onCardClicked = (cardImg) => {
   const cardLabel = $(`#player${player.index}Card`);
   showCard(img, cardLabel);
 
+  const marginalIndex = window.marginalMobileCardIndex;
+
+  if ($(cardImg).css('z-index') < marginalIndex) {
+    $($('.cardImage')[marginalIndex]).css('margin-top', 0);
+  }
+
   // removing the card from the player's hand
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
-  console.log($(cardImg).css('z-index'), window.marginalMobileCardIndex);
-  if ($(cardImg).css('z-index') < window.marginalMobileCardIndex) {
-    console.log('hi');
-    $($('.cardImage')[window.marginalMobileCardIndex]).css('margin-top', '');
-  }
 
   $(cardImg).remove();
   changeCardClickable(false);
