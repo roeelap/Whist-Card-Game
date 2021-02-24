@@ -39,7 +39,8 @@
   .cardImage {
     transform: rotate(0) !important;
     margin-right: -18px;
-    height: 90px;
+    width: 18% !important;
+    height: auto;
   }
 
   .navbar-wrapper {
@@ -118,7 +119,11 @@
   }
 
   .bidButton {
-    padding: 0.1em 0.3em !important;
+    padding: 0.3em 0.4em !important;
+  }
+
+  #suit-bid .bidButton {
+    padding: 0.3em 0.8em !important;
   }
 
   #tricks-bid .bidButton {
@@ -223,6 +228,22 @@
     background: rgb(255, 251, 230);
     font-size: 2.5em;
     border: none;
+  }
+
+  .bid-value-controls {
+    position: absolute;
+    left: 30px;
+    top: 59vh;
+    display: grid !important;
+  }
+
+  .bid-value-button {
+    font-size: 6em;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .bid-value-button:active {
+    color: rgba(255, 255, 255, 0.9);
   }
 
   #game-info-background-mobile {

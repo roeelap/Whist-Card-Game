@@ -6,9 +6,9 @@
 
 #suit-bid {
   width: 50%;
+  display: flex;
+  justify-content: center;
   justify-self: center;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
   gap: 5px;
 }
 

@@ -12,7 +12,14 @@ import {
   removeAllFilters,
   showPlayerCards,
 } from './dynamicUIChanges/playerCards.js';
-import { createTrickBidButtons, showBidButtons, showLastTrickButton, showSuitButtons } from './dynamicUIChanges/bidArea.js';
+import {
+  createTrickBidButtons,
+  decreaseBid,
+  increaseBid,
+  showBidButtons,
+  showLastTrickButton,
+  showSuitButtons,
+} from './dynamicUIChanges/bidArea.js';
 import {
   clearAllBidText,
   clearCardImages,
@@ -34,6 +41,8 @@ import {
   displayGameInfoMobile,
 } from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
+
+const IS_MOBILE = $(document).width() < 500;
 
 const newGame = (numberOfRounds) => {
   let players = [];
@@ -93,6 +102,9 @@ const trumpSuitBidRound = () => {
 
   // player turn
   if (game.turn === 1) {
+    if (IS_MOBILE) {
+      $('.bid-value-controls').css('visibility', 'visible');
+    }
     return showSuitButtons(true);
   }
 
@@ -138,6 +150,7 @@ const onSuitBidButtonClicked = (bidButton) => {
 const tricksBidRound = () => {
   // clear trump round info
   if (game.trickBidsMade === 0) {
+    $('.bid-value-controls').css('visibility', 'hidden');
     clearAllBidText();
     showTrumpSuit();
   }
@@ -154,8 +167,7 @@ const tricksBidRound = () => {
         ai.playingMode = game.roundMode > 0 ? OVER : UNDER;
       }
 
-      const isMobile = $(document).width() < 500;
-      if (isMobile) {
+      if (IS_MOBILE) {
         $('#gameBoard').css('grid-template-rows', '0% 38% 24% 38%');
       }
 
@@ -332,6 +344,8 @@ const bindConstsToWindow = () => {
   window.createNewGame = createNewGame;
   window.rearrangeCardsMobile = rearrangeCardsMobile;
   window.displayGameInfoMobile = displayGameInfoMobile;
+  window.increaseBid = increaseBid;
+  window.decreaseBid = decreaseBid;
 };
 
 const suitsAnimation = () => {
