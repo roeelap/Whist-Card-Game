@@ -116,11 +116,15 @@
   }
 
   .bidButton {
-    padding: 0.1em 0.3em 0.1em 0.3em !important;
+    padding: 0.1em 0.3em !important;
   }
 
   #tricks-bid .bidButton {
     width: 2rem;
+  }
+
+  #instructionsModal .modal-content {
+    height: 60vh;
   }
 
   #gameBoard {
@@ -178,24 +182,31 @@
     justify-self: center;
     overflow-x: scroll;
   }
+
+  .table-modal button {
+    padding: 0.3em 1.5em !important;
+  }
+
   ::-webkit-scrollbar {
     -webkit-appearance: none;
   }
 
   ::-webkit-scrollbar:horizontal {
     height: 12px;
+    padding: 20px;
   }
 
   ::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    border: 2px solid #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.95);
   }
 
   ::-webkit-scrollbar-track {
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.95);
   }
+
   table {
     width: 100%;
   }
