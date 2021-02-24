@@ -31,8 +31,7 @@ export const showPlayerCards = (playerCards) => {
   let output = '';
 
   playerCards.forEach((card, index) => {
-    const loadFunction = index === 12 ? 'rearrangeCardsMobile()' : '';
-    output += `<img src="${card.getImage()}" class="cardImage" style="z-index: ${index}" onclick="onCardClicked(this)" onload="${loadFunction}">`;
+    output += `<img src="${card.getImage()}" class="cardImage" style="z-index: ${index}" onclick="onCardClicked(this)" onload="rearrangeCardsMobile()">`;
   });
   $('#player').html(output);
 

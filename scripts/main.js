@@ -146,6 +146,11 @@ const tricksBidRound = () => {
         ai.playingMode = game.roundMode > 0 ? OVER : UNDER;
       }
 
+      const isMobile = $(document).width() < 500;
+      if (isMobile) {
+        $('#gameBoard').css('grid-template-rows', '0% 38% 24% 38%');
+      }
+
       showGameMode();
       clearAllBidText();
       showLastTrickButton(true);
@@ -274,9 +279,9 @@ export const onCardClicked = (cardImg) => {
 
   const marginalIndex = window.marginalMobileCardIndex;
 
-  if ($(cardImg).css('z-index') < marginalIndex) {
-    $($('.cardImage')[marginalIndex]).css('margin-top', 0);
-  }
+  // if ($(cardImg).css('z-index') < marginalIndex) {
+  $($('.cardImage')[marginalIndex]).css('margin-top', 0);
+  // }
 
   // removing the card from the player's hand
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
@@ -310,6 +315,8 @@ const displayNewGameModal = () => {
   $('#newGameModal').modal();
 };
 
+const displayGameInfoMobile = () => {};
+
 const bindConstsToWindow = () => {
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
   window.onTricksBidButtonClicked = onTricksBidButtonClicked;
@@ -324,6 +331,7 @@ const bindConstsToWindow = () => {
   window.displayNewGameModal = displayNewGameModal;
   window.createNewGame = createNewGame;
   window.rearrangeCardsMobile = rearrangeCardsMobile;
+  window.displayGameInfoMobile = displayGameInfoMobile;
 };
 
 const suitsAnimation = () => {

@@ -9,6 +9,11 @@
     flex-wrap: wrap;
   }
 
+  #last-trick-btn {
+    margin-right: 10px;
+    margin-top: 1em;
+  }
+
   .cardImage {
     transform: rotate(0) !important;
     margin-right: -18px;
@@ -35,11 +40,50 @@
     padding-top: 0;
   }
 
-  #score-board, #round-number {
-    display: none;
+  #score-board {
+    height: 100px;
+    width: 100px;
+    top: 140px;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: auto;
   }
 
-  #suit-bid, #tricks-bid {
+  #score-board-wrapper {
+    padding: 5% 10%;
+  }
+
+  #score-board p {
+    font-size: 0.4em;
+  }
+  #score-board h2 {
+    font-size: 1.4em;
+    margin-left: 0;
+  }
+
+  .scores {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  #round-number {
+    height: 80px;
+    width: 100px;
+    top: 60px;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  #round-number h2 {
+    font-size: 1.3em;
+    margin-top: 0.5em;
+  }
+
+  #suit-bid,
+  #tricks-bid {
     width: 100%;
   }
 
@@ -57,15 +101,17 @@
   }
 
   #gameBoard {
-    grid-template-rows: 35px 70px  70px  70px;
+    grid-template-rows: 8% 35% 15% 35%;
+    padding-top: 1em;
   }
-  
-  #player2Card {
-    height: 100%;
+
+  #player3Card {
+    align-self: flex-end !important;
   }
-  
-  #player4Card {
-    height: 100%;
+
+  .card-container {
+    width: 60%;
+    height: 90px !important;
   }
 
   .progression {
@@ -94,20 +140,22 @@
     min-width: 2.5em;
   }
 
-  #rounds-amount, #newGameModal label {
+  #rounds-amount,
+  #newGameModal label {
     font-size: 2em;
   }
 
   #newGameModal .modal-bottom button {
     width: fit-content;
-    padding: 0.5em!important;
-  }
-
-  .table-modal td, th {
     padding: 0.5em !important;
   }
 
-  #score-board-btn {
+  .table-modal td,
+  th {
+    padding: 0.5em !important;
+  }
+
+  #burger-btn {
     display: block;
   }
 }

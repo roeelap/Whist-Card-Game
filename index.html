@@ -18,13 +18,12 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="navbar-wrapper">
-       
-          <div class="navbar-brand">
-            <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
-            <h2>Israeli Whist</h2>
-            <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
-          </div>
-        
+        <div class="navbar-brand">
+          <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
+          <h2>Israeli Whist</h2>
+          <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
+        </div>
+
         <div class="links">
           <input type="button" class="navbar-button" value="Round History" onclick="displayRoundHistoryModal()" />
           <input type="button" class="navbar-button" value="Instructions" onclick="displayInstructionsModal()" />
@@ -147,12 +146,7 @@
       </div>
     </div>
 
-    <div id="info">
-      <div id="roundInfo"></div>
-      <div id="score"></div>
-    </div>
-    
-    <button id="score-board-btn" class="bidButton">
+    <button id="burger-btn" class="bidButton" onclick="displayGameInfoMobile()">
       <i class="fas fa-bars"></i>
     </button>
 
@@ -171,6 +165,15 @@
     <div id="round-number" class="text-center">
       <h2></h2>
     </div>
+
+    <input
+      id="last-trick-btn"
+      type="button"
+      class="btn btn-primary bidButton p-2"
+      value="View Last Trick"
+      disabled
+      onclick="displayCardsModal()"
+    />
 
     <div id="gameBoard" class="container text-center">
       <div id="bidArea" class="container">
@@ -207,14 +210,6 @@
           <input type="button" class="bidButton btn btn-primary" value="Pass" onclick="onSuitBidButtonClicked(this)" />
         </div>
         <div id="tricks-bid"></div>
-        <input
-          id="last-trick-btn"
-          type="button"
-          class="btn btn-primary bidButton p-2"
-          value="View Last Trick"
-          disabled
-          onclick="displayCardsModal()"
-        />
       </div>
       <div id="player1Card" class="card-container">
         <p class="progression"></p>
