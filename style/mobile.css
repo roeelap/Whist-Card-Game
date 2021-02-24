@@ -202,6 +202,9 @@
 
   #burger-btn {
     display: block;
+    background: wheat;
+    background-size: cover;
+
   }
 
   #game-info-background-mobile {
@@ -209,12 +212,14 @@
     position: absolute;
     width: 100px;
     height: 180px;
-    background: rgb(255, 251, 230);
     margin-left: -100px;
     left: 0;
     right: 0;
     z-index: 9;
     border-radius: 0 10px 10px 0;
+    /* background: rgb(255, 251, 230); */
+    background: url("https://image.freepik.com/free-vector/wood-background-realistic_107791-102.jpg?1");
+    background-size: cover;
   }
 }
 
