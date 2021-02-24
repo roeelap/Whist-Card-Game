@@ -5,6 +5,7 @@ import AI from './classes/AI.js';
 import { updateScore } from './static/scoreCalculations.js';
 import {
   changeCardClickable,
+  fixCardContainerHeight,
   highlightPlayableCards,
   makeHandRotated,
   rearrangeCardsMobile,
@@ -279,9 +280,9 @@ export const onCardClicked = (cardImg) => {
 
   const marginalIndex = window.marginalMobileCardIndex;
 
-  // if ($(cardImg).css('z-index') < marginalIndex) {
-  $($('.cardImage')[marginalIndex]).css('margin-top', 0);
-  // }
+  if (index < marginalIndex) {
+    $($('.cardImage')[marginalIndex]).css('margin-top', 0);
+  }
 
   // removing the card from the player's hand
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
@@ -315,7 +316,16 @@ const displayNewGameModal = () => {
   $('#newGameModal').modal();
 };
 
-const displayGameInfoMobile = () => {};
+const displayGameInfoMobile = (isShow) => {
+  isShow
+
+  $( "#score-board" ).animate({
+    marginLeft: "+=100"
+  }, 500);
+  $( "#round-number" ).animate({
+    marginLeft: "+=100"
+  }, 500);
+};
 
 const bindConstsToWindow = () => {
   window.onSuitBidButtonClicked = onSuitBidButtonClicked;
@@ -337,7 +347,7 @@ const bindConstsToWindow = () => {
 const suitsAnimation = () => {
   setTimeout(function () {
     $('.diamond, .spade, .heart, .club').removeClass('circled');
-  }, 400);
+  }, 500);
 
   $('.diamond, .spade, .heart, .club').hover(
     function () {
@@ -360,6 +370,7 @@ const createNewGame = () => {
 };
 
 $(document).ready(() => {
+  fixCardContainerHeight();
   bindConstsToWindow();
   displayNewGameModal();
   suitsAnimation();

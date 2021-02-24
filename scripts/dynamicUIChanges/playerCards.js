@@ -57,6 +57,12 @@ export const rearrangeCardsMobile = () => {
   }
 };
 
+export const fixCardContainerHeight = () => {
+  const height = $('#player1Card').height();
+  $('#player2Card').height(height);
+  $('#player4Card').height(height);
+};
+
 export const removeAllFilters = () => {
   $.each($('.cardImage'), (index, card) => {
     $(card).removeClass('dark highlight');

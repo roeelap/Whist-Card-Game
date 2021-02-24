@@ -1,6 +1,28 @@
+@media (max-width: 800px) {
+  body {
+    font-size: 0.8rem;
+  }
+  .card-container {
+    background-size: contain !important;
+  }
+
+  .cardImage {
+    height: 160px;
+  }
+}
+
 @media (max-width: 500px) {
   body {
     font-size: 0.4rem;
+  }
+
+  .suit-animation {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .suit-animation > div {
+    transform: rotate(45deg) scale(0.8);
   }
 
   #player {
@@ -46,7 +68,7 @@
     top: 140px;
     left: 0;
     right: 0;
-    margin-left: 0;
+    margin-left: -100px;
     margin-right: auto;
   }
 
@@ -73,7 +95,7 @@
     top: 60px;
     left: 0;
     right: 0;
-    margin-left: 0;
+    margin-left: -100px;
     margin-right: auto;
   }
 
@@ -92,7 +114,6 @@
   }
 
   .bidButton {
-    width: 2.15rem;
     padding: 0.1em 0.3em 0.1em 0.3em !important;
   }
 
@@ -110,8 +131,8 @@
   }
 
   .card-container {
-    width: 60%;
-    height: 90px !important;
+    width: 70%;
+    height: 80%;
   }
 
   .progression {
@@ -152,10 +173,20 @@
 
   .table-modal td,
   th {
-    padding: 0.5em !important;
+    padding: 0.5em;
+  }
+
+  .table-modal > .modal-content {
+    width: 100% !important;
   }
 
   #burger-btn {
     display: block;
+  }
+}
+
+@media (max-height: 550px) {
+  .card-container {
+    width: 55%;
   }
 }
