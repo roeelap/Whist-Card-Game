@@ -147,6 +147,11 @@
       </div>
     </div>
 
+    <div class="bid-value-controls">
+      <i class="far fa-plus-square bid-value-button" onclick="increaseBid()"></i>
+      <i class="far fa-minus-square bid-value-button" onclick="decreaseBid()"></i>
+    </div>
+
     <button id="burger-btn" class="bidButton" onclick="displayGameInfoMobile(this)" data-isInfoShowing="false">
       <i class="fas fa-bars"></i>
     </button>
@@ -179,7 +184,7 @@
     />
 
     <div id="gameBoard" class="container text-center">
-      <div id="bidArea" class="container">
+      <div id="bidArea">
         <div id="suit-bid" style="display: none">
           <input
             type="number"

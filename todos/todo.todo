@@ -12,5 +12,5 @@
 ✔ RESPONSIVENESS @done(21-02-24 20:51)
 ✔ Hamburger buttons - make notes appear on click @done(21-02-24 20:51)
 ☐ New deployed branch (with timeouts and no console logs)
-☐ Option to leave new game modal (only if clicked on new game)
+✔ Option to leave new game modal (only if clicked on new game) @done(21-02-24 23:14)
 ☐ Endgame message

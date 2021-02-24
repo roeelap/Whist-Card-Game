@@ -29,3 +29,15 @@ export const createTrickBidButtons = (minBid, forbiddenBid) => {
   }
   $('#tricks-bid').html(newDiv);
 };
+
+export const increaseBid = () => {
+  if ($('#bidAmount')[0].value < 13) {
+    $('#bidAmount')[0].value++;
+  }
+};
+
+export const decreaseBid = () => {
+  if ($('#bidAmount')[0].value > 5) {
+    $('#bidAmount')[0].value--;
+  }
+};
