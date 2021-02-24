@@ -63,12 +63,12 @@
   }
 
   #score-board {
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     top: 140px;
     left: 0;
     right: 0;
-    margin-left: -100px;
+    margin-left: -150px;
     margin-right: auto;
     z-index: 10;
   }
@@ -78,10 +78,10 @@
   }
 
   #score-board p {
-    font-size: 0.4em;
+    font-size: 0.7em;
   }
   #score-board h2 {
-    font-size: 1.4em;
+    font-size: 2.2em;
     margin-left: 0;
   }
 
@@ -92,18 +92,20 @@
 
   #round-number {
     height: 80px;
-    width: 100px;
+    width: 150px;
     top: 60px;
     left: 0;
     right: 0;
-    margin-left: -100px;
+    margin-left: -150px;
     margin-right: auto;
     z-index: 10;
   }
 
   #round-number h2 {
-    font-size: 1.3em;
-    margin-top: 0.5em;
+    font-size: 1.7em;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    width: 100px;
   }
 
   #suit-bid,
@@ -121,10 +123,6 @@
 
   #tricks-bid .bidButton {
     width: 2rem;
-  }
-
-  #instructionsModal .modal-content {
-    height: 60vh;
   }
 
   #gameBoard {
@@ -153,6 +151,10 @@
     font-weight: bold;
     margin-bottom: -20px;
     margin-top: auto;
+  }
+
+  #instructionsModal .modal-content {
+    height: 50vh;
   }
 
   #instructionsModal .modal-title {
@@ -213,7 +215,6 @@
 
   #burger-btn {
     display: block;
-    background: wheat;
     background-size: cover;
     position: fixed;
     padding: 0.5em !important;
@@ -221,21 +222,24 @@
     top: 130px;
     background: rgb(255, 251, 230);
     font-size: 2.5em;
+    border: none;
   }
 
   #game-info-background-mobile {
     display: block;
     position: absolute;
-    width: 100px;
-    height: 180px;
-    margin-left: -100px;
+    width: 150px;
+    height: 230px;
+    margin-left: -150px;
     left: 0;
     right: 0;
     z-index: 9;
     border-radius: 0 10px 10px 0;
-    /* background: rgb(255, 251, 230); */
-    background: url("https://image.freepik.com/free-vector/wood-background-realistic_107791-102.jpg?1");
-    background-size: cover;
+    background: rgb(255, 251, 230);
+  }
+
+  #newGameModal .exit-button {
+    transform: scale(0.75);
   }
 }
 

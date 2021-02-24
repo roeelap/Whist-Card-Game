@@ -1,6 +1,6 @@
 import { INSTRUCTIONS } from '../static/consts.js';
 
-export const updateLastTrick = (lastTrick) => {
+const updateLastTrick = (lastTrick) => {
   let output = '';
   for (const entry of lastTrick) {
     output += `
@@ -45,3 +45,37 @@ export const instructionsChangePage = (isNext) => {
   document.querySelector('#instructionsModal').dataset.page = isNext ? `${page + 1}` : `${page - 1}`
   updateInstructionsPage();
 }
+
+export const displayCardsModal = () => {
+  updateLastTrick(game.lastThrownCards);
+  $('#cardsModal').modal();
+};
+
+export const displayRoundHistoryModal = () => {
+  $('#roundHistoryModal').modal();
+};
+
+export const displayInstructionsModal = () => {
+  updateInstructionsPage();
+  $('#instructionsModal').modal();
+};
+
+export const displayGameInfoMobile = (burgerBtn) => {
+  const data = burgerBtn.dataset.isInfoShowing;
+
+  const direction = data === "false" ? -150 : 150;
+  burgerBtn.dataset.isInfoShowing = data === "false" ? "true" : "false";
+
+  $("#score-board").animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+  $("#round-number").animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+  $(burgerBtn).animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+  $("#game-info-background-mobile").animate({
+    marginLeft: `+=${direction}`
+  }, 500);
+};

@@ -25,7 +25,14 @@ import {
   showTrumpSuit,
   updateAllProgressions,
 } from './dynamicUIChanges/mainBoard.js';
-import { updateLastTrick, updateInstructionsPage, instructionsChangePage } from './dynamicUIChanges/modals.js';
+import { 
+  updateInstructionsPage,
+  instructionsChangePage,
+  displayCardsModal,
+  displayRoundHistoryModal,
+  displayInstructionsModal, 
+  displayGameInfoMobile,
+} from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
 
 const newGame = (numberOfRounds) => {
@@ -298,42 +305,16 @@ export const onCardClicked = (cardImg) => {
   return gameRound();
 };
 
-const displayCardsModal = () => {
-  updateLastTrick(game.lastThrownCards);
-  $('#cardsModal').modal();
-};
-
-const displayRoundHistoryModal = () => {
-  $('#roundHistoryModal').modal();
-};
-
-const displayInstructionsModal = () => {
-  updateInstructionsPage();
-  $('#instructionsModal').modal();
-};
+const disableExitBtnNewGameModal = () => {
+  if (!game) {
+     return $("#newGameModal .exit-button").attr("disabled", true);
+  }
+  $("#newGameModal .exit-button").attr("disabled", false);
+}
 
 const displayNewGameModal = () => {
+  disableExitBtnNewGameModal();
   $('#newGameModal').modal();
-};
-
-const displayGameInfoMobile = (burgerBtn) => {
-  const data = burgerBtn.dataset.isInfoShowing;
-
-  const direction = data === "false" ? -100 : 100;
-  burgerBtn.dataset.isInfoShowing = data === "false" ? "true" : "false";
-
-  $("#score-board").animate({
-    marginLeft: `+=${direction}`
-  }, 500);
-  $("#round-number").animate({
-    marginLeft: `+=${direction}`
-  }, 500);
-  $(burgerBtn).animate({
-    marginLeft: `+=${direction}`
-  }, 500);
-  $("#game-info-background-mobile").animate({
-    marginLeft: `+=${direction}`
-  }, 500);
 };
 
 const bindConstsToWindow = () => {

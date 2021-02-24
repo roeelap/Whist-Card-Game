@@ -88,6 +88,7 @@ export const updateScoreList = (playerList, winningPlayersIndexes) => {
   }
   $('#scores').html(scoreOutput);
   $('#players').html(playerOutput);
+  $('#score-board h2').html("Score Board");
 };
 
 export const updateAllProgressions = () => {

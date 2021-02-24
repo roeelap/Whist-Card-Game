@@ -58,6 +58,7 @@
         <div class="modal-content p-3" style="height: 40vh; box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5)">
           <div class="modal-title">
             <h1 class="text-center">Israeli Whist</h1>
+            <button class="btn btn-primary exit-button" data-dismiss="modal"><i class="fas fa-times"></i></button>
           </div>
           <div class="modal-body text-center" style="font-size: 1.5em">
             <label for="rounds-amount"># Rounds</label>
@@ -86,7 +87,7 @@
             </div>
           </div>
           <div class="modal-bottom my-2 text-center">
-            <button type="button" onclick="createNewGame()" class="btn btn-primary bidButton" data-dismiss="modal">
+            <button onclick="createNewGame()" class="btn btn-primary bidButton" data-dismiss="modal">
               Start New Game
             </button>
           </div>
@@ -134,7 +135,7 @@
         <div class="modal-content p-1">
           <div class="modal-title"></div>
           <div class="modal-body"></div>
-          <div class="modal-bottom mt-5">
+          <div class="modal-bottom">
             <button type="button" id="previous" class="btn btn-primary bidButton" onclick="instructionsChangePage(false)">
               <i class="fas fa-arrow-alt-circle-left"></i>
             </button>
@@ -147,7 +148,7 @@
       </div>
     </div>
 
-    <button id="burger-btn" class="bidButton" onclick="displayGameInfoMobile(this)" data-isInfoShowing="false">
+    <button id="burger-btn" onclick="displayGameInfoMobile(this)" data-isInfoShowing="false">
       <i class="fas fa-bars"></i>
     </button>
 
@@ -156,7 +157,7 @@
     <div id="score-board">
       <div id="score-board-wrapper">
         <div class="header">
-          <h2>Score Board</h2>
+          <h2></h2>
         </div>
         <div class="scores">
           <div id="players"></div>
