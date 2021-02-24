@@ -1,4 +1,4 @@
-import { getUnplayableCards, getCardIndex } from '../static/cardFunctions.js'
+import { getUnplayableCards, getCardIndex } from '../static/cardFunctions.js';
 
 export const changeCardClickable = (isClickable) => {
   document.querySelectorAll('.cardImage').forEach((cardImg) => {
@@ -14,14 +14,14 @@ export const makeHandRotated = (playerCardsLength) => {
   $.each($('.cardImage'), (index, card) => {
     const yPos = (index + 0.5 - playerCardsLength / 2) ** 2;
     const rotationAngle = (index - (playerCardsLength - 1) / 2) * 2;
-    $(card).attr('style', `transform: translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+    $(card).css('transform', `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
 
     $(card).hover(
       function () {
-        $(this).attr('style', `transform: translate(${rotationAngle / 5}px, ${yPos - 20}px) rotate(${rotationAngle}deg)`);
+        $(this).css('transform', `translate(${rotationAngle / 5}px, ${yPos - 20}px) rotate(${rotationAngle}deg)`);
       },
       function () {
-        $(this).attr('style', `transform: translateY(${yPos}px) rotate(${rotationAngle}deg)`);
+        $(this).css('transform', `translateY(${yPos}px) rotate(${rotationAngle}deg)`);
       }
     );
   });
@@ -29,13 +29,33 @@ export const makeHandRotated = (playerCardsLength) => {
 
 export const showPlayerCards = (playerCards) => {
   let output = '';
-  let index = 0;
-  playerCards.forEach((card) => {
-    output += `<img src="${card.getImage()}" class="cardImage" style:"z-index: ${index};" onclick="onCardClicked(this)">`;
-    index++;
+
+  playerCards.forEach((card, index) => {
+    const loadFunction = index === 12 ? 'rearrangeCardsMobile()' : '';
+    output += `<img src="${card.getImage()}" class="cardImage" style="z-index: ${index}" onclick="onCardClicked(this)" onload="${loadFunction}">`;
   });
   $('#player').html(output);
+
   makeHandRotated(playerCards.length);
+};
+
+export const rearrangeCardsMobile = () => {
+  const isMobile = $(document).width() < 500;
+  if (!isMobile) {
+    return;
+  }
+
+  const cardImages = $('.cardImage');
+  const marginalHeight = $(cardImages[0]).offset().top;
+
+  for (const cardImage of cardImages) {
+    if ($(cardImage).offset().top > marginalHeight) {
+      if (!window.marginalMobileCardIndex) {
+        window.marginalMobileCardIndex = $(cardImage).css('z-index');
+      }
+      $(cardImage).css('margin-top', '-50px');
+    }
+  }
 };
 
 export const removeAllFilters = () => {
@@ -43,7 +63,6 @@ export const removeAllFilters = () => {
     $(card).removeClass('dark highlight');
   });
 };
-
 
 export const highlightPlayableCards = (cards, playedSuit) => {
   const unplayableCards = playedSuit ? getUnplayableCards(cards, playedSuit) : [];

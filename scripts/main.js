@@ -7,6 +7,7 @@ import {
   changeCardClickable,
   highlightPlayableCards,
   makeHandRotated,
+  rearrangeCardsMobile,
   removeAllFilters,
   showPlayerCards,
 } from './dynamicUIChanges/playerCards.js';
@@ -273,6 +274,11 @@ export const onCardClicked = (cardImg) => {
 
   // removing the card from the player's hand
   game.thrownCards.push({ player, card: player.cards.splice(index, 1)[0] });
+  console.log($(cardImg).css('z-index'), window.marginalMobileCardIndex);
+  if ($(cardImg).css('z-index') < window.marginalMobileCardIndex) {
+    console.log('hi');
+    $($('.cardImage')[window.marginalMobileCardIndex]).css('margin-top', '');
+  }
 
   $(cardImg).remove();
   changeCardClickable(false);
@@ -316,6 +322,7 @@ const bindConstsToWindow = () => {
   window.instructionsChangePage = instructionsChangePage;
   window.displayNewGameModal = displayNewGameModal;
   window.createNewGame = createNewGame;
+  window.rearrangeCardsMobile = rearrangeCardsMobile;
 };
 
 const suitsAnimation = () => {

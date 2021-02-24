@@ -35,6 +35,14 @@
 }
 
 .navbar-brand {
+  display: flex;
+  align-items: center;
   font-size: 1.5em;
   font-weight: bold;
+}
+.navbar-brand h2 {
+  margin: 0;
+}
+.navbar-brand img {
+  width: 10%;
 }

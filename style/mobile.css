@@ -1,0 +1,109 @@
+@media (max-width: 500px) {
+  body {
+    font-size: 0.4rem;
+  }
+
+  #player {
+    transform: translateX(-9px);
+    bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .cardImage {
+    transform: rotate(0) !important;
+    margin-right: -18px;
+    height: 90px;
+  }
+
+  .navbar-wrapper {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .navbar-brand {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .navbar-brand h2 {
+    font-size: 1.5em;
+  }
+
+  .navbar {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  #score-board, #round-number {
+    display: none;
+  }
+
+  #suit-bid, #tricks-bid {
+    width: 100%;
+  }
+
+  #tricks-bid {
+    overflow: hidden;
+  }
+
+  .bidButton {
+    width: 2.15rem;
+    padding: 0.1em 0.3em 0.1em 0.3em !important;
+  }
+
+  #tricks-bid .bidButton {
+    width: 2rem;
+  }
+
+  #gameBoard {
+    grid-template-rows: 14% 28% 28% 28%;
+  }
+  
+  #player2Card {
+    height: 100%;
+  }
+  
+  #player4Card {
+    height: 100%;
+  }
+
+  .progression {
+    font-size: 2em !important;
+    font-weight: bold;
+    margin-bottom: auto;
+    margin-top: -15px;
+  }
+
+  .player-name {
+    font-size: 2em !important;
+    font-weight: bold;
+    margin-bottom: -20px;
+    margin-top: auto;
+  }
+
+  #instructionsModal .modal-title {
+    font-size: 3.5em;
+  }
+
+  #instructionsModal .modal-body {
+    font-size: 1.75em;
+  }
+
+  #instructionsModal .modal-bottom button {
+    min-width: 2.5em;
+  }
+
+  #rounds-amount, #newGameModal label {
+    font-size: 2em;
+  }
+
+  #newGameModal .modal-bottom button {
+    width: fit-content;
+    padding: 0.5em!important;
+  }
+
+  .table-modal td, th {
+    padding: 0.5em !important;
+  }
+}

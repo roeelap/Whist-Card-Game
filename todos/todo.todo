@@ -10,3 +10,4 @@
 ✔ New game - resets game (show confirmation box) 2 @done(21-02-23 02:07)
 ✔ Show menu on load - choose number of rounds (4-20), new game button 2 @done(21-02-23 02:07)
 ☐ RESPONSIVENESS!!!! 5
+☐ New deployed branch (with timeouts and no console logs)

@@ -10,8 +10,11 @@
 @import url('./player-cards.css');
 @import url('./table.css');
 @import url('./suits-animation.css');
+@import url('./mobile.css');
+
 
 body {
+  position:fixed;
   width: 100%;
   height: 100%;
   background-image: url('../images/background/wooden-table.jpg');
@@ -20,7 +23,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   font-family: 'Comfortaa';
-  user-select: none;
+  user-select: none; 
 }
 
 .nonClickable {

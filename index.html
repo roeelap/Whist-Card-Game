@@ -3,14 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Israeli Whist Card Game</title>
+    <title>Israeli Whist</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
     <link rel="stylesheet" href="./style/style.css" />
-    <link
-      rel="shortcut icon"
-      href="./images/icon.ico"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="./images/icon.ico" type="image/x-icon" />
     <script
       src="https://code.jquery.com/jquery-3.5.1.js"
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -22,9 +18,13 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="navbar-wrapper">
-        <div>
-          <a class="navbar-brand" href="index.html">Israeli Whist Card Game</a>
-        </div>
+       
+          <div class="navbar-brand">
+            <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
+            <h2>Israeli Whist</h2>
+            <img src="./images/icon.ico" alt="Israeli Whist Card Game" />
+          </div>
+        
         <div class="links">
           <input type="button" class="navbar-button" value="Round History" onclick="displayRoundHistoryModal()" />
           <input type="button" class="navbar-button" value="Instructions" onclick="displayInstructionsModal()" />
@@ -58,7 +58,7 @@
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content p-3" style="height: 40vh; box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5)">
           <div class="modal-title">
-            <h1 class="text-center">Israeli Whist Card Game</h1>
+            <h1 class="text-center">Israeli Whist</h1>
           </div>
           <div class="modal-body text-center" style="font-size: 1.5em">
             <label for="rounds-amount"># Rounds</label>
@@ -151,6 +151,8 @@
       <div id="roundInfo"></div>
       <div id="score"></div>
     </div>
+    
+    <button id="score-board-btn"></button>
 
     <div id="score-board">
       <div id="score-board-wrapper">
