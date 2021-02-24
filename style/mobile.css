@@ -57,7 +57,7 @@
   }
 
   #gameBoard {
-    grid-template-rows: 14% 28% 28% 28%;
+    grid-template-rows: 35px 70px  70px  70px;
   }
   
   #player2Card {
@@ -105,5 +105,9 @@
 
   .table-modal td, th {
     padding: 0.5em !important;
+  }
+
+  #score-board-btn {
+    display: block;
   }
 }

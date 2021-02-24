@@ -67,7 +67,6 @@
   border-right: 2px solid black;
 }
 
-
 #scores {
   margin-left: 30%;
   grid-row: 2;
@@ -76,4 +75,14 @@
 
 .bold {
   font-weight: bold;
+}
+
+#score-board-btn {
+  display: none;
+  position: fixed;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 0 5px 5px 0;
+  top: 130px;
+  background: rgb(255, 251, 230);
 }
