@@ -79,12 +79,6 @@
 
 #burger-btn {
   display: none;
-  position: fixed;
-  height: fit-content;
-  width: fit-content;
-  border-radius: 0 3px 3px 0;
-  top: 130px;
-  background: rgb(255, 251, 230);
 }
 
 #game-info-background-mobile {
