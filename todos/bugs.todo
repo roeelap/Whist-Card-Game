@@ -12,7 +12,7 @@
 ✔ round history table - "score" shows the score of the players, not how many points they have lost/won at a specific round @done(21-02-23 00:11)
 ✔ AI still bids too much @done(21-02-23 00:44)
 ✔ player cards - fix positioning going crazy on mobile @done(21-02-24 19:43)
-☐ Round history table - going out of bounds on mobile
-☐ Instructions modal - size on mobile
+✔ Round history table - going out of bounds on mobile @done(21-02-24 20:51)
+✔ Instructions modal - size on mobile @done(21-02-24 20:50)
 ✔ new game modal - suits are not centered on mobile @done(21-02-24 20:11)
 ✔ Card image container is too short @done(21-02-24 19:43)
