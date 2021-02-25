@@ -7,7 +7,7 @@
   transition: 0.5s;
   backface-visibility: hidden;
   transform: translateZ(0) scale(1, 1);
-  transition: none;
+  transition: 0.3s;
 }
 
 .dark {

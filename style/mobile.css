@@ -41,6 +41,7 @@
     margin-right: -18px;
     width: 18% !important;
     height: auto;
+    transition: none;
   }
 
   .navbar-wrapper {
