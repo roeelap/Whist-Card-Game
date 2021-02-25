@@ -48,7 +48,7 @@ export class Card {
       suit = 'S';
     }
 
-    this.image = `./images/cards/${value}${suit}.png`;
+    this.image = `./images/cards/${value}${suit}-min.png`;
     return this.image;
   }
 }
