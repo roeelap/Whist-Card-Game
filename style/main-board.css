@@ -60,7 +60,7 @@
 }
 
 .no-trump-image {
-  height: 300%;
+  height: 300% !important;
 }
 
 .suit-background {
