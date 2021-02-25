@@ -249,7 +249,7 @@ const gameRound = () => {
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
     return setTimeout(() => {
-      game.determineTrickWinner()
+      game.determineTrickWinner();
       clearCardImages();
       gameRound();
     }, ROUND_TIMEOUT);
