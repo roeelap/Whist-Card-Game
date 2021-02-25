@@ -60,4 +60,4 @@ one trick, for each additional trick he won,
 he receives 10 points.
 
 
-Made by Roee Lapushin & Omri Goldstein
+# Made by Roee Lapushin & Omri Goldstein
