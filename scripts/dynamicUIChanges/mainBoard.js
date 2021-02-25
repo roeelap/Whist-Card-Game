@@ -117,3 +117,35 @@ export const clearCardImages = () => {
     $(playerCardId).css('background', `rgba(249, 247, 238, 0.6)`);
   }
 };
+
+export const displayGameInfoMobile = (burgerBtn) => {
+  const data = burgerBtn.dataset.isInfoShowing;
+
+  const direction = data === 'false' ? -150 : 150;
+  burgerBtn.dataset.isInfoShowing = data === 'false' ? 'true' : 'false';
+
+  $('#score-board').animate(
+    {
+      marginLeft: `+=${direction}`,
+    },
+    500
+  );
+  $('#round-number').animate(
+    {
+      marginLeft: `+=${direction}`,
+    },
+    500
+  );
+  $(burgerBtn).animate(
+    {
+      marginLeft: `+=${direction}`,
+    },
+    500
+  );
+  $('#game-info-background-mobile').animate(
+    {
+      marginLeft: `+=${direction}`,
+    },
+    500
+  );
+};

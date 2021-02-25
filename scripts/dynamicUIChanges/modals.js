@@ -59,38 +59,6 @@ export const displayInstructionsModal = () => {
   $('#instructionsModal').modal();
 };
 
-export const displayGameInfoMobile = (burgerBtn) => {
-  const data = burgerBtn.dataset.isInfoShowing;
-
-  const direction = data === 'false' ? -150 : 150;
-  burgerBtn.dataset.isInfoShowing = data === 'false' ? 'true' : 'false';
-
-  $('#score-board').animate(
-    {
-      marginLeft: `+=${direction}`,
-    },
-    500
-  );
-  $('#round-number').animate(
-    {
-      marginLeft: `+=${direction}`,
-    },
-    500
-  );
-  $(burgerBtn).animate(
-    {
-      marginLeft: `+=${direction}`,
-    },
-    500
-  );
-  $('#game-info-background-mobile').animate(
-    {
-      marginLeft: `+=${direction}`,
-    },
-    500
-  );
-};
-
 export const displayGameOverModal = () => {
   const scoreBoard = $('#score-board').clone().attr('id', 'modalScoreBoard');
   $('#gameOverModal .final-scores').html(scoreBoard);

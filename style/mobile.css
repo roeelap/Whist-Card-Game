@@ -83,6 +83,7 @@
     background-position: center center;
     background-size: contain;
     color: black;
+    margin-left: 0 !important;
   }
 
   .final-scores {

@@ -82,7 +82,6 @@ export default class Game {
     this.deck = new Deck();
     this.deck.shuffle();
     this.dealCards();
-    console.log(this.players);
 
     // UI updating
     updateScoreList(this.players, this.getWinningPlayersIndexes());
@@ -91,26 +90,6 @@ export default class Game {
     removeAllProgressionLabels();
     removeGameModeLabel();
   }
-
-  // Fuck up your PC - deals 13 NT hands
-  // dealCards() {
-  //   let score = 0;
-  //   while (score < 33) {
-  //     this.deck = new Deck();
-  //     this.deck.shuffle();
-  //     this.players.forEach((player) => {
-  //       player.cards = [];
-  //     });
-  //     while (this.deck.cards.length > 0) {
-  //       this.players.forEach((player) => {
-  //         player.cards.push(this.deck.cards.pop());
-  //         player.sortCards();
-  //       });
-  //     }
-  //     score = handEvaluation(this.players[0].cards);
-  //     console.log(score);
-  //   }
-  // }
 
   dealCards() {
     while (this.deck.cards.length > 0) {
@@ -137,7 +116,6 @@ export default class Game {
       return false;
     }
 
-    console.log('good bid');
     return true;
   }
 
@@ -191,9 +169,6 @@ export default class Game {
     } else {
       this.turn++;
     }
-
-    // reRenderTables(this);
-    updateTurnGlow(this.turn);
   }
 
   determineTrickWinner() {

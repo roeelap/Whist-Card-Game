@@ -31,6 +31,8 @@ import {
   showTrumpBid,
   showTrumpSuit,
   updateAllProgressions,
+  displayGameInfoMobile,
+  updateTurnGlow,
 } from './dynamicUIChanges/mainBoard.js';
 import {
   updateInstructionsPage,
@@ -38,7 +40,6 @@ import {
   displayCardsModal,
   displayRoundHistoryModal,
   displayInstructionsModal,
-  displayGameInfoMobile,
   displayGameOverModal,
 } from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
@@ -67,9 +68,9 @@ const onBidInputChange = (bidInput) => {
 
 // validate total rounds
 const onTotalRoundsInputChange = (totalRounds) => {
-  // if (totalRounds.value < 4) {
-  //   return (totalRounds.value = 4);
-  // }
+  if (totalRounds.value < 4) {
+    return (totalRounds.value = 4);
+  }
   if (totalRounds.value > 24) {
     return (totalRounds.value = 24);
   }
@@ -100,6 +101,8 @@ const trumpSuitBidRound = () => {
       newRound(true);
     }, ROUND_TIMEOUT);
   }
+
+  updateTurnGlow(game.turn);
 
   // player turn
   if (game.turn === 1) {
@@ -156,8 +159,6 @@ const tricksBidRound = () => {
     showTrumpSuit();
   }
 
-  // reRenderTables(game);
-
   // Tricks round ended
   if (game.trickBidsMade === 4) {
     return setTimeout(() => {
@@ -178,6 +179,8 @@ const tricksBidRound = () => {
       gameRound();
     }, ROUND_TIMEOUT);
   }
+
+  updateTurnGlow(game.turn);
 
   // waiting for player to bid
   if (game.turn === 1) {
@@ -220,13 +223,13 @@ const onTricksBidButtonClicked = (bidButton) => {
   return tricksBidRound();
 };
 
-const printRoundCards = () => {
-  let printMsg = '';
-  for (let card of game.thrownCards) {
-    printMsg += `player: ${card.player.index}, card: ${card.card.value},${card.card.suit}\n`;
-  }
-  console.log(printMsg);
-};
+// const printRoundCards = () => {
+//   let printMsg = '';
+//   for (let card of game.thrownCards) {
+//     printMsg += `player: ${card.player.index}, card: ${card.card.value},${card.card.suit}\n`;
+//   }
+//   console.log(printMsg);
+// };
 
 const gameRound = () => {
   // UI - update the tricks for every player
@@ -245,14 +248,13 @@ const gameRound = () => {
 
   // if sub-round ended - figure out the winning card and the starting player of the next putdown
   if (game.thrownCards.length === 4) {
-    printRoundCards();
     return setTimeout(() => {
-      console.log(`Winner: player ${game.determineTrickWinner()}`);
-      // reRenderTables(game);
       clearCardImages();
       gameRound();
     }, ROUND_TIMEOUT);
   }
+
+  updateTurnGlow(game.turn);
 
   // check if round has ended and calculate scores
   const isRoundEnd = game.players.every((player) => player.cards.length === 0);
@@ -289,9 +291,9 @@ export const onCardClicked = (cardImg) => {
   const player = game.players[0];
 
   // // if card not valid, make a red custom alert
-  // if (!game.isCardValid(player, player.cards[index])) {
-  //   return invalidAlert('Card Not Valid!');
-  // }
+  if (!game.isCardValid(player, player.cards[index])) {
+    return invalidAlert('Card Not Valid!');
+  }
 
   // putting the clicked card on the game board
   const img = player.cards[index].getImage();
