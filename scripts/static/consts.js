@@ -21,7 +21,7 @@ export const MIN_VALID_TRUMP_BID = 5;
 
 const SECOND = 1000;
 export const TURN_TIMEOUT = 1 * SECOND;
-export const ROUND_TIMEOUT = 3 * SECOND;
+export const ROUND_TIMEOUT = 2 * SECOND;
 
 export const INSTRUCTIONS = [
   {

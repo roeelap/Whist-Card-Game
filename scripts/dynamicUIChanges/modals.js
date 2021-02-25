@@ -64,3 +64,13 @@ export const displayGameOverModal = () => {
   $('#gameOverModal .final-scores').html(scoreBoard);
   $('#gameOverModal').modal();
 };
+
+// validate total rounds
+export const onTotalRoundsInputChange = (totalRounds) => {
+  if (totalRounds.value < 4) {
+    return (totalRounds.value = 4);
+  }
+  if (totalRounds.value > 24) {
+    return (totalRounds.value = 24);
+  }
+};

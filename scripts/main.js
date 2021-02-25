@@ -40,7 +40,7 @@ import {
   displayCardsModal,
   displayRoundHistoryModal,
   displayInstructionsModal,
-  displayGameOverModal,
+  onTotalRoundsInputChange,
 } from './dynamicUIChanges/modals.js';
 import { addRoundRow, createRoundHistoryTable } from './dynamicUIChanges/tables.js';
 
@@ -63,16 +63,6 @@ const onBidInputChange = (bidInput) => {
   }
   if (bidInput.value > 13) {
     return (bidInput.value = 13);
-  }
-};
-
-// validate total rounds
-const onTotalRoundsInputChange = (totalRounds) => {
-  if (totalRounds.value < 4) {
-    return (totalRounds.value = 4);
-  }
-  if (totalRounds.value > 24) {
-    return (totalRounds.value = 24);
   }
 };
 
@@ -321,15 +311,15 @@ export const onCardClicked = (cardImg) => {
   return gameRound();
 };
 
-const disableExitBtnNewGameModal = () => {
-  if (!game) {
-    return $('#newGameModal .exit-button').attr('disabled', true);
+const disableExitBtnNewGameModal = (isExitBtn) => {
+  if (isExitBtn) {
+    return $('#newGameModal .exit-button').attr('disabled', false);
   }
-  $('#newGameModal .exit-button').attr('disabled', false);
+  $('#newGameModal .exit-button').attr('disabled', true);
 };
 
-const displayNewGameModal = () => {
-  disableExitBtnNewGameModal();
+const displayNewGameModal = (isExitBtn) => {
+  disableExitBtnNewGameModal(isExitBtn);
   $('#newGameModal').modal();
 };
 
@@ -380,6 +370,6 @@ const createNewGame = async () => {
 $(document).ready(() => {
   fixCardContainerHeight();
   bindConstsToWindow();
-  displayNewGameModal();
+  displayNewGameModal(false);
   suitsAnimation();
 });

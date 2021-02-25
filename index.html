@@ -27,7 +27,7 @@
         <div class="links">
           <input type="button" class="navbar-button" value="Round History" onclick="displayRoundHistoryModal()" />
           <input type="button" class="navbar-button" value="Instructions" onclick="displayInstructionsModal()" />
-          <input type="button" class="navbar-button" value="New Game" onclick="displayNewGameModal()" />
+          <input type="button" class="navbar-button" value="New Game" onclick="displayNewGameModal(true)" />
         </div>
       </div>
     </nav>
@@ -103,7 +103,7 @@
             <div class="final-scores col-8"></div>
             <div class="final-buttons col">
               <button onclick="displayRoundHistoryModal()" class="btn-primary bidButton">Round History</button>
-              <button onclick="displayNewGameModal()" class="btn-primary bidButton" data-dismiss="modal">New Game</button>
+              <button onclick="displayNewGameModal(false)" class="btn-primary bidButton" data-dismiss="modal">New Game</button>
             </div>
           </div>
         </div>
