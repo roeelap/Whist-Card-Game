@@ -75,6 +75,7 @@
   border: 1px solid black;
   border-radius: 5px;
   outline: none;
+  text-align: center;
 }
 
 .final-buttons {
